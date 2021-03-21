@@ -1,0 +1,11 @@
+.container{
+  display: flex;
+  justify-content: center;
+  margin: 5rem 0;
+}
+
+.btn{
+  display: block;
+  margin: 5px auto;
+  font-size: large;
+}

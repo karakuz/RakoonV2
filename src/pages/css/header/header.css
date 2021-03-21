@@ -1,0 +1,22 @@
+header{
+  border: 1px solid grey;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+input{
+  border: 1px solid;
+  margin: 4px 0px;
+  padding: 8px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border-color: rgba(0,0,0,0.12);
+  line-height: 1.5;
+  font-weight: 400;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+div > * {
+  margin-right: 5px;
+}
