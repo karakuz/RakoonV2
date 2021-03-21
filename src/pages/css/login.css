@@ -1,6 +1,7 @@
-.container{
+.form_container{
   display: flex;
   justify-content: center;
+  font-size: 2rem;
   margin: 5rem 0;
 }
 

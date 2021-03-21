@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import '../css/login/login.css'
+import '../css/login.css'
 
 const Login = () => {
   const [email,setEmail] = useState('');
@@ -13,7 +13,7 @@ const Login = () => {
   }
 
   return (
-    <div className="container">
+    <div className="form_container">
       <form onSubmit={Submit}>
         <div>
           <label>E-mail:</label>

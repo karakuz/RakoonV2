@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
 import LoginButton from '../../components/login_button/LoginButton';
 import RakoonLogo from '../../components/rakoon_logo/RakoonLogo';
@@ -6,12 +7,14 @@ import Search from '../../components/search_button/Search';
 import ShoppingCart from '../../components/shopping_cart/ShoppingCart';
 
 //CSS
-import '../css/header/header.css';
+import '../css/header.css';
 
 const Header = () => {
   return (
     <header>
-      <RakoonLogo/>
+      <Link to="/">
+        <RakoonLogo/>
+      </Link>
       <div style={{display: "flex"}}>
         <Search/>
         <LoginButton/>
