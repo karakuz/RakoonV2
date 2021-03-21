@@ -5,6 +5,11 @@ const app = express();
 
 const port = process.env.PORT || 8080;
 
+const authRoutes = require('./backend/routes/auth');
+
+//middleware routes
+app.use("/login", authRoutes);
+
 app.get('/ping', function (req, res) {
   return res.send('pong');
 });
