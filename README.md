@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+CS 476/576 Project: E-commerce System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The goal of this project is to design & implement an e-commerce website. Students are expected to fulfil
+the following requirements of the customer:
+  ● Adding an item to the shopping cart should be available without account creation.
+  ● Users must have the ability to enable 2-factor authentication.
+  ● Users can change their passwords & information, see their previous orders & invoices.
+  ● Users can add, delete and edit products to, from and in their basket.
+  ● Users can checkout (buy) the items in their basket & receive a pdf invoice.
+  ● Users can buy the products through a full-fledged payment system.
 
-## Available Scripts
+○ In order to cope with the modern technologies, the payment system must be
+crypto-currency based. For this project, you can connect to the test networks of popular
+crypto systems(Ethereum Chain, Binance Smart Chain, Algorand, Avalanche, Polkadot
+etc. etc.)
 
-In the project directory, you can run:
+○ Create your own crypto-currency from one these networks so that you can control the
+whole pool of the currency and keep the price fixed.
 
-### `yarn start`
+○ When a user is created, you also need to create a public address for them so that the
+payments can be sent from their account to the account of the user who listed the
+product(Product Manager)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+○ Since this is a school project, for money deposits, you just need to create a fund page,
+where a logged in user can go to the site, enter how many YOUR_TOKEN they want to
+have and click accept.( Similar Example )
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+○ We suggest setting the price of your currency to be 1 TL = 1 YOUR_TOKEN so that
+your operations will be more user friendly.
+  ● Users can search products with different parameters like name, description etc. (advanced
+  search component usage is strongly recommended e.g. apache solr, elasticsearch)
+  ● Users can filter search results by parameters & sort them in ascending/descending order
+  according to the attributes like price (can also be an interval), name, rating etc.
+  ● A mailing system is required for sign-up, checkout, order status change and related
+  functionalities.
+  ● Users can be notified about the new campaigns, their order tracking etc. via push
+  notifications.
+  ● Users can comment on the products and rate the purchased items.
+  ● Other than the customer role, the following roles exist:
+  
+○ Sales Manager:
+  ■ can see the invoices.
+  ■ is responsible for changing the status of the orders.
+  ■ can develop and deploy campaigns.
+  ■ can analyze the sales through charts.
+  ■ can cancel a purchase order or redirect to another customer address upon
+  client request.
+  
+○ Product Manager/Store:
+  ■ is responsible for adding, deleting and editing products & categories
+  (depending on your design).
+  ■ is responsible for validating comments.
+  
+● The comments must be approved by the product manager.
 
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+● The website is required  
+  ○ to recommend relevant products to customers which needs to be tailored for each
+  user or
+  ○ to show up advertisements based on customers’ preferences or
+  ○ to give points to products automatically according to customers’ comments.
+  
+● Two different platforms are required: e.g. mobile and web app.
