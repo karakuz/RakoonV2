@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import LoginButton from '../../components/login_button/LoginButton';
 import RakoonLogo from '../../components/rakoon_logo/RakoonLogo';
 import Search from '../../components/search_button/Search';
-import ShoppingCart from '../../components/shopping_cart/ShoppingCart';
+import ShoppingCart from '../../components/cart/ShoppingCart';
 
 //CSS
 import '../css/header.css';
