@@ -77,7 +77,8 @@ app.post("/register", (req, res) => {
   });
 });
 app.get("/user", (req, res) => {
-  res.send(req.user); // The req.user stores the entire user that has been authenticated inside of it.
+  res.send(req.user);
+  console.log(req.user); // The req.user stores the entire user that has been authenticated inside of it.
 });
 //----------------------------------------- END OF ROUTES---------------------------------------------------
 //Start Server

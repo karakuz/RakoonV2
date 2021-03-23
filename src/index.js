@@ -9,11 +9,12 @@ import Login from './pages/login/Login';
 import Body from './pages/main_page/Body';
 import Cart from './pages/cart/cart';
 import Register from "./pages/register/register";
+import NavigationBar from "./components/Navbar/NavigationBar";
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <Header />
+      <NavigationBar />
 
       <Switch>
         <Route path="/" exact component={Body} />
