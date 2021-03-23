@@ -14,7 +14,6 @@ const Login = () => {
 
     setEmail('');
     setPassword('');
-    console.log("line15");
     const data = await Axios({
       method: "POST",
       data: {
@@ -24,7 +23,7 @@ const Login = () => {
       withCredentials: true,
       url: "http://localhost:4000/login",
     });
-    if(data.status==200) history.push('/');
+    if(data.status===200) history.push('/');
   }
 
   return (
