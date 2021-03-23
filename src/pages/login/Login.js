@@ -1,18 +1,21 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom';
 import '../css/login.css'
 import Axios from "axios"
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  let history = useHistory();
 
-  const Submit = (e) => {
+  const Submit = async (e) => {
     e.preventDefault();
     (email && password) ? console.log(email, password) : console.log("Empty form input");
 
     setEmail('');
     setPassword('');
-    Axios({
+    console.log("line15");
+    const data = await Axios({
       method: "POST",
       data: {
         username: email,
@@ -20,7 +23,8 @@ const Login = () => {
       },
       withCredentials: true,
       url: "http://localhost:4000/login",
-    }).then((res) => console.log(res));
+    });
+    if(data.status==200) history.push('/');
   }
 
   return (
