@@ -2,6 +2,7 @@ import React from 'react'
 import ProductCard from '../../components/product/product_card';
 import '../css/body.css';
 import {products} from '../../components/product/test_products';
+import { CardColumns, Row } from 'react-bootstrap';
 
 const Body = (props) => {
   return (
@@ -11,7 +12,7 @@ const Body = (props) => {
         products.map((product)=>{
           return <ProductCard key={product.id} id={product.id} {...product} numOfItems={props.numOfItems} setNumOfItems={props.setNumOfItems}/>
         })
-      }
+      }  
     </div>
   )
 }

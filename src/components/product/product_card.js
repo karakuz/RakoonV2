@@ -1,4 +1,4 @@
-import { Button } from 'react-bootstrap'
+import { Button, CardDeck } from 'react-bootstrap'
 import React from 'react'
 import { Card } from 'react-bootstrap'
 
@@ -24,19 +24,23 @@ const ProductCard = (props) => {
   }
   
   return (
-    <Card style={{ width: '50rem', margin: '0.5rem' }}>
+    <div style={{marginTop: 80, marginBottom: 20, width: 250}}>
+    <CardDeck>
+    <Card border="success" style={{ width: '150rem', margin: '1.5rem' }}>
     <Card.Img variant="top" src={product.img} />
     <Card.Body>
       <Card.Title>{product.author}</Card.Title>
       <Card.Text>
         {product.text}
       </Card.Text>
-      <Button variant="secondary"><span onClick={(e)=> change(e)}>{addOrDelete}</span></Button>
-      <div style={{display: "Flex", justifyContent: "space-between", cursor:"pointer", color:"blue"}}>
+      <Button variant="success"><span onClick={(e)=> change(e)}>{addOrDelete}</span></Button>
+      <div style={{display: "Flex", justifyContent: "space-between", cursor:"pointer", color:"green"}}>
         <span >Price</span> <span >Deatils</span>
       </div>
     </Card.Body>
   </Card>
+  </CardDeck>
+  </div>
   )
 }
 
