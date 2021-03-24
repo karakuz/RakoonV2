@@ -16,6 +16,7 @@ const NavLeft = (props) => {
           document.getElementById('cart').innerHTML = text;
       } else ref.current = true;
   },[props.numOfItems]);
+  
   return (
     <Nav className="mr-auto">
       <Nav.Link href="/cart" id="cart">{`${Cart}`}</Nav.Link>

@@ -11,7 +11,6 @@ const Body = (props) => {
     Welcome to Rakoon E-Commerce!
      </h3>
     <div className="container">
-      
       {
         products.map((product)=>{
           return <ProductCard key={product.id} id={product.id} {...product} numOfItems={props.numOfItems} setNumOfItems={props.setNumOfItems}/>

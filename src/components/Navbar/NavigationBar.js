@@ -5,7 +5,7 @@ import NavRight from './NavRight';
 
 const NavigationBar = (props) => {
     return (
-        <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
+        <Navbar collapseOnSelect expand="lg" bg="light" variant="light" style={{fontSize:'1.3rem'}}>
             <Navbar.Brand href="/">
                 <RakoonLogo/>
             </Navbar.Brand>

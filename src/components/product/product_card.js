@@ -28,14 +28,14 @@ const ProductCard = (props) => {
     <CardDeck>
     <Card bg ='light' style={{ width: '30rem', height:'30rem', margin: '1.5rem' }}>
     <Card.Img variant="top" src={product.img} style={{ padding: '1rem' }} />
-    <Card.Body style ={{margin: '1rem', padding : '1rem'}}>
+    <Card.Body style ={{margin: '1rem', padding : '1rem', position: "relative"}}>
       <Card.Title>{product.author}</Card.Title>
       <Card.Text>{product.text} </Card.Text> 
       <div style={{ display: "flex", justifyContent: "space-between", cursor:"pointer"}}>
       <Card.Subtitle>$ Price</Card.Subtitle>
       <Card.Subtitle>More</Card.Subtitle>
       </div>
-      <Button variant="success"><span onClick={(e)=> change(e)}>{addOrDelete}</span></Button>  
+      <Button variant="success" style={{position:"absolute", bottom:"0px", left:"60px"}}><span onClick={(e)=> change(e)}>{addOrDelete}</span></Button>  
     </Card.Body>
   </Card>
   </CardDeck>
