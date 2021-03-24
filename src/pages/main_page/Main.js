@@ -8,6 +8,9 @@ import NavigationBar from "../../components/Navbar/NavigationBar";
 
 const Main = () => {
   const [numOfItems, setNumOfItems] = useState(0);
+  //const user = this.props.location.state;
+
+  console.log(this);
 
   return (
     <Router>

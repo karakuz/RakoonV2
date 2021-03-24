@@ -7,7 +7,6 @@ const NavLeft = (props) => {
     const Cart = (localStorage.length>0)?`Cart(${localStorage.length})`:'Cart';
     props.setNumOfItems(localStorage.length);
     useEffect(()=>{
-        console.log(`useEffect num: ${props.numOfItems}`);
         if(ref.current){
             let text = document.getElementById('cart').innerHTML;
             if(props.numOfItems===0) text=`Cart`;

@@ -17,7 +17,7 @@ module.exports = function (passport) {
                             password: user.password,
                             name: user.name,
                             surname: user.surname,
-                            success: true
+                            role_id: 1
                         });
                     } else {
                         return done(null, false);

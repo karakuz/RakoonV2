@@ -1,5 +1,4 @@
 import Navbar from "react-bootstrap/Navbar";
-import { Link } from 'react-router-dom';
 import RakoonLogo from '../rakoon_logo/RakoonLogo';
 import NavLeft from './NavLeft';
 import NavRight from './NavRight';
