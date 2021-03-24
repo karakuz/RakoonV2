@@ -24,16 +24,16 @@ const ProductCard = (props) => {
   }
   
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card style={{ width: '50rem', margin: '0.5rem' }}>
     <Card.Img variant="top" src={product.img} />
     <Card.Body>
       <Card.Title>{product.author}</Card.Title>
       <Card.Text>
         {product.text}
       </Card.Text>
-      <Button variant="primary">Go somewhere</Button>
-      <div style={{display: "flex", justifyContent: "space-between", cursor:"pointer", color:"blue"}}>
-        <span >Inspect</span> | <span onClick={(e)=> change(e)}>{addOrDelete}</span>
+      <Button variant="secondary"><span onClick={(e)=> change(e)}>{addOrDelete}</span></Button>
+      <div style={{display: "Flex", justifyContent: "space-between", cursor:"pointer", color:"blue"}}>
+        <span >Price</span> <span >Deatils</span>
       </div>
     </Card.Body>
   </Card>
