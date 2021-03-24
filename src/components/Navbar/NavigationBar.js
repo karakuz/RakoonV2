@@ -3,6 +3,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { Link } from 'react-router-dom';
+import RakoonLogo from '../rakoon_logo/RakoonLogo';
 
 const NavigationBar = (props) => {
     const ref = useRef(false);
@@ -20,7 +21,9 @@ const NavigationBar = (props) => {
     },[props.numOfItems]);
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-            <Navbar.Brand href="/">Rakoon</Navbar.Brand>
+            <Navbar.Brand href="/">
+                <RakoonLogo/>
+            </Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="mr-auto">
