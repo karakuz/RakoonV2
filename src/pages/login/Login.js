@@ -14,7 +14,7 @@ const Login = () => {
 
     setEmail('');
     setPassword('');
-    const data = await Axios({
+    const user = await Axios({
       method: "POST",
       data: {
         username: email,
@@ -23,7 +23,7 @@ const Login = () => {
       withCredentials: true,
       url: "http://localhost:4000/login",
     });
-    if(data.status===200) history.push('/');
+    if(user.status===200) history.push('/',{ user: user.data });
   }
 
   return (
