@@ -3,7 +3,7 @@ import React from 'react'
 import { Card } from 'react-bootstrap'
 
 const ProductCard = (props) => {
-  const addOrDelete = (!props.isRemovable)?'Add':'Delete';
+  const addOrDelete = (!props.isRemovable)?'Add To Cart':'Delete';
   const product = {
     id: props.id,
     author: props.author,
@@ -24,19 +24,18 @@ const ProductCard = (props) => {
   }
   
   return (
-    <div style={{marginTop: 80, marginBottom: 20, width: 250}}>
+    <div style={{ width: '18rem'}}>
     <CardDeck>
-    <Card border="success" style={{ width: '150rem', margin: '1.5rem' }}>
-    <Card.Img variant="top" src={product.img} />
-    <Card.Body>
+    <Card bg ='light' style={{ width: '30rem', height:'30rem', margin: '1.5rem' }}>
+    <Card.Img variant="top" src={product.img} style={{ padding: '1rem' }} />
+    <Card.Body style ={{margin: '1rem', padding : '1rem'}}>
       <Card.Title>{product.author}</Card.Title>
-      <Card.Text>
-        {product.text}
-      </Card.Text>
-      <Button variant="success"><span onClick={(e)=> change(e)}>{addOrDelete}</span></Button>
-      <div style={{display: "Flex", justifyContent: "space-between", cursor:"pointer", color:"green"}}>
-        <span >Price</span> <span >Deatils</span>
+      <Card.Text>{product.text} </Card.Text> 
+      <div style={{ display: "flex", justifyContent: "space-between", cursor:"pointer"}}>
+      <Card.Subtitle>$ Price</Card.Subtitle>
+      <Card.Subtitle>More</Card.Subtitle>
       </div>
+      <Button variant="success"><span onClick={(e)=> change(e)}>{addOrDelete}</span></Button>  
     </Card.Body>
   </Card>
   </CardDeck>
