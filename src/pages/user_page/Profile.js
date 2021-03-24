@@ -1,13 +1,11 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 
-const Profile = () => {
-  const location = useLocation();
+const Profile = (props) => {
   console.log(`In profile: `);
   return (
     <div>
       {
-        location.state
+      JSON.stringify(props,null,'\t')
       }
     </div>
   )
