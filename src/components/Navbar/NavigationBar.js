@@ -20,7 +20,7 @@ const NavigationBar = (props) => {
         } else ref.current = true;
     },[props.numOfItems]);
     return (
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
             <Navbar.Brand href="/">
                 <RakoonLogo/>
             </Navbar.Brand>
