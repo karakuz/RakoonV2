@@ -17,6 +17,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "mongoose": "^5.12.1",
+    "nodemon": "^2.0.7",
     "passport": "^0.4.1",
     "passport-2fa-totp": "0.0.1",
     "passport-local": "^1.0.0",
@@ -28,7 +29,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "concurrently \"react-scripts build\" \"node server.js\" \"react-scripts start\"",
+    "start": "concurrently \"react-scripts build\" \"nodemon server.js\" \"react-scripts start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
