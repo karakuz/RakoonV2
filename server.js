@@ -9,6 +9,9 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const app = express();
 const User = require("./backend/models/user");
+const async = require("async");
+const nodemailer = require("nodemailer");
+const crypto = require("crypto");
 //----------------------------------------- END OF IMPORTS---------------------------------------------------
 mongoose.connect(
   "mongodb+srv://admin:eray4193@cluster0.afcfi.mongodb.net/Users?retryWrites=true&w=majority",
@@ -81,6 +84,113 @@ app.post("/register", (req, res) => {
 app.get("/user", (req, res) => {
   res.send(req.user);
   console.log(req.body.user); // The req.user stores the entire user that has been authenticated inside of it.
+});
+
+app.post("/forgot", function (req, res, next) {
+  async.waterfall([
+    function (done) {
+      crypto.randomBytes(20, function (err, buf) {
+        var token = buf.toString("hex");
+        done(err, token);
+      });
+    },
+    function (token, done) {
+      User.findOne({ username: req.body.email }, function (err, user) {
+        if (!user) {
+          console.log("There is no user with that email");
+          // return res.redirect("/forgot");
+        }
+
+        user.resetPasswordToken = token;
+        user.resetPasswordExpires = Date.now() + 3600000;
+
+        user.save(function (err) {
+          done(err, token, user);
+        });
+      });
+    },
+    function (token, user, done) {
+      var smtpTransport = nodemailer.createTransport({
+        service: "Gmail",
+        auth: {
+          user: "rakoonecommerceservices@gmail.com",
+          pass: "rakoon123"
+        }
+      });
+      var mailOptions = {
+        to: user.username,
+        from: "rakoonecommerceservices@gmail.com",
+        subject: "Rakoon E-Commerce Password change",
+        text: "You are receiving this e-mail because you have requested to reset your password " +
+          " Please click on the following link to change your password" + '\n\n' +
+          "http://" + req.headers.host + "/reset/" + token
+      };
+      smtpTransport.sendMail(mailOptions, function (err) {
+        console.log("mail sent");
+        done(err, "done");
+      });
+    }
+  ], function (err) {
+    if (err) return next(err);
+    // res.redirect("/forgot");
+  })
+});
+
+router.get('/reset/:token', function (req, res) {
+  User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
+    if (!user) {
+      req.flash('error', 'Password reset token is invalid or has expired.');
+      return res.redirect('/forgot');
+    }
+    res.render('reset', { token: req.params.token });
+  });
+});
+
+router.post('/reset/:token', function (req, res) {
+  async.waterfall([
+    function (done) {
+      User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
+        if (!user) {
+          console.log('Password reset token is invalid or has expired.');
+          return res.redirect('/');
+        }
+
+        user.setPassword(req.body.password, function (err) {
+          user.resetPasswordToken = undefined;
+          user.resetPasswordExpires = undefined;
+
+          user.save(function (err) {
+            req.logIn(user, function (err) {
+              done(err, user);
+            });
+          });
+        })
+
+      });
+    },
+    function (user, done) {
+      var smtpTransport = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+          user: 'rakoonecommerceservices@gmail.com',
+          pass: "rakoon123"
+        }
+      });
+      var mailOptions = {
+        to: user.username,
+        from: 'rakoonecommerceservices@gmail.com',
+        subject: 'Your password has been changed',
+        text: 'Hello,\n\n' +
+          'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
+      };
+      smtpTransport.sendMail(mailOptions, function (err) {
+        console.log('Success! Your password has been changed.');
+        done(err);
+      });
+    }
+  ], function (err) {
+    res.redirect('/');
+  });
 });
 //----------------------------------------- END OF ROUTES---------------------------------------------------
 //Start Server

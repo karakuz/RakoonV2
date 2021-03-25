@@ -25,15 +25,11 @@ const Login = () => {
       withCredentials: true,
       url: "http://localhost:4000/login",
     });
-<<<<<<< HEAD
-    if (data.status === 200) history.push('/');
-=======
-    if(user.status===200){
+    if (user.status === 200) {
       const token = jwt.sign(user.data, 'shhhhh');
       localStorage.setItem('sessionID', token);
       history.push('/');
-    } 
->>>>>>> 00ba8e040d5c104ace26020539cd105c85517a76
+    }
   }
 
   return (
