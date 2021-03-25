@@ -10,3 +10,18 @@
   margin: 5px auto;
   font-size: large;
 }
+
+input{
+  font-size: 26px;
+}
+
+form{
+  width: 460px;
+
+}
+
+form>div{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}

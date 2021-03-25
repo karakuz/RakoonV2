@@ -16,6 +16,9 @@ const flash = require("connect-flash");
 const path = require('path');
 const user = require("./backend/models/user");
 //----------------------------------------- END OF IMPORTS---------------------------------------------------
+
+const PORT = process.env.PORT || 4000;
+
 mongoose.connect(
   "mongodb+srv://admin:eray4193@cluster0.afcfi.mongodb.net/Users?retryWrites=true&w=majority",
   {
@@ -84,7 +87,7 @@ app.post("/register", (req, res) => {
         surname: req.body.surname,
       });
       await newUser.save();
-      res.redirect("/");
+      res.send(true);
     }
   });
 });
@@ -104,13 +107,11 @@ app.post("/forgot", function (req, res, next) {
     function (token, done) {
       User.findOne({ username: req.body.email }, function (err, user) {
         if (!user) {
-          console.log("There is no user with that email");
-          // return res.redirect("/forgot");
+          res.send('NoUser');
+          return;
         }
-
         user.resetPasswordToken = token;
         user.resetPasswordExpires = Date.now() + 3600000;
-
         user.save(function (err) {
           done(err, token, user);
         });
@@ -135,6 +136,7 @@ app.post("/forgot", function (req, res, next) {
       smtpTransport.sendMail(mailOptions, function (err) {
         console.log("mail sent");
         done(err, "done");
+        res.send("sent");
       });
     }
   ], function (err) {
@@ -143,20 +145,18 @@ app.post("/forgot", function (req, res, next) {
   })
 });
 
-app.get('/reset/:token', function (req, res) {
-  console.log("qweqwe")
+/* app.get('/reset/:token', function (req, res) {
   User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
     if (!user) {
       console.log('Password reset token is invalid or has expired.');
       return res.redirect('/forgot');
     }
 
-    res.sendFile('index.html', { root: path.join(__dirname, './build/') });
+    //res.sendFile('index.html', { root: path.join(__dirname, './build/') });
   });
-});
+}); */
 
 app.post('/reset/:token', function (req, res) {
-  console.log(123123);
   Async.waterfall([
     function (done) {
       User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, async function (err, user) {
@@ -171,7 +171,7 @@ app.post('/reset/:token', function (req, res) {
         user.resetPasswordToken = undefined;
         user.resetPasswordExpires = undefined;
         user.save();
-        res.redirect("/");
+        res.send(true);
         done(err, user);
       });
     },
@@ -193,6 +193,7 @@ app.post('/reset/:token', function (req, res) {
       smtpTransport.sendMail(mailOptions, function (err) {
         console.log('Success! Your password has been changed.');
         done(err);
+        res.send(true);
       });
     }
   ], function (err) {
@@ -203,6 +204,6 @@ app.post('/reset/:token', function (req, res) {
 
 //----------------------------------------- END OF ROUTES---------------------------------------------------
 //Start Server
-app.listen(4000, () => {
-  console.log("Server Has Started");
+app.listen(PORT, () => {
+  console.log(`Server Has Started at port ${PORT}`);
 });
