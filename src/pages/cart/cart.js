@@ -7,10 +7,11 @@ const Cart = (props) => {
   let products=[];
 
   for(let key of keys){
-    const object = localStorage.getItem(parseInt(key));
-    products.push(JSON.parse(object));
+    if(key!=='sessionID'){
+      const object = localStorage.getItem(parseInt(key));
+      products.push(JSON.parse(object));
+    }
   }
-  console.log(keys.length===0);
   if(keys.length!==0){
     return (
       <div className="container">

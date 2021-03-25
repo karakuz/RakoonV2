@@ -1,0 +1,20 @@
+{
+	"_eventsCount": 1,
+	"outputSize": 0,
+	"writable": true,
+	"_last": false,
+	"chunkedEncoding": false,
+	"shouldKeepAlive": true,
+	"useChunkedEncodingByDefault": true,
+	"sendDate": true,
+	"_removedConnection": false,
+	"_removedContLen": false,
+	"_removedTE": false,
+	"_hasBody": true,
+	"_trailer": "",
+	"finished": false,
+	"_headerSent": false,
+	"_keepAliveTimeout": 5000,
+	"_sent100": false,
+	"_expect_continue": false
+}

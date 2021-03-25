@@ -1,25 +1,30 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import Login from '../login/Login';
 import Body from './Body';
 import Cart from '../cart/cart';
 import Register from "../register/register";
 import NavigationBar from "../../components/Navbar/NavigationBar";
+import ProtectedRoute from './Routes/ProtectedProfileRouter';
+import ProtectedLoginRouter from './Routes/ProtectedLoginRouter';
+import Profile from '../user_page/Profile';
 
 const Main = () => {
   const [numOfItems, setNumOfItems] = useState(0);
-
+  //const user = this.props.location.state;
+  
   return (
-    <Router>
+    <>
       <NavigationBar numOfItems={numOfItems} setNumOfItems={setNumOfItems}/>
       <Switch>
         <Route path="/" exact component={()=> (<Body numOfItems={numOfItems} setNumOfItems={setNumOfItems}/>)}/>
-        <Route path="/login" component={Login} />
+        <ProtectedLoginRouter path="/login" component={Login} />
         <Route path="/cart" component={()=> (<Cart numOfItems={numOfItems} setNumOfItems={setNumOfItems}/>)} />
         <Route path="/register" component={Register} />
+        <ProtectedRoute path="/profile" component={Profile}/>
       </Switch>
-    </Router>
+    </>
   )
 }
 
-export default Main
+export default withRouter(Main)

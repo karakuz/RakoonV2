@@ -1,5 +1,5 @@
 import React from 'react'
-import Logo from './rakoon_logo.jpg'
+import Logo from './raccoon.png'
 
 const RakoonLogo = () => {
   return (

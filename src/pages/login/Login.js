@@ -3,6 +3,8 @@ import { useHistory } from 'react-router-dom';
 import '../css/login.css'
 import Axios from "axios"
 
+var jwt = require('jsonwebtoken');
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -10,11 +12,10 @@ const Login = () => {
 
   const Submit = async (e) => {
     e.preventDefault();
-    (email && password) ? console.log(email, password) : console.log("Empty form input");
 
     setEmail('');
     setPassword('');
-    const data = await Axios({
+    const user = await Axios({
       method: "POST",
       data: {
         username: email,
@@ -24,7 +25,15 @@ const Login = () => {
       withCredentials: true,
       url: "http://localhost:4000/login",
     });
+<<<<<<< HEAD
     if (data.status === 200) history.push('/');
+=======
+    if(user.status===200){
+      const token = jwt.sign(user.data, 'shhhhh');
+      localStorage.setItem('sessionID', token);
+      history.push('/');
+    } 
+>>>>>>> 00ba8e040d5c104ace26020539cd105c85517a76
   }
 
   return (
