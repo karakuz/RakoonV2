@@ -20,10 +20,11 @@ const Login = () => {
         username: email,
         password: password,
       },
+      credentials: 'include',
       withCredentials: true,
       url: "http://localhost:4000/login",
     });
-    if(data.status===200) history.push('/');
+    if (data.status === 200) history.push('/');
   }
 
   return (
