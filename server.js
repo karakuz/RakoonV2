@@ -12,6 +12,9 @@ const User = require("./backend/models/user");
 const async = require("async");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
+const flash = require("connect-flash");
+const path = require('path');
+const user = require("./backend/models/user");
 //----------------------------------------- END OF IMPORTS---------------------------------------------------
 mongoose.connect(
   "mongodb+srv://admin:eray4193@cluster0.afcfi.mongodb.net/Users?retryWrites=true&w=majority",
@@ -32,7 +35,7 @@ app.use(
     credentials: true,
   })
 );
-
+app.use(flash());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(
@@ -47,6 +50,10 @@ app.use(passport.session());
 app.use(cookieParser("secretcode"));
 
 require("./backend/passportConfig")(passport);
+
+app.use('/static', express.static(path.join(__dirname, './build/static')));
+
+
 
 //----------------------------------------- END OF MIDDLEWARE---------------------------------------------------
 
@@ -77,7 +84,7 @@ app.post("/register", (req, res) => {
         surname: req.body.surname,
       });
       await newUser.save();
-      res.send("User Created");
+      res.redirect("/");
     }
   });
 });
@@ -123,7 +130,7 @@ app.post("/forgot", function (req, res, next) {
         subject: "Rakoon E-Commerce Password change",
         text: "You are receiving this e-mail because you have requested to reset your password " +
           " Please click on the following link to change your password" + '\n\n' +
-          "http://" + req.headers.host + "/reset/" + token
+          "http://localhost:3000/reset/" + token
       };
       smtpTransport.sendMail(mailOptions, function (err) {
         console.log("mail sent");
@@ -137,12 +144,14 @@ app.post("/forgot", function (req, res, next) {
 });
 
 app.get('/reset/:token', function (req, res) {
+  console.log("qweqwe")
   User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
     if (!user) {
-      req.flash('error', 'Password reset token is invalid or has expired.');
+      console.log('Password reset token is invalid or has expired.');
       return res.redirect('/forgot');
     }
-    res.render('reset', { token: req.params.token });
+
+    res.sendFile('index.html', { root: path.join(__dirname, './build/') });
   });
 });
 
