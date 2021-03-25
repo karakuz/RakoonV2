@@ -8,29 +8,31 @@ import Axios from "axios";
 const Reset = () => {
     const { token } = useParams();
     console.log(token);
-    /* const [registerPassword, setRegisterPassword] = useState("");
+    const [registerPassword, setRegisterPassword] = useState("");
 
-
+    var url = `http://localhost:4000/reset/${token}`
     const submit = () => {
-        Axios({
-            method: "POST",
-            data: {
-                password: registerPassword,
-            },
-            withCredentials: true,
-            url: "http://localhost:4000/reset:token",
-        }).then((res) => console.log(res));
-    }; */
+        Axios.post(url, {
+            password: registerPassword
+        })
+            .then((response) => {
+                console.log(response);
+            }, (error) => {
+                console.log(error);
+            });
+    };
+
+    console.log(url);
 
     return (
         <Form>
             <Form.Group controlId="formBasicPassword">
                 <Form.Label>New Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" onChange={(e) => {}} />
+                <Form.Control type="password" placeholder="Password" onChange={e => setRegisterPassword(e.target.value)} />
             </Form.Group>
 
 
-            <Button variant="primary" type="submit" onClick={()=>{}}>
+            <Button variant="primary" type="submit" onClick={submit}>
                 Submit
         </Button>
         </Form>

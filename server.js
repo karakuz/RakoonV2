@@ -9,7 +9,7 @@ const session = require("express-session");
 const bodyParser = require("body-parser");
 const app = express();
 const User = require("./backend/models/user");
-const async = require("async");
+const Async = require("async");
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const flash = require("connect-flash");
@@ -61,7 +61,7 @@ app.use('/static', express.static(path.join(__dirname, './build/static')));
 app.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) throw err;
-    if (!user) res.send("No User Exists");
+    if (!user) res.send("NoUser");
     else {
       req.logIn(user, (err) => {
         if (err) throw err;
@@ -94,7 +94,7 @@ app.get("/user", (req, res) => {
 });
 
 app.post("/forgot", function (req, res, next) {
-  async.waterfall([
+  Async.waterfall([
     function (done) {
       crypto.randomBytes(20, function (err, buf) {
         var token = buf.toString("hex");
@@ -156,25 +156,23 @@ app.get('/reset/:token', function (req, res) {
 });
 
 app.post('/reset/:token', function (req, res) {
-  async.waterfall([
+  console.log(123123);
+  Async.waterfall([
     function (done) {
-      User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
+      User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, async function (err, user) {
         if (!user) {
           console.log('Password reset token is invalid or has expired.');
           return res.redirect('/');
         }
+        console.log(user);
 
-        user.setPassword(req.body.password, function (err) {
-          user.resetPasswordToken = undefined;
-          user.resetPasswordExpires = undefined;
-
-          user.save(function (err) {
-            req.logIn(user, function (err) {
-              done(err, user);
-            });
-          });
-        })
-
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        user.password = hashedPassword;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
+        user.save();
+        res.redirect("/");
+        done(err, user);
       });
     },
     function (user, done) {
@@ -190,7 +188,7 @@ app.post('/reset/:token', function (req, res) {
         from: 'rakoonecommerceservices@gmail.com',
         subject: 'Your password has been changed',
         text: 'Hello,\n\n' +
-          'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
+          'This is a confirmation that the password for your account ' + user.username + ' has just been changed.\n'
       };
       smtpTransport.sendMail(mailOptions, function (err) {
         console.log('Success! Your password has been changed.');
@@ -201,6 +199,8 @@ app.post('/reset/:token', function (req, res) {
     res.redirect('/');
   });
 });
+
+
 //----------------------------------------- END OF ROUTES---------------------------------------------------
 //Start Server
 app.listen(4000, () => {

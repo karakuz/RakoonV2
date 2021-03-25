@@ -25,10 +25,16 @@ const Login = () => {
       withCredentials: true,
       url: "http://localhost:4000/login",
     });
-    if (user.status === 200) {
+    console.log(JSON.stringify(user, null, '\t'));
+
+    if (typeof user.data == typeof {}) {
       const token = jwt.sign(user.data, 'shhhhh');
       localStorage.setItem('sessionID', token);
       history.push('/');
+    }
+    else {
+
+      alert("Your E-mail or password is wrong");
     }
   }
 
