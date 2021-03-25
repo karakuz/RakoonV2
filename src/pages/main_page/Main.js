@@ -24,7 +24,7 @@ const Main = () => {
         <Route path="/cart" component={() => (<Cart numOfItems={numOfItems} setNumOfItems={setNumOfItems} />)} />
         <Route path="/register" component={Register} />
         <Route path="/forgot" component={Forgot} />
-        <Route path="/reset:token" component={Reset} />
+        <Route path="/reset/:token" component={Reset} />
         <ProtectedRoute path="/profile" component={Profile} />
       </Switch>
     </>
