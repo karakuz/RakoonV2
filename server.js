@@ -136,7 +136,7 @@ app.post("/forgot", function (req, res, next) {
   })
 });
 
-router.get('/reset/:token', function (req, res) {
+app.get('/reset/:token', function (req, res) {
   User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
     if (!user) {
       req.flash('error', 'Password reset token is invalid or has expired.');
@@ -146,7 +146,7 @@ router.get('/reset/:token', function (req, res) {
   });
 });
 
-router.post('/reset/:token', function (req, res) {
+app.post('/reset/:token', function (req, res) {
   async.waterfall([
     function (done) {
       User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function (err, user) {
