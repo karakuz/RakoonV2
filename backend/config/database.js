@@ -1,18 +1,32 @@
-const { Sequelize } = require('sequelize');
+const { Sequelize, QueryTypes } = require('sequelize');
 const { modelName } = require('../models/user');
+require('dotenv').config({ path: './.env' });
 
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
-    host: process.env.DB_HOST,
-    dialect: 'mysql'
+  host: process.env.DB_HOST,
+  dialect: 'mysql'
 });
 
 const connectDB = async function () {
+  return new Promise(async (resolve,reject)=>{
     try {
-        await sequelize.authenticate();
-        console.log('Connection has been established successfully.');
-    } catch (error) {
-        console.error('Unable to connect to the database:', error);
-    }
+      await sequelize.authenticate();
+      console.log('Connection has been established successfully.');
+      resolve();
+  } catch (error) {
+      console.error('Unable to connect to the database:', error);
+      reject();
+  }
+  })
+  
 }
 
-module.exports = sequelize;
+const get = async (sql) =>{
+  await sequelize.query(sql, { type: QueryTypes.SELECT });
+} 
+
+module.exports = {
+  sequelize,
+  connectDB,
+  get
+};
