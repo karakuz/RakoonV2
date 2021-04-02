@@ -18,6 +18,7 @@ const user = require("./backend/models/user");
 const AuthRoutes = require("./backend/routes/Auth/AuthRotes");
 const ForgotRoutes = require("./backend/routes/Forgot/ForgotRoutes");
 const Database = require("./backend/config/database");
+
 //----------------------------------------- END OF IMPORTS---------------------------------------------------
 require('dotenv').config();
 const PORT = process.env.PORT || 4000;

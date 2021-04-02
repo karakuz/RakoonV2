@@ -5,16 +5,16 @@ const readline = require('readline');
 
 const con = mysql.createConnection(user);
 
-const main = async () =>{
+const main = async () => {
   await connect();
 
   const rl = readline.createInterface({
-    input: fs.createReadStream('./rakoon_db.sql'),
+    input: fs.createReadStream('./db/rakoon_db.sql'),
     crlfDelay: Infinity
   });
 
-  let sql='';
-  for await (const line of rl) sql+=line;
+  let sql = '';
+  for await (const line of rl) sql += line;
   await get(sql);
 
   /* sql= JSON.parse(await get("USE rakoon; SHOW tables;"));
@@ -31,8 +31,8 @@ const main = async () =>{
 
 }
 
-async function connect(){
-  return new Promise((resolve)=>{
+async function connect() {
+  return new Promise((resolve) => {
     con.connect(async (err) => {
       if (err) throw err;
       console.log("Connected to Mysql DB");
@@ -41,8 +41,8 @@ async function connect(){
   });
 }
 
-function get(query){
-  return new Promise((resolve,reject)=>{
+function get(query) {
+  return new Promise((resolve, reject) => {
     con.query(query, function (err, result) {
       if (err) reject(err);
       resolve(JSON.stringify(result));
