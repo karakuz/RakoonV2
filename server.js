@@ -75,5 +75,7 @@ app.listen(PORT, () => {
 
 (async () => {
   await Database.connectDB();
+  const res = await Database.get("SELECT * FROM `users`");
+  console.log("res: " + res);
   //Database.get("USE rakoon; SHOW tables;");
 })();
