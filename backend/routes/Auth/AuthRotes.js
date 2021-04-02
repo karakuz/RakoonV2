@@ -17,23 +17,29 @@ router.post("/login", (req, res, next) => {
         }
     })(req, res, next);
 });
-router.post("/register", (req, res) => {
-    User.findOne({ username: req.body.username }, async (err, doc) => {
-        if (err) throw err;
-        if (doc) res.send("User Already Exists");
-        if (!doc) {
-            const hashedPassword = await bcrypt.hash(req.body.password, 10);
+router.post("/register", async (req, res) => {
+    const user = await User.findOne({ where: { e_mail: req.body.username } });
+    console.log(user);
 
-            const newUser = new User({
-                username: req.body.username,
-                password: hashedPassword,
-                name: req.body.name,
-                surname: req.body.surname,
-            });
-            await newUser.save();
-            res.send(true);
-        }
-    });
+    if (user === null || user === undefined) {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+
+        const newUser = await User.create({
+            e_mail: req.body.username,
+            password: hashedPassword,
+            name: req.body.name,
+            surname: req.body.surname,
+            role_id: 1,
+            is_verified: false,
+        });
+        res.send(true);
+    }
+
+    else {
+        console.log("User already exists");
+    }
+
+
 });
 router.get("/user", (req, res) => {
     res.send(req.user);
