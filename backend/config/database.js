@@ -1,4 +1,4 @@
-const { Sequelize, QueryTypes } = require('sequelize');
+const { Sequelize } = require('sequelize');
 const { modelName } = require('../models/user');
 require('dotenv').config({ path: './.env' });
 
@@ -18,11 +18,14 @@ const connectDB = async function () {
       reject();
   }
   })
-  
 }
 
-const get = async (sql) =>{
-  await sequelize.query(sql, { type: QueryTypes.SELECT });
+const get = async (sql, options) =>{
+  await connectDB();
+  const [results, metadata] = await sequelize.query(sql, options);
+  await sequelize.close();
+  
+  return results;
 } 
 
 module.exports = {
