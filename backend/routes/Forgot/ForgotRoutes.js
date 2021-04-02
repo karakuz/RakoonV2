@@ -14,18 +14,21 @@ router.post("/forgot", function (req, res, next) {
                 done(err, token);
             });
         },
-        function (token, done) {
-            User.findOne({ username: req.body.email }, function (err, user) {
-                if (!user) {
-                    res.send('NoUser');
-                    return;
-                }
-                user.resetPasswordToken = token;
-                user.resetPasswordExpires = Date.now() + 3600000;
-                user.save(function (err) {
-                    done(err, token, user);
-                });
-            });
+        async function (token, done) {
+            let user = await User.findOne({ where: { e_mail: req.body.email } });
+            console.log(user);
+
+            if (user === null || user === undefined) {
+                res.send('NoUser');
+                return;
+            }
+
+            user.reset_token = token;
+            await user.save();
+
+            (err) => {
+                done(token, user, err);
+            }
         },
         function (token, user, done) {
             var smtpTransport = nodemailer.createTransport({
@@ -45,7 +48,7 @@ router.post("/forgot", function (req, res, next) {
             };
             smtpTransport.sendMail(mailOptions, function (err) {
                 console.log("mail sent");
-                done(err, "done");
+                done(err);
                 res.send("sent");
             });
         }
