@@ -9,7 +9,7 @@ const flash = require("connect-flash");
 const path = require('path');
 const AuthRoutes = require("./backend/routes/Auth/AuthRotes");
 const ForgotRoutes = require("./backend/routes/Forgot/ForgotRoutes");
-
+const ProductRoutes = require("./backend/routes/Product/ProductRoutes");
 const Database = require("./backend/config/database");
 //----------------------------------------- END OF IMPORTS---------------------------------------------------
 
@@ -58,6 +58,7 @@ app.use('/static', express.static(path.join(__dirname, './build/static')));
 // Routes
 app.use(AuthRoutes);
 app.use(ForgotRoutes);
+app.use(ProductRoutes);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('build'));
