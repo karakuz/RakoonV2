@@ -10,6 +10,7 @@ import ProtectedLoginRouter from './Routes/ProtectedLoginRouter';
 import Profile from '../user_page/Profile';
 import Forgot from '../forgot/forgot';
 import Reset from '../forgot/reset';
+import Activate from '../login/activate';
 
 const Main = () => {
   const [numOfItems, setNumOfItems] = useState(0);
@@ -25,6 +26,7 @@ const Main = () => {
         <Route path="/register" component={Register} />
         <Route path="/forgot" component={Forgot} />
         <Route path="/reset/:token" component={Reset} />
+        <Route path="/activate/:token" component={Activate} />
         <ProtectedRoute path="/profile" component={Profile} />
       </Switch>
     </>

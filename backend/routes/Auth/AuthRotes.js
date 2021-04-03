@@ -39,8 +39,8 @@ router.post("/register", async (req, res) => {
             is_verified: false,
             activate_token: activate,
         });
-        console.log(user.e_mail);
-        VerifyMail(user, activate);
+        console.log(newUser.e_mail);
+        VerifyMail(newUser, activate);
         res.send(true);
     }
 
@@ -50,6 +50,20 @@ router.post("/register", async (req, res) => {
 
 
 });
+
+router.post("/activate/:token", (req, res) => {
+    var user = User.findOne({ where: { activate_token: req.params.token } });
+
+    if (user === null || user === undefined) {
+        res.send("NoUser");
+    }
+    else {
+        user.is_verified = true;
+        res.redirect("/login");
+    }
+
+});
+
 router.get("/user", (req, res) => {
     res.send(req.user);
     console.log(req.body.user); // The req.user stores the entire user that has been authenticated inside of it.
