@@ -7,14 +7,14 @@ import Axios from 'axios';
 const ProductCard = (props) => {
   const addOrDelete = (!props.isRemovable)?'Add To Cart':'Delete';
   const product = {
-    id: props.id,
-    name: props.name,
-    text: props.text,
-    img: props.img,
+    id: props.item_id,
+    name: props.item_name,
+    text: props.description,
+    img: props.image,
     price: props.price
   };
 
-  const change = (e) => {
+  const change = async (e) => {
     if(!props.isRemovable && localStorage.getItem(product.id) === null){
       localStorage.setItem(product.id, JSON.stringify(product));
       props.setNumOfItems(props.numOfItems+1);
@@ -25,8 +25,7 @@ const ProductCard = (props) => {
       const card = e.target.parentElement.parentElement.parentElement;
       card.parentElement.removeChild(card);
     }
-    console.log("Clicked");
-    Axios({
+    const res = await Axios({
       method: "POST",
       data: {
         item: product,
@@ -34,7 +33,7 @@ const ProductCard = (props) => {
       },
       withCredentials: true,
       url: `http://localhost:4000/addToCart`,
-    }).then((res) => console.log(res));
+    });
   }
   
   return (
@@ -43,10 +42,10 @@ const ProductCard = (props) => {
         <Card.Img src={product.img} variant='top'></Card.Img>
       </Link> 
       <Link to={`/product/${product.id}`}>
-      <Card.Title as='div'>
+        <Card.Title as='div'>
           <strong>{product.name}</strong>
         </Card.Title>
-        </Link> 
+      </Link> 
       <Card.Body>
       <Card.Text as='h5'>${product.price}</Card.Text>
           <Button variant="success">

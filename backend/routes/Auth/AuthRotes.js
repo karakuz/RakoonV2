@@ -27,8 +27,6 @@ router.post("/register", async (req, res) => {
 
         const activate = await bcrypt.hash(req.body.name, 10);
 
-
-
         console.log(activate);
         const newUser = await User.create({
             e_mail: req.body.username,

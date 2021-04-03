@@ -7,13 +7,15 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, pr
   dialect: 'mysql',
   pool: {
     max: 1,
-    min: 1,
+    min: 0,
     acquire: 30000,
     idle: 10000
   }
 });
+ 
+sequelize.authenticate();
 
-const connectDB = async function () {
+/* const connectDB = async function () {
   return new Promise(async (resolve, reject) => {
     try {
       await sequelize.authenticate();
@@ -24,18 +26,17 @@ const connectDB = async function () {
       reject();
     }
   })
-}
+} */
 
 const get = async (sql, options) => {
-  await connectDB();
+  //await connectDB();
   const [results, metadata] = await sequelize.query(sql, options);
-  await sequelize.close();
+  //await sequelize.close();
 
   return results;
 }
 
 module.exports = {
-  sequelize,
-  connectDB,
-  get
+  get,
+  sequelize
 };
