@@ -16,16 +16,34 @@ const ProductCard = (props) => {
 
   const change = async (e) => {
     if(!props.isRemovable && localStorage.getItem(product.id) === null){
-      localStorage.setItem(product.id, JSON.stringify(product));
+      const res = await Axios({
+        method: "POST",
+        data: {
+          item: product,
+          user: localStorage.getItem('sessionID')
+        },
+        withCredentials: true,
+        url: `http://localhost:4000/addToCart`,
+      });
+
       props.setNumOfItems(props.numOfItems+1);
     }
     else if(props.isRemovable){
-      localStorage.removeItem(product.id);
+      const res = await Axios({
+        method: "POST",
+        data: {
+          item: product,
+          user: localStorage.getItem('sessionID')
+        },
+        withCredentials: true,
+        url: `http://localhost:4000/removeFromCart`,
+      });
+
       props.setNumOfItems((props.numOfItems)-1);
       const card = e.target.parentElement.parentElement.parentElement;
       card.parentElement.removeChild(card);
     }
-    const res = await Axios({
+    /* const res = await Axios({
       method: "POST",
       data: {
         item: product,
@@ -33,7 +51,7 @@ const ProductCard = (props) => {
       },
       withCredentials: true,
       url: `http://localhost:4000/addToCart`,
-    });
+    }); */
   }
   
   return (
