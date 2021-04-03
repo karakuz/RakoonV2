@@ -3,6 +3,8 @@ const router = express.Router();
 const User = require("../../models/user");
 const bcrypt = require('bcryptjs');
 const passport = require("passport");
+const crypto = require("crypto");
+const nodemailer = require("nodemailer");
 const passportLocal = require("passport-local").Strategy;
 
 router.post("/login", (req, res, next) => {
@@ -19,11 +21,15 @@ router.post("/login", (req, res, next) => {
 });
 router.post("/register", async (req, res) => {
     const user = await User.findOne({ where: { e_mail: req.body.username } });
-    console.log(user);
 
     if (user === null || user === undefined) {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
+        const activate = await bcrypt.hash(req.body.name, 10);
+
+
+
+        console.log(activate);
         const newUser = await User.create({
             e_mail: req.body.username,
             password: hashedPassword,
@@ -31,7 +37,10 @@ router.post("/register", async (req, res) => {
             surname: req.body.surname,
             role_id: 1,
             is_verified: false,
+            activate_token: activate,
         });
+        console.log(user.e_mail);
+        VerifyMail(user, activate);
         res.send(true);
     }
 
@@ -45,5 +54,27 @@ router.get("/user", (req, res) => {
     res.send(req.user);
     console.log(req.body.user); // The req.user stores the entire user that has been authenticated inside of it.
 });
+
+const VerifyMail = function (user, token) {
+    var smtpTransport = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+            user: 'rakoonecommerceservices@gmail.com',
+            pass: "rakoon123"
+        }
+    });
+    var mailOptions = {
+        to: user.e_mail,
+        from: 'rakoonecommerceservices@gmail.com',
+        subject: 'Activation E-Mail',
+        text: 'Hello,\n\n' +
+            'To activate to your account please click the link below \n' +
+            'http://localhost:3000/activate/' + token
+    };
+    smtpTransport.sendMail(mailOptions, function (err) {
+        console.log('Success! Your password has been changed.');
+        res.send(true);
+    });
+}
 
 module.exports = router;
