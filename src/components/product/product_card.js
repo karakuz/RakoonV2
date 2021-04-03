@@ -2,6 +2,7 @@ import { Button, CardDeck, Row  } from 'react-bootstrap'
 import React from 'react'
 import { Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
+import Axios from 'axios';
 
 const ProductCard = (props) => {
   const addOrDelete = (!props.isRemovable)?'Add To Cart':'Delete';
@@ -12,6 +13,7 @@ const ProductCard = (props) => {
     img: props.img,
     price: props.price
   };
+
   const change = (e) => {
     if(!props.isRemovable && localStorage.getItem(product.id) === null){
       localStorage.setItem(product.id, JSON.stringify(product));
@@ -23,6 +25,16 @@ const ProductCard = (props) => {
       const card = e.target.parentElement.parentElement.parentElement;
       card.parentElement.removeChild(card);
     }
+    console.log("Clicked");
+    Axios({
+      method: "POST",
+      data: {
+        item: product,
+        user: localStorage.getItem('sessionID')
+      },
+      withCredentials: true,
+      url: `http://localhost:4000/addToCart`,
+    }).then((res) => console.log(res));
   }
   
   return (

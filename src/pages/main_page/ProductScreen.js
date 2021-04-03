@@ -16,7 +16,6 @@ import {products} from '../../components/product/test_products';
   console.log(product.text);
   console.log(product.countInStock);
 
-  
   return (
     <>
     <Link className='btn btn-light my-3' to = '/'>

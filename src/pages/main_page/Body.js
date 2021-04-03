@@ -5,6 +5,7 @@ import {products} from '../../components/product/test_products';
 import { Alert, Col, Row, Container} from 'react-bootstrap';
 
 const Body = (props) => {
+
   return (
   <div>
     <h3 style={{textAlign: 'center', margin: '1rem'}}>
@@ -14,15 +15,17 @@ const Body = (props) => {
       <Row>
         {
           products.map((product)=>{
-            return <Col sm={12} md={6} lg={4} xl={3}>
+            return (
+            <Col sm={12} md={6} lg={4} xl={3}>
               <ProductCard key={product.id} id={product.id} {...product} 
               numOfItems={props.numOfItems} setNumOfItems={props.setNumOfItems}/>
-              </Col>
+            </Col>
+            );
           })
         }
       </Row>
     </Container>
-    </div>
+  </div>
   )
 }
 

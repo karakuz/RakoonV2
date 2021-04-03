@@ -11,6 +11,7 @@ const AuthRoutes = require("./backend/routes/Auth/AuthRotes");
 const ForgotRoutes = require("./backend/routes/Forgot/ForgotRoutes");
 const ProductRoutes = require("./backend/routes/Product/ProductRoutes");
 const Database = require("./backend/config/database");
+const rest = require('./backend/config/rest');
 //----------------------------------------- END OF IMPORTS---------------------------------------------------
 
 require('dotenv').config();
@@ -26,7 +27,7 @@ const PORT = process.env.PORT || 4000;
     console.log("Mongoose Is Connected");
   }
 );
- */
+*/
 // Middleware
 
 app.use(
@@ -59,6 +60,7 @@ app.use('/static', express.static(path.join(__dirname, './build/static')));
 app.use(AuthRoutes);
 app.use(ForgotRoutes);
 app.use(ProductRoutes);
+app.use(rest);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('build'));
