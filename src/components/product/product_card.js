@@ -6,7 +6,7 @@ const ProductCard = (props) => {
   const addOrDelete = (!props.isRemovable)?'Add To Cart':'Delete';
   const product = {
     id: props.id,
-    author: props.author,
+    name: props.name,
     text: props.text,
     img: props.img,
     price: props.price
@@ -25,17 +25,21 @@ const ProductCard = (props) => {
   }
   
   return (
-    
     <Card className='my-3 p-3 rounded'>
       <a href={'/products/${product.id}'}>
         <Card.Img src={product.img} variant='top'></Card.Img>
-      </a>
-      <a href={'/product/${product.id}'}>
-        <Card.Title as='div'>
-          <strong>{product.author}</strong>
+      </a> 
+      <a href={'/products/${product.id}'}>
+      <Card.Title as='div'>
+          <strong>{product.name}</strong>
         </Card.Title>
-      </a>
-      <Card.Text as='h3'>{product.text}</Card.Text>
+        </a> 
+      <Card.Body>
+      <Card.Text as='h5'>{product.price}</Card.Text>
+          <Button variant="success">
+            <span onClick={(e)=> change(e)}>{addOrDelete}</span>
+          </Button>
+      </Card.Body>
     </Card>
   )
 }
