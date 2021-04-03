@@ -17,17 +17,6 @@ const rest = require('./backend/config/rest');
 require('dotenv').config();
 const PORT = process.env.PORT || 4000;
 
-/* mongoose.connect(
-  "mongodb+srv://admin:eray4193@cluster0.afcfi.mongodb.net/Users?retryWrites=true&w=majority",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  },
-  () => {
-    console.log("Mongoose Is Connected");
-  }
-);
-*/
 // Middleware
 
 app.use(
