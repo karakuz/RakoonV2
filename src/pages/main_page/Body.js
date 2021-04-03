@@ -2,22 +2,24 @@ import React from 'react'
 import ProductCard from '../../components/product/product_card';
 import '../css/body.css';
 import {products} from '../../components/product/test_products';
-import { Alert} from 'react-bootstrap';
+import { Alert, Col} from 'react-bootstrap';
 
 const Body = (props) => {
   return (
-    <div>
+    <>
     <h3 style={{textAlign: 'center', margin: '1rem'}}>
     Welcome to Rakoon E-Commerce!
      </h3>
-    <div className="container">
+      <Row>
       {
         products.map((product)=>{
-          return <ProductCard key={product.id} id={product.id} {...product} numOfItems={props.numOfItems} setNumOfItems={props.setNumOfItems}/>
+          <Col sm={12} md={6} lg={4} xl={3}>
+             return <ProductCard product={product}/>
+          </Col>
         })
       }  
-    </div>
-    </div>
+    </Row>
+    </>
   )
 }
 
