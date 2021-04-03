@@ -1,6 +1,6 @@
 import React from 'react'
 import ProductCard from '../../components/product/product_card';
-import '../css/body.css';
+import '../css/bootstrap.min.css';
 import {products} from '../../components/product/test_products';
 import { Alert, Col, Row, Container} from 'react-bootstrap';
 

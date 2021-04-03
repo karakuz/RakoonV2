@@ -11,6 +11,7 @@ import Profile from '../user_page/Profile';
 import Forgot from '../forgot/forgot';
 import Reset from '../forgot/reset';
 import Activate from '../login/activate';
+import ProductScreen from './ProductScreen';
 
 const Main = () => {
   const [numOfItems, setNumOfItems] = useState(0);
@@ -27,7 +28,9 @@ const Main = () => {
         <Route path="/forgot" component={Forgot} />
         <Route path="/reset/:token" component={Reset} />
         <Route path="/activate/:token" component={Activate} />
+        <Route path="/product/:id" component={ProductScreen} />
         <ProtectedRoute path="/profile" component={Profile} />
+
       </Switch>
     </>
   )
