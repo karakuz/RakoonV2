@@ -16,7 +16,7 @@ import ProductScreen from './ProductScreen';
 const Main = () => {
   const [numOfItems, setNumOfItems] = useState(0);
   //const user = this.props.location.state;
-
+  console.log("Main");
   return (
     <>
       <NavigationBar numOfItems={numOfItems} setNumOfItems={setNumOfItems} />
@@ -30,7 +30,6 @@ const Main = () => {
         <Route path="/activate/:token" component={Activate} />
         <Route path="/product/:id" component={ProductScreen} />
         <ProtectedRoute path="/profile" component={Profile} />
-
       </Switch>
     </>
   )
