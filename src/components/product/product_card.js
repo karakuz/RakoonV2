@@ -1,4 +1,4 @@
-import { Button, CardDeck } from 'react-bootstrap'
+import { Button, CardDeck, Row  } from 'react-bootstrap'
 import React from 'react'
 import { Card } from 'react-bootstrap'
 
@@ -8,7 +8,8 @@ const ProductCard = (props) => {
     id: props.id,
     author: props.author,
     text: props.text,
-    img: props.img
+    img: props.img,
+    price: props.price
   };
   const change = (e) => {
     if(!props.isRemovable && localStorage.getItem(product.id) === null){
@@ -24,22 +25,18 @@ const ProductCard = (props) => {
   }
   
   return (
-    <div style={{ width: '18rem'}}>
-    <CardDeck>
-    <Card bg ='light' style={{ width: '30rem', height:'30rem', margin: '1.5rem' }}>
-    <Card.Img variant="top" src={product.img} style={{ padding: '1rem' }} />
-    <Card.Body style ={{margin: '1rem', padding : '1rem', position: "relative"}}>
-      <Card.Title>{product.author}</Card.Title>
-      <Card.Text>{product.text} </Card.Text> 
-      <div style={{ display: "flex", justifyContent: "space-between", cursor:"pointer"}}>
-      <Card.Subtitle>$ Price</Card.Subtitle>
-      <Card.Subtitle>More</Card.Subtitle>
-      </div>
-      <Button variant="success" style={{position:"absolute", bottom:"0px", left:"60px"}}><span onClick={(e)=> change(e)}>{addOrDelete}</span></Button>  
-    </Card.Body>
-  </Card>
-  </CardDeck>
-  </div>
+    
+    <Card className='my-3 p-3 rounded'>
+      <a href={'/products/${product.id}'}>
+        <Card.Img src={product.img} variant='top'></Card.Img>
+      </a>
+      <a href={'/product/${product.id}'}>
+        <Card.Title as='div'>
+          <strong>{product.author}</strong>
+        </Card.Title>
+      </a>
+      <Card.Text as='h3'>{product.text}</Card.Text>
+    </Card>
   )
 }
 
