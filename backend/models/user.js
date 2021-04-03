@@ -45,7 +45,7 @@ const User = db.sequelize.define('User', {
     },
     activate_token: {
         type: DataTypes.STRING
-    }
+    },
 }, {
     tableName: "users",
     timestamps: false

@@ -13,7 +13,7 @@ const Activate = () => {
     var url = `http://localhost:${PORT}/activate/${token}`
     const submit = async (e) => {
         e.preventDefault();
-        const res = await Axios.post().catch(err => console.log(`Error in activate.js: ${err}`));
+        const res = await Axios.post(url).catch(err => console.log(`Error in activate.js: ${err}`));
     };
 
 

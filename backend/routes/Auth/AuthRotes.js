@@ -51,14 +51,18 @@ router.post("/register", async (req, res) => {
 
 });
 
-router.post("/activate/:token", (req, res) => {
-    var user = User.findOne({ where: { activate_token: req.params.token } });
-
+router.post("/activate/:token", async (req, res) => {
+    console.log(req.params.token);
+    var user = await User.findOne({ where: { activate_token: req.params.token } });
+    console.log(user);
     if (user === null || user === undefined) {
+        console.log("No User");
         res.send("NoUser");
+
     }
     else {
         user.is_verified = true;
+        await user.save();
         res.redirect("/login");
     }
 
@@ -86,8 +90,7 @@ const VerifyMail = function (user, token) {
             'http://localhost:3000/activate/' + token
     };
     smtpTransport.sendMail(mailOptions, function (err) {
-        console.log('Success! Your password has been changed.');
-        res.send(true);
+        console.log('Success! e-mail has been sent');
     });
 }
 
