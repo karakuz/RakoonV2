@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const db = require("../config/database");
 
-const History = db.sequelize.define('History', {
+const History = db.sequelize.define('Rating', {
 
     rating_id: {
         type: DataTypes.INTEGER,
