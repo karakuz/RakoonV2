@@ -5,7 +5,7 @@ const History = db.sequelize.define('Rating', {
 
     rating_id: {
         type: DataTypes.INTEGER,
-       allowNull: false
+        allowNull: false
     },
 
     Comment: {
@@ -21,10 +21,10 @@ const History = db.sequelize.define('Rating', {
         type: DataTypes.INTEGER,
         allowNull: true
     },
-    
-   
+
+
 }, {
-    tableName: "rating",
+    tableName: "ratings",
     timestamps: false
 });
 

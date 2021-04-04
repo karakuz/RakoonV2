@@ -2,11 +2,11 @@ const { Store } = require("express-session");
 const { Sequelize, DataTypes } = require("sequelize");
 const db = require("../config/database");
 
-const History = db.sequelize.define('Store', {
+const Store = db.sequelize.define('Store', {
 
     store_id: {
         type: DataTypes.INTEGER,
-       allowNull: false
+        allowNull: false
     },
 
     store_name: {
@@ -18,9 +18,9 @@ const History = db.sequelize.define('Store', {
         allowNull: false
     },
 
-  
-    
-   
+
+
+
 }, {
     tableName: "store",
     timestamps: false

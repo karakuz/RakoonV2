@@ -12,9 +12,9 @@ const Item = db.sequelize.define('Order Status', {
         type: DataTypes.STRING,
         allowNull: false
     },
-    
+
 }, {
-    tableName: "order status",
+    tableName: "order_status",
     timestamps: false
 });
 

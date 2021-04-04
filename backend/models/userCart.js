@@ -1,26 +1,26 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const db = require("../config/database");
 
-const History = db.sequelize.define('userChart', {
+const UserCart = db.sequelize.define('UserCart', {
 
     item_id: {
         type: DataTypes.INTEGER,
-       allowNull: false
+        allowNull: false
     },
 
     user_id: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-    
-    
-   
+
+
+
 }, {
-    tableName: "user chart",
+    tableName: "users_cart",
     timestamps: false
 });
 
 
 
 
-module.exports = userChart;
+module.exports = UserCart;
