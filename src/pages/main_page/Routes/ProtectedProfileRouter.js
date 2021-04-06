@@ -3,7 +3,7 @@ import {Route, Redirect} from 'react-router-dom'
 let jwt = require('jsonwebtoken');
 
 const ProtectedRoute = ({component: Component}) => {
-  const sessionID = localStorage.getItem('sessionID');
+  const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID'); 
   
   return (
     <Route render={()=> {

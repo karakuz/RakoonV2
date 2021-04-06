@@ -28,24 +28,22 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <div className="form_container" style={{width:'590px', margin:'2rem auto', fontSize:'2em'}}>
-        <div style={{marginBottom: '1em', width: '100%', display: 'flex', justifyContent: 'center', borderBottom: '1px solid grey'}}>
-            <Nav>
-              <Nav.Link style={{borderRight: '1px solid grey'}} href="/login">LOGIN</Nav.Link>
-              <Nav.Link eventKey={2} href="/register">SIGN UP</Nav.Link>
-            </Nav>
-          </div>
+    <div style={{marginTop: '2rem'}}>
+      <div className="form_container" style={{width:'590px', margin:'0 auto', fontSize:'2em'}}>
+        <div style={{marginBottom: '1em', width: '100%', borderBottom: '1px solid grey'}}>
+          <Nav style={{display: 'flex', width: '100%'}}>
+            <Nav.Link style={{borderRight: '1px solid grey', flex: '1', textAlign: 'center'}} href="/login">LOGIN</Nav.Link>
+            <Nav.Link eventKey={2} href="/register" style={{flex: '1', textAlign: 'center', background: 'rgb(225,225,225)'}}>SIGN UP</Nav.Link>
+          </Nav>
+        </div>
         <Form style={{margin: "0 auto", width: "500px"}}>
-          <Form.Group controlId="formBasicEmail">
+          <Form.Group controlId="formBasicEmail" style={{position: "relative"}}>
             <Form.Label>Email:</Form.Label>
             <Form.Control type="email" placeholder="Enter email" onChange={(e) => setRegisterUsername(e.target.value)} style={{width: "332px", border: '1px solid grey'}}/>
-          </Form.Group>
-          <div style={{position: "relative"}}>
-            <span style={{color: "darkgrey", fontSize:"14px", position:"absolute", top:"-30px", right: "0"}}>
+            <span style={{color: "darkgrey", fontSize:"14px", position:"absolute", bottom:"-15px", right: "-2px"}}>
               We'll never share your email with anyone else.
             </span>
-          </div>
+          </Form.Group>
           <Form.Group controlId="formBasicPassword">
             <Form.Label>Password</Form.Label>
             <Form.Control type="password" placeholder="Password" onChange={(e) => setRegisterPassword(e.target.value)} style={{width: "332px", border: '1px solid grey'}}/>

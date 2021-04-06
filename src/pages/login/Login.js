@@ -15,7 +15,7 @@ const Login = () => {
   const Submit = async (e) => {
     e.preventDefault();
     const rememberMe = document.querySelector('#rememberMe').checked;
-
+    console.log(rememberMe);
     setEmail('');
     setPassword('');
     const user = await Axios({
@@ -28,25 +28,28 @@ const Login = () => {
       withCredentials: true,
       url: `http://localhost:${PORT}/login`,
     });
+
     if (typeof user.data == typeof {}) {
       const token = jwt.sign(user.data, 'shhhhh');
-      if(rememberMe) localStorage.setItem('sessionID', token);
+      if(!rememberMe) localStorage.setItem('sessionID', token);
       else sessionStorage.setItem('sessionID', token);
       history.push('/');
     }
-    else alert("Your E-mail or password is wrong");
+    else {
+      document.querySelector('.error').style.display = 'block';
+    }
   }
 
   const redirect = () => {
     history.push('/forgot');
   }
   return (
-    <div>
-      <div className="form_container" style={{width:'590px', margin:'2rem auto', fontSize:'2em'}}>
-        <div style={{marginBottom: '1em', width: '100%', display: 'flex', justifyContent: 'center', borderBottom: '1px solid grey'}}>
-          <Nav>
-            <Nav.Link style={{borderRight: '1px solid grey'}} href="/login">LOGIN</Nav.Link>
-            <Nav.Link eventKey={2} href="/register">SIGN UP</Nav.Link>
+    <div style={{marginTop: '2rem'}}>
+      <div className="form_container" style={{width:'590px', margin:'0 auto', fontSize:'2em'}}>
+        <div style={{marginBottom: '1em', width: '100%', borderBottom: '1px solid grey'}}>
+          <Nav style={{display: 'flex', width: '100%'}}>
+            <Nav.Link style={{borderRight: '1px solid grey', flex: '1', textAlign: 'center', background: 'rgb(225,225,225)'}} href="/login">LOGIN</Nav.Link>
+            <Nav.Link eventKey={2} href="/register" style={{flex: '1', textAlign: 'center'}}>SIGN UP</Nav.Link>
           </Nav>
         </div>
         <form onSubmit={Submit}>
@@ -65,16 +68,17 @@ const Login = () => {
               value={password}
               onChange={e => setPassword(e.target.value)}
             />
-            <span style={{fontSize: '16px', position:'absolute', right:'0', bottom: '-30px', color:'red', cursor: 'pointer'}} onClick={()=>redirect()}>Forgot Password?</span>
+            <span style={{fontSize: '16px', position: 'absolute', right:'0', bottom: '-25px', color: 'red', display: 'none'}} className='error'>Email or Password is wrong!</span>
+            <span style={{fontSize: '16px', position:'absolute', right:'0', bottom: '-55px', color:'red', cursor: 'pointer'}} onClick={()=>redirect()}>Forgot Password?</span>
           </div>
           <div>
-            <div style={{margin: '0 auto'}}>
+            <div style={{margin: '1rem auto 0'}}>
               <label for="rememberMe" style={{fontSize: '17px', marginRight: '8px'}}>Remember Me</label>
               <input type="checkbox" id="rememberMe" name="rememberMe" style={{transform: 'scale(1.3)'}}/>  
             </div>
           </div>
           <div>
-            <button type="submit" className="btn" style={{border: '1px solid black', display: 'inline-block', marginTop: '25px', fontSize: '20px'}}>Login</button>
+            <button type="submit" className="btn" style={{border: '1px solid black', display: 'inline-block', marginTop: '10px', fontSize: '20px'}}>Login</button>
           </div>
         </form>
       </div>
