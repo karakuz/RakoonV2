@@ -23,7 +23,7 @@ const NavLeft = (props) => {
   };
 
   useEffect(()=>{
-    getProducts();
+    if(localStorage.getItem('sessionID')!==null)getProducts();
   },[]);
   
   useEffect(()=>{
