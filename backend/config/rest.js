@@ -56,8 +56,6 @@ router.post('/getCartItems', async (req,res) => {
     const result2 = await db.get(`SELECT * FROM items WHERE item_id=${itemID}`);
     products.push(result2[0]);
   }
-  console.log("PRODUCTS IN REST");
-  console.log(products);
   if(products.length!==0) res.send(products)
   else res.send("none")
 });

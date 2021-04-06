@@ -50,9 +50,9 @@ const ProductCard = (props) => {
   }
   
   return (
-    <Card className='my-3 p-3 rounded'>
+    <Card className='my-3 p-3 rounded' style={{display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden'}}>
       <Link to={`/product/${product.id}`}>
-        <Card.Img src={product.img} variant='top'></Card.Img>
+        <Card.Img src={product.img} variant='top' style={{flexShrink: '0', minWidth: '100%', minHeight: '100%'}}></Card.Img>
       </Link> 
       <Link to={`/product/${product.id}`}>
         <Card.Title as='div'>
