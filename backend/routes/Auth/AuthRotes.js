@@ -15,9 +15,6 @@ router.post("/login", (req, res, next) => {
     else {
       req.logIn(user, (err) => {
         if (err) throw err;
-        console.log(user);
-        console.log("AFTER");
-        console.log(req.user);
         res.send(req.user);
       });
     }
@@ -59,7 +56,6 @@ router.post("/store_register", async (req, res) => {
 
     let activate = await bcrypt.hash(req.body.name, 10);
     activate = activate.replace(/\//g, "");
-    console.log(activate);
     
     const newUser = await User.create({
       e_mail: req.body.username,
@@ -70,7 +66,6 @@ router.post("/store_register", async (req, res) => {
       is_verified: false,
       activate_token: activate,
     });
-    console.log(newUser.e_mail);
     
     const db = require('../../config/database');
     db.get(`INSERT INTO store(store_name, owner_id) VALUES('${req.body.storeName}',
@@ -88,18 +83,14 @@ router.post("/store_register", async (req, res) => {
 router.post("/activate/:token", async (req, res) => {
   console.log(req.params.token);
   var user = await User.findOne({ where: { activate_token: req.params.token } });
-  console.log(user);
   if (user === null || user === undefined) {
-    console.log("No User");
     res.send("NoUser");
-
   }
   else {
     user.is_verified = true;
     await user.save();
     res.redirect("/login");
   }
-
 });
 
 router.get("/user", (req, res) => {
