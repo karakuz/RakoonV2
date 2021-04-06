@@ -1,12 +1,10 @@
-const { Store } = require("express-session");
 const { Sequelize, DataTypes } = require("sequelize");
 const db = require("../config/database");
 
 const Store = db.sequelize.define('Store', {
-
     store_id: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        primaryKey: true
     },
 
     store_name: {
@@ -17,16 +15,9 @@ const Store = db.sequelize.define('Store', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-
-
-
-
 }, {
     tableName: "store",
     timestamps: false
 });
-
-
-
 
 module.exports = Store;
