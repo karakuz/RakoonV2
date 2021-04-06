@@ -5,7 +5,7 @@ import '../css/body.css';
 import Loading from './loading.gif';
 
 const Cart = (props) => {
-  const sessionID = localStorage.getItem('sessionID');
+  const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID'); 
   const [products, setProducts] = useState([]);
 
   const getProducts = async() => {

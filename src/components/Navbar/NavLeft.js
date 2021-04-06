@@ -5,6 +5,7 @@ import Axios from 'axios';
 
 const NavLeft = (props) => {
   const ref = useRef(false);
+  const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID'); 
   var Cart = 'Cart';
 
   const getProducts = async() => {
@@ -12,7 +13,7 @@ const NavLeft = (props) => {
     const res = await Axios({
       method: "POST",
       data:{
-        sessionID: localStorage.getItem('sessionID')
+        sessionID: sessionID
       },
       withCredentials: true,
       url: `http://localhost:4000/getCartItems`,
@@ -23,7 +24,7 @@ const NavLeft = (props) => {
   };
 
   useEffect(()=>{
-    if(localStorage.getItem('sessionID')!==null)getProducts();
+    if(sessionID!==null)getProducts();
   },[]);
   
   useEffect(()=>{

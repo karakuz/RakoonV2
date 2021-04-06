@@ -14,6 +14,7 @@ const Login = () => {
 
   const Submit = async (e) => {
     e.preventDefault();
+    const rememberMe = document.querySelector('#rememberMe').checked;
 
     setEmail('');
     setPassword('');
@@ -27,11 +28,10 @@ const Login = () => {
       withCredentials: true,
       url: `http://localhost:${PORT}/login`,
     });
-    console.log(JSON.stringify(user, null, '\t'));
-
     if (typeof user.data == typeof {}) {
       const token = jwt.sign(user.data, 'shhhhh');
-      localStorage.setItem('sessionID', token);
+      if(rememberMe) localStorage.setItem('sessionID', token);
+      else sessionStorage.setItem('sessionID', token);
       history.push('/');
     }
     else alert("Your E-mail or password is wrong");
@@ -66,6 +66,12 @@ const Login = () => {
               onChange={e => setPassword(e.target.value)}
             />
             <span style={{fontSize: '16px', position:'absolute', right:'0', bottom: '-30px', color:'red', cursor: 'pointer'}} onClick={()=>redirect()}>Forgot Password?</span>
+          </div>
+          <div>
+            <div style={{margin: '0 auto'}}>
+              <label for="rememberMe" style={{fontSize: '17px', marginRight: '8px'}}>Remember Me</label>
+              <input type="checkbox" id="rememberMe" name="rememberMe" style={{transform: 'scale(1.3)'}}/>  
+            </div>
           </div>
           <div>
             <button type="submit" className="btn" style={{border: '1px solid black', display: 'inline-block', marginTop: '25px', fontSize: '20px'}}>Login</button>

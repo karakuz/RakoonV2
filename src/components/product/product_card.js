@@ -6,6 +6,7 @@ import Axios from 'axios';
 
 const ProductCard = (props) => {
   const addOrDelete = (!props.isRemovable)?'Add To Cart':'Delete';
+  const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID'); 
   const product = {
     id: props.item_id,
     name: props.item_name,
@@ -24,7 +25,7 @@ const ProductCard = (props) => {
         method: "POST",
         data: {
           item: product,
-          user: localStorage.getItem('sessionID')
+          user: sessionID
         },
         withCredentials: true,
         url: `http://localhost:4000/addToCart`,
@@ -36,7 +37,7 @@ const ProductCard = (props) => {
         method: "POST",
         data: {
           item: product,
-          user: localStorage.getItem('sessionID')
+          user: sessionID
         },
         withCredentials: true,
         url: `http://localhost:4000/removeFromCart`,
@@ -45,18 +46,7 @@ const ProductCard = (props) => {
       props.setNumOfItems((props.numOfItems)-1);
       console.log("props-1");
 
-      /* const card = e.target.parentElement.parentElement.parentElement;
-      card.parentElement.removeChild(card); */
     }
-    /* const res = await Axios({
-      method: "POST",
-      data: {
-        item: product,
-        user: localStorage.getItem('sessionID')
-      },
-      withCredentials: true,
-      url: `http://localhost:4000/addToCart`,
-    }); */
   }
   
   return (
