@@ -1,0 +1,28 @@
+@keyframes auto-progress {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
+.progress-bar{
+  display: block;
+  height: 15px;
+  width: 0%;
+  background-color: red;
+  border-radius: 3px;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
+  position: relative;
+  animation: auto-progress 3s 1 linear;
+}
+
+.progress-bar-inner{
+  background-color: transparent;
+  height: 15px;
+  width: 450px;
+  margin: 50px auto;
+  border-radius: 5px;
+}
