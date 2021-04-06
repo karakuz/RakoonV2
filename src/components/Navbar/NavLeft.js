@@ -1,20 +1,39 @@
 import DropDown from './DropDown';
 import Nav from "react-bootstrap/Nav";
 import React, { useEffect, useRef } from 'react';
+import Axios from 'axios';
 
 const NavLeft = (props) => {
   const ref = useRef(false);
-  const Cart = (localStorage.getItem('sessionID')===null)?`Cart(${localStorage.length})`:
-    (localStorage.length>0)?`Cart(${localStorage.length-1})`:'Cart';
-  (localStorage.getItem('sessionID')===null)?props.setNumOfItems(localStorage.length):props.setNumOfItems(localStorage.length-1);
+  var Cart = 'Cart';
+
+  const getProducts = async() => {
+    console.log("getProducts in NavLeft");
+    const res = await Axios({
+      method: "POST",
+      data:{
+        sessionID: localStorage.getItem('sessionID')
+      },
+      withCredentials: true,
+      url: `http://localhost:4000/getCartItems`,
+    });
+    const products = res.data;
+    
+    if(typeof products != typeof '') props.setNumOfItems(products.length)
+  };
+
   useEffect(()=>{
-      if(ref.current){
-          let text = document.getElementById('cart').innerHTML;
-          if(props.numOfItems===0) text=`Cart`;
-          else if(!text.includes('(')) text += ` (${props.numOfItems})`;
-          else text = text.split('(')[0] + '(' + props.numOfItems + ')';
-          document.getElementById('cart').innerHTML = text;
-      } else ref.current = true;
+    getProducts();
+  },[]);
+  
+  useEffect(()=>{
+    if(ref.current){
+      let text = document.getElementById('cart').innerHTML;
+      if(props.numOfItems===0) text=`Cart`;
+      else if(!text.includes('(')) text += ` (${props.numOfItems})`;
+      else text = text.split('(')[0] + '(' + props.numOfItems + ')';
+      document.getElementById('cart').innerHTML = text;
+    } else ref.current = true;
   },[props.numOfItems]);
   
   return (

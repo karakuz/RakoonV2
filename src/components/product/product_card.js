@@ -15,8 +15,12 @@ const ProductCard = (props) => {
   };
 
   const change = async (e) => {
-    if(!props.isRemovable && localStorage.getItem(product.id) === null){
-      const res = await Axios({
+    if(!props.isRemovable){
+      console.log("Adding to cart");
+      props.setNumOfItems(props.numOfItems+1);
+      console.log("props+1");
+      
+      await Axios({
         method: "POST",
         data: {
           item: product,
@@ -25,8 +29,7 @@ const ProductCard = (props) => {
         withCredentials: true,
         url: `http://localhost:4000/addToCart`,
       });
-
-      props.setNumOfItems(props.numOfItems+1);
+      //PROGRAM DOESNT REACH HERE ???
     }
     else if(props.isRemovable){
       const res = await Axios({
@@ -40,8 +43,10 @@ const ProductCard = (props) => {
       });
 
       props.setNumOfItems((props.numOfItems)-1);
-      const card = e.target.parentElement.parentElement.parentElement;
-      card.parentElement.removeChild(card);
+      console.log("props-1");
+
+      /* const card = e.target.parentElement.parentElement.parentElement;
+      card.parentElement.removeChild(card); */
     }
     /* const res = await Axios({
       method: "POST",
