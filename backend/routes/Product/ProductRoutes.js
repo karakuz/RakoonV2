@@ -16,4 +16,10 @@ router.get("/product/:id", async (req, res) => {
 
 });
 
+router.get("/products", async (req, res) => {
+    var products = await Product.findAll();
+
+    res.send(products);
+})
+
 module.exports = router;

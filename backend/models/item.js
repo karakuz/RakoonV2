@@ -21,12 +21,8 @@ const Item = db.sequelize.define('Item', {
         type: DataTypes.STRING,
 
     },
-    images: {
+    image: {
         type: DataTypes.STRING,
-    },
-
-    prev_img: {
-        type: DataTypes.STRING
     },
 
     category: {
@@ -37,6 +33,16 @@ const Item = db.sequelize.define('Item', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
+    countInStock: {
+        type: DataTypes.INTEGER,
+    },
+    rating_id: {
+        type: DataTypes.INTEGER,
+    },
+    brand: {
+        type: DataTypes.STRING,
+    },
+
 }, {
     tableName: "items",
     timestamps: false

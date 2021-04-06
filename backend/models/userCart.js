@@ -5,7 +5,8 @@ const UserCart = db.sequelize.define('UserCart', {
 
     item_id: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
+        primaryKey: true,
     },
 
     user_id: {
