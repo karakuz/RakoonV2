@@ -12,6 +12,7 @@ import Forgot from '../forgot/forgot';
 import Reset from '../forgot/reset';
 import Activate from '../login/activate';
 import ProductScreen from './ProductScreen';
+import Store_Register from '../register/store_register';
 
 const Main = () => {
   const [numOfItems, setNumOfItems] = useState(0);
@@ -24,6 +25,7 @@ const Main = () => {
         <ProtectedLoginRouter path="/login" component={Login} />
         <Route path="/cart" component={() => (<Cart numOfItems={numOfItems} setNumOfItems={setNumOfItems} />)} />
         <Route path="/register" component={Register} />
+        <Route path="/store_register" component={Store_Register} />
         <Route path="/forgot" component={Forgot} />
         <Route path="/reset/:token" component={Reset} />
         <Route path="/activate/:token" component={Activate} />

@@ -5,6 +5,8 @@ import Nav from "react-bootstrap/Nav";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Axios from "axios";
+import redX from '../css/redX.jpg';
+import '../css/register.css';
 
 const Register = () => {
   const [registerUsername, setRegisterUsername] = useState("");
@@ -13,23 +15,42 @@ const Register = () => {
   const [registerSurname, setRegisterSurname] = useState("");
   const PORT = process.env.PORT || 4000;
 
-  const submit = () => {
-    Axios({
+  const submit = async (e) => {
+    e.preventDefault();
+    console.log("register");
+    const res = await Axios({
       method: "POST",
       data: {
         username: registerUsername,
         password: registerPassword,
         name: registerName,
-        surname: registerSurname,
+        surname: registerSurname
       },
+      credentials: 'include',
       withCredentials: true,
       url: `http://localhost:${PORT}/register`,
-    }).then((res) => console.log(res));
+    });
+
+    if(res.data.res==="exists"){
+      document.querySelector('#exists').style.display = 'flex';
+      setTimeout(()=>{
+        document.querySelector('#exists').style.display = 'none';
+      },3000);
+    }
   };
 
   return (
     <div style={{marginTop: '2rem'}}>
-      <div className="form_container" style={{width:'590px', margin:'0 auto', fontSize:'2em'}}>
+      <div className="form_container" style={{width:'590px', margin:'0 auto', fontSize:'2em', position: 'relative'}}>
+        <div style={{display: 'none', position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='exists'>
+          <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
+          <div style={{flexGrow: '1', marginTop: '3px'}}>
+            <span style={{fontSize: '20px'}}>User already exists</span>
+            <div className="progress-bar">
+              <span className="progress-bar-inner"></span>
+            </div>
+          </div>
+        </div>
         <div style={{marginBottom: '1em', width: '100%', borderBottom: '1px solid grey'}}>
           <Nav style={{display: 'flex', width: '100%'}}>
             <Nav.Link style={{borderRight: '1px solid grey', flex: '1', textAlign: 'center'}} href="/login">LOGIN</Nav.Link>
@@ -52,16 +73,21 @@ const Register = () => {
             <Form.Label>Password(*)</Form.Label>
             <Form.Control type="password" placeholder="Password" style={{width: "332px", border: '1px solid grey'}}/>
           </Form.Group>
-          <Row style={{width: "430px", marginLeft: "auto", display:"flex", justifyContent:"space-between"}}>
+          <Row style={{width: "430px", marginLeft: "auto", display:"flex", justifyContent:"space-between", position: 'relative'}}>
             <Col>
               <Form.Control placeholder="First name" onChange={(e) => setRegisterName(e.target.value)} style={{border: '1px solid grey'}}/>
             </Col>
             <Col>
               <Form.Control placeholder="Last name" onChange={(e) => setRegisterSurname(e.target.value)} style={{border: '1px solid grey'}}/>
             </Col>
+            <Nav style={{fontSize: '16px', position: "absolute", right: '0px', bottom: '-40px', textDecoration: 'underline'}}>
+              <Nav.Link href='/store_register'>
+                Want to open a store?
+              </Nav.Link>
+            </Nav>
           </Row>
           <div>
-            <Button variant="primary" type="submit" onClick={submit} style={{marginTop:"20px"}}>
+            <Button variant="primary" type="submit" onClick={(e)=> submit(e)} style={{marginTop:"20px"}}>
               Submit
             </Button>
           </div>

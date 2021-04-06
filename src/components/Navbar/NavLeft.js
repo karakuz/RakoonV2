@@ -9,7 +9,6 @@ const NavLeft = (props) => {
   var Cart = 'Cart';
 
   const getProducts = async() => {
-    console.log("getProducts in NavLeft");
     const res = await Axios({
       method: "POST",
       data:{
