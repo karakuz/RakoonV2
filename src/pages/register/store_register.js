@@ -6,6 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Axios from 'axios';
 import redX from '../css/redX.jpg';
+import greenTick from '../css/greenTick.png';
 import '../css/register.css';
 
 const Store_Register = () => {
@@ -18,7 +19,39 @@ const Store_Register = () => {
 
   const submit = async (e) => {
     e.preventDefault();
-    console.log("register");
+
+    if(document.querySelector('#formBasicPassword').value !== document.querySelector('#formBasicPassword2').value){
+      document.querySelector('#doesNotMatch').style.display = 'flex';
+      setTimeout(()=>{
+        document.querySelector('#doesNotMatch').style.display = 'none';
+      },3000);
+      return;
+    }
+    else if(document.querySelector('#formBasicPassword').value.length < 6){
+      document.querySelector('#min6Char').style.display = 'flex';
+      setTimeout(()=>{
+        document.querySelector('#min6Char').style.display = 'none';
+      },3000);
+      return;
+    }
+    else if(document.querySelector('#firstName').value.length < 3 || document.querySelector('#lastName').value.length < 3){
+      document.querySelector('#nameError').style.display = 'flex';
+      setTimeout(()=>{
+        document.querySelector('#nameError').style.display = 'none';
+      },3000);
+      return;
+    }
+    else if(document.querySelector('#storeName').value.length < 3){
+      document.querySelector('#storeNameError').style.display = 'flex';
+      setTimeout(()=>{
+        document.querySelector('#storeNameError').style.display = 'none';
+      },3000);
+      return;
+    }
+
+    document.querySelector('#submit').disabled = true;
+    document.querySelectorAll('input').forEach( input => input.disabled = true );
+
     const res = await Axios({
       method: "POST",
       data: {
@@ -34,6 +67,8 @@ const Store_Register = () => {
     console.log(res.data);
     if(res.data.res==="exists"){
       document.querySelector('#exists').style.display = 'flex';
+      document.querySelector('#submit').disabled = false;
+      document.querySelectorAll('input').forEach( input => input.disabled = false );
       setTimeout(()=>{
         document.querySelector('#exists').style.display = 'none';
       },3000);
@@ -47,11 +82,62 @@ const Store_Register = () => {
           <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
           <div style={{flexGrow: '1', marginTop: '3px'}}>
             <span style={{fontSize: '20px'}}>User already exists</span>
-            <div className="progress-bar">
+            <div className="progress-bar-error">
               <span className="progress-bar-inner"></span>
             </div>
           </div>
         </div>
+
+        <div style={{display: 'none', padding: '10px', position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='success'>
+          <img src={greenTick} alt="success" style={{width: '70px', float: 'left'}}/>
+          <div style={{flexGrow: '1', marginTop: '3px', marginLeft: '10px', lineHeight: '0.9'}}>
+            <span style={{fontSize: '20px'}}>An email has been sent to {registerUsername} for activation</span>
+            <div className="progress-bar-success">
+              <span className="progress-bar-inner"></span>
+            </div>
+          </div>
+        </div>
+
+        <div style={{display: 'none', position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='doesNotMatch'>
+          <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
+          <div style={{flexGrow: '1', marginTop: '3px'}}>
+            <span style={{fontSize: '20px'}}>Passwords does not match</span>
+            <div className="progress-bar-error">
+              <span className="progress-bar-inner"></span>
+            </div>
+          </div>
+        </div>
+
+        <div style={{display: 'none', position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='min6Char'>
+          <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
+          <div style={{flexGrow: '1', marginTop: '3px'}}>
+            <span style={{fontSize: '17px'}}>Password should be minimum 6 characters</span>
+            <div className="progress-bar-error">
+              <span className="progress-bar-inner"></span>
+            </div>
+          </div>
+        </div>
+
+        <div style={{display: 'none', position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='nameError'>
+          <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
+          <div style={{flexGrow: '1', marginTop: '3px'}}>
+            <span style={{fontSize: '17px'}}>Your name or surname can not be empty</span>
+            <div className="progress-bar-error">
+              <span className="progress-bar-inner"></span>
+            </div>
+          </div>
+        </div>
+
+        <div style={{display: 'none', position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='storeNameError'>
+          <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
+          <div style={{flexGrow: '1', marginTop: '3px'}}>
+            <span style={{fontSize: '18px'}}>Type your store's name</span>
+            <div className="progress-bar-error">
+              <span className="progress-bar-inner"></span>
+            </div>
+          </div>
+        </div>
+
         <div style={{marginBottom: '1em', width: '100%', borderBottom: '1px solid grey'}}>
           <Nav style={{display: 'flex', width: '100%'}}>
             <Nav.Link style={{borderRight: '1px solid grey', flex: '1', textAlign: 'center'}} href="/login">LOGIN</Nav.Link>
@@ -76,10 +162,10 @@ const Store_Register = () => {
           </Form.Group>
           <Row style={{width: "430px", marginLeft: "auto", display:"flex", justifyContent:"space-between", position: 'relative'}}>
             <Col>
-              <Form.Control placeholder="First name" onChange={(e) => setRegisterName(e.target.value)} style={{border: '1px solid grey'}}/>
+              <Form.Control placeholder="First name" onChange={(e) => setRegisterName(e.target.value)} style={{border: '1px solid grey'}} id="firstName"/>
             </Col>
             <Col>
-              <Form.Control placeholder="Last name" onChange={(e) => setRegisterSurname(e.target.value)} style={{border: '1px solid grey'}}/>
+              <Form.Control placeholder="Last name" onChange={(e) => setRegisterSurname(e.target.value)} style={{border: '1px solid grey'}} id="lastName"/>
             </Col>
             
           </Row>
@@ -95,7 +181,7 @@ const Store_Register = () => {
           </Row>
           
           <div>
-            <Button variant="primary" type="submit" onClick={e => submit(e)} style={{marginTop:"20px"}}>
+            <Button variant="primary" type="submit" onClick={e => submit(e)} style={{marginTop:"20px"}} id="submit">
               Submit
             </Button>
           </div>
