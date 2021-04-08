@@ -21,7 +21,7 @@ router.post("/cart/product/:id", async (req, res) => {
 router.delete("/cart/product/:id", async (req, res) => {
   const productId = req.params.id;
   const sessionID = req.body.user;
-  const user = jwt.verify(sessionID, 'shhhhh');
+  var user = (typeof sessionID == typeof '') ? jwt.verify(sessionID, 'shhhhh') : sessionID;
   const CartProduct = await UserCart.destroy({
     where: {
       item_id: productId,

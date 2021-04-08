@@ -68,8 +68,21 @@ const Register = () => {
       document.querySelector('#submit').disabled = false;
       document.querySelectorAll('input').forEach( input => input.disabled = false );
     }
-    else if(res.data===true){
-      console.log("in true");
+    else if(res.data.success===true){
+    const keys = Object.keys(localStorage);
+    keys.forEach(async productID =>{
+      await Axios({
+        method: "POST",
+        data: {
+          item: productID,
+          user: {user_id: res.data.user_id}
+        },
+        withCredentials: true,
+        url: `http://localhost:4000/cart/product/${productID}`
+      });
+    });
+
+      
       document.querySelector('#success').style.display = 'flex';
       setTimeout(()=>{
         document.querySelector('#success').style.display = 'none';

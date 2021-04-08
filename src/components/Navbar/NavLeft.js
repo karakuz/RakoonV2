@@ -24,6 +24,10 @@ const NavLeft = (props) => {
   useEffect(()=>{
     //console.log(sessionID);
     if(sessionID!==null) getProducts();
+    else {
+      const storage = Object.keys(localStorage);
+      props.setNumOfItems(storage.length);
+    }
   },[]);
   
   useEffect(()=>{

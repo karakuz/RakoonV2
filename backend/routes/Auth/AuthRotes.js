@@ -80,8 +80,11 @@ router.post("/store_register", async (req, res) => {
       (SELECT user_id FROM users WHERE e_mail='${req.body.username}')
     );`)
 
+    const user_id = await db.get(`SELECT user_id FROM users WHERE e_mail='${req.body.username}'`);
+    console.log(user_id);
+
     VerifyMail(newUser, activate);
-    res.send(true);
+    res.send({success: true, user_id: user_id[0].user_id});
   }
   else {
     res.send({ res: "exists" })

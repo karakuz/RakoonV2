@@ -17,35 +17,49 @@ const ProductCard = (props) => {
   const change = async (e) => {
     e.preventDefault();
     if (!props.isRemovable) {
+      if(sessionID!==null){
+        const res = await Axios({
+          method: "POST",
+          data: {
+            item: product,
+            user: sessionID
+          },
+          withCredentials: true,
+          url: `http://localhost:4000/cart/product/${product.id}`
+        });
+      }
+      else{
+        const prod = {
+          item_id: product.id,
+          item_name: product.name,
+          description: product.text,
+          image: product.img,
+          price: product.price
+        }
+        localStorage.setItem(product.id, JSON.stringify(prod));
+      }
       props.setNumOfItems(props.numOfItems + 1);
-      console.log("line22");
-      const res = await Axios({
-        method: "POST",
-        data: {
-          item: product,
-          user: sessionID
-        },
-        withCredentials: true,
-        url: `http://localhost:4000/cart/product/${product.id}`
-      });
-      console.log("Line32");
-      
     }
     else if (props.isRemovable) {
-      const res = await Axios({
-        method: "DELETE",
-        data: {
-          item: product,
-          user: sessionID
-        },
-        withCredentials: true,
-        url: `http://localhost:4000/cart/product/${product.id}`,
-      });
-
+      if(sessionID!==null){
+        const res = await Axios({
+          method: "DELETE",
+          data: {
+            item: product,
+            user: sessionID
+          },
+          withCredentials: true,
+          url: `http://localhost:4000/cart/product/${product.id}`,
+        });
+      }
+      else{
+        localStorage.removeItem(product.id);
+      }
       props.setNumOfItems((props.numOfItems) - 1);
     }
   }
-
+  console.log("ın product_card");
+  console.log(product);
   return (
     <Card className='my-3 p-3 rounded' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
       <Link to={`/product/${product.id}`}>

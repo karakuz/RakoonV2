@@ -37,7 +37,16 @@ const Cart = (props) => {
   };
 
   useEffect(() => {
-    getProducts();
+    if(Object.keys(localStorage).includes('sessionID')) getProducts();
+    else{
+      var arr=[]
+      Object.keys(localStorage).forEach(productID => {
+        arr.push(JSON.parse(localStorage.getItem(productID)));
+      });
+      setProducts(arr);
+      console.log(products);
+      console.log(typeof products);
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -47,6 +56,7 @@ const Cart = (props) => {
         <div className='row' style={{ marginRight: '220px' }}>
           {
             products.map((product) => {
+              console.log(product);
               return (
                 <Col sm={12} md={6} lg={4} xl={3}>
                   <ProductCard key={product.id} {...product} isRemovable={true} numOfItems={props.numOfItems} setNumOfItems={props.setNumOfItems} />
@@ -85,7 +95,7 @@ const Cart = (props) => {
       </div>
     )
   }
-  else if (products[0] === undefined) {
+  else if (products[0] === undefined && localStorage.getItem('sessionID') === undefined) {
     return (
       <div className="container">
         <img src={Loading} alt='Loading...' />
@@ -95,7 +105,9 @@ const Cart = (props) => {
   else {
     return (
       <div className="container">
+        <span style={{fontSize: '20px', marginTop: '30px'}}>
         You have no item in your cart
+        </span>
       </div>
     )
   }
