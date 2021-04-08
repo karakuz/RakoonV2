@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import Axios from 'axios'
 import ProductCard from '../../components/product/product_card';
 import '../css/body.css';
@@ -9,6 +9,7 @@ import CartBuy from './cart_buy.jpg';
 const Cart = (props) => {
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
   const [products, setProducts] = useState([]);
+  const ref = useRef(true);
 
   const getProducts = async () => {
     const res = await Axios({
@@ -20,6 +21,7 @@ const Cart = (props) => {
       url: `http://localhost:4000/cart/products`,
     });
     setProducts(res.data);
+    ref.current = false;
   };
 
   useEffect(() => {
@@ -83,7 +85,6 @@ const Cart = (props) => {
         You have no item in your cart
       </div>
     )
-
   }
 }
 

@@ -15,6 +15,8 @@ router.post("/cart/product/:id", async (req, res) => {
     item_id: productId,
     user_id: user.user_id
   });
+
+  res.send("done");
 });
 
 router.delete("/cart/product/:id", async (req, res) => {

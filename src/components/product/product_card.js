@@ -14,14 +14,12 @@ const ProductCard = (props) => {
     img: props.image,
     price: props.price
   };
-
   const change = async (e) => {
+    e.preventDefault();
     if (!props.isRemovable) {
-      console.log("Adding to cart");
       props.setNumOfItems(props.numOfItems + 1);
-      console.log("props+1");
-
-      await Axios({
+      console.log("line22");
+      const res = await Axios({
         method: "POST",
         data: {
           item: product,
@@ -30,7 +28,8 @@ const ProductCard = (props) => {
         withCredentials: true,
         url: `http://localhost:4000/cart/product/${product.id}`
       });
-      //PROGRAM DOESNT REACH HERE ???
+      console.log("Line32");
+      
     }
     else if (props.isRemovable) {
       const res = await Axios({
@@ -44,8 +43,6 @@ const ProductCard = (props) => {
       });
 
       props.setNumOfItems((props.numOfItems) - 1);
-      console.log("props-1");
-
     }
   }
 

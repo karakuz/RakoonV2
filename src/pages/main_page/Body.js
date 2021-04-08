@@ -8,7 +8,8 @@ import { Alert, Col, Row, Container } from 'react-bootstrap';
 const Body = (props) => {
   const [products, setProducts] = useState([]);
   const ref = useRef(false);
-
+  
+  console.log("Body");
   const getProducts = async () => {
     const res = await Axios({
       method: "GET",
