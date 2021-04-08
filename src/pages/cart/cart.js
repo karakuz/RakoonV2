@@ -6,6 +6,18 @@ import Loading from './loading.gif';
 import { Col } from 'react-bootstrap';
 //import CartBuy from './cart_buy.jpg';
 
+function numeral(number) {
+  number = String(number);
+  if(number.indexOf('.')!==-1)
+    for(let i=number.indexOf('.')-3; i>0; i-=3)
+      number = number.substring(0,i) + ',' + number.substring(i);
+  else
+    for(let i=number.length-3; i>0; i-=3)
+      number = number.substring(0,i) + ',' + number.substring(i);
+  number = number.split('.')[0] + '.' + number.split('.')[1].substring(0,3);
+  return number;
+}
+
 const Cart = (props) => {
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
   const [products, setProducts] = useState([]);
@@ -61,7 +73,7 @@ const Cart = (props) => {
               }
             </ul>
             <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '0 1rem 1rem', color: 'black', fontSize: '1rem' }}>
-              <span>Total: ${products.reduce((a, v) => a = a + v.price, 0)}</span>
+              <span>Total: ${numeral(products.reduce((a, v) => a = a + v.price, 0))}</span>
             </div>
           </div>
           <div style={{display: 'flex', justifyContent: 'center', marginBottom: '10px'}}>
