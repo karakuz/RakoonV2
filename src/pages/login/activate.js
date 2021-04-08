@@ -14,12 +14,13 @@ const Activate = () => {
     const submit = async (e) => {
         e.preventDefault();
         const res = await Axios.post(url).catch(err => console.log(`Error in activate.js: ${err}`));
+        history.push("/login");
     };
 
 
     return (
 
-        <Button variant="primary" type="submit" onClick={(e) => submit(e)}>
+        <Button variant="primary" style={{ margin: "3em auto" }} type="submit" onClick={(e) => submit(e)}>
             Activate
         </Button>
 

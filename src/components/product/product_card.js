@@ -28,19 +28,19 @@ const ProductCard = (props) => {
           user: sessionID
         },
         withCredentials: true,
-        url: `http://localhost:4000/product/${product.id}`
+        url: `http://localhost:4000/cart/product/${product.id}`
       });
       //PROGRAM DOESNT REACH HERE ???
     }
     else if (props.isRemovable) {
       const res = await Axios({
-        method: "POST",
+        method: "DELETE",
         data: {
           item: product,
           user: sessionID
         },
         withCredentials: true,
-        url: `http://localhost:4000/removeFromCart`,
+        url: `http://localhost:4000/cart/product/${product.id}`,
       });
 
       props.setNumOfItems((props.numOfItems) - 1);

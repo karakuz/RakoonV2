@@ -12,6 +12,11 @@ router.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) throw err;
     if (!user) res.send("NoUser");
+    console.log(user.is_verified);
+    if (user.is_verified === 0) {
+      res.send("notVerified");
+
+    }
     else {
       req.logIn(user, (err) => {
         if (err) throw err;
@@ -44,8 +49,7 @@ router.post("/register", async (req, res) => {
   }
 
   else {
-    console.log("user exists");
-    res.send({res: "exists"})
+    res.send({ res: "exists" })
   }
 });
 
@@ -57,7 +61,7 @@ router.post("/store_register", async (req, res) => {
 
     let activate = await bcrypt.hash(req.body.name, 10);
     activate = activate.replace(/\//g, "");
-    
+
     const newUser = await User.create({
       e_mail: req.body.username,
       password: hashedPassword,
@@ -67,18 +71,17 @@ router.post("/store_register", async (req, res) => {
       is_verified: false,
       activate_token: activate,
     });
-    
+
     const db = require('../../config/database');
     db.get(`INSERT INTO store(store_name, owner_id) VALUES('${req.body.storeName}',
       (SELECT user_id FROM users WHERE e_mail='${req.body.username}')
     );`)
-    
+
     VerifyMail(newUser, activate);
     res.send(true);
   }
   else {
-    console.log("user exists");
-    res.send({res: "exists"})
+    res.send({ res: "exists" })
   }
 });
 
