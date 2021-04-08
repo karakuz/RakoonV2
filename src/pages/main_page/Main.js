@@ -14,9 +14,19 @@ import Activate from '../login/activate';
 import ProductScreen from './ProductScreen';
 import Store_Register from '../register/store_register';
 
+const jwt = require('jsonwebtoken');
+
 const Main = () => {
   const [numOfItems, setNumOfItems] = useState(0);
   //const user = this.props.location.state;
+
+  if(localStorage.getItem('sessionID') === null){
+    const random = Math.random();
+    console.log("Random: " + random);
+    const token = jwt.sign({random: random}, 'shhhhh');
+    
+  }
+
   return (
     <>
       <NavigationBar numOfItems={numOfItems} setNumOfItems={setNumOfItems} />
