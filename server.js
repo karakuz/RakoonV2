@@ -77,3 +77,5 @@ app.listen(PORT, () => {
   //Database.get("USE rakoon; SHOW tables;");
 })();
 */
+
+module.exports = app;
