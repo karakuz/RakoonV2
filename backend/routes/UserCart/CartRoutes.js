@@ -11,12 +11,11 @@ router.post("/cart/product/:id", async (req, res) => {
   const sessionID = req.body.user;
   const user = jwt.verify(sessionID, 'shhhhh');
 
-  const CartProduct = await UserCart.create({
+  const CartProduct = UserCart.create({
     item_id: productId,
     user_id: user.user_id
-  });
-
-  res.send("done");
+  }).then((res) => res.send("done"))
+    .catch(error => res.status(404).send(error));
 });
 
 router.delete("/cart/product/:id", async (req, res) => {

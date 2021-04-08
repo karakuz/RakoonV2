@@ -14,10 +14,10 @@ chai.use(chaiHttp);
 
 
 
-  describe('/GET All Products', () => {
-      it('it should GET all the products', (done) => {
+  describe('/GET All Category', () => {
+      it('it should GET all the Categories', (done) => {
         chai.request(server)
-            .get('/products')
+            .get('/categories')
             .end((err, res) => {
                   res.should.have.status(200);
                   res.body.should.be.a('array');
@@ -26,13 +26,13 @@ chai.use(chaiHttp);
       });
   });
 
-  describe('/GET Product from ID', () => {
-    it('it should GET the product with the given id', (done) => {
+  describe('/GET Category from Name', () => {
+    it('it should GET the product with the given name', (done) => {
       chai.request(server)
-          .get('/product/10')
+          .get('/category/electronics')
           .end((err, res) => {
                 res.should.have.status(200);
-                res.body.should.be.a('object');
+                res.body.should.be.a('array');
             done();
           });
     });
