@@ -13,6 +13,7 @@ import Reset from '../forgot/reset';
 import Activate from '../login/activate';
 import ProductScreen from './ProductScreen';
 import Store_Register from '../register/store_register';
+import CategoryPage from '../category/CategoryPage';
 
 const Main = () => {
   const [numOfItems, setNumOfItems] = useState(0);
@@ -30,6 +31,8 @@ const Main = () => {
         <Route path="/reset/:token" component={Reset} />
         <Route path="/activate/:token" component={Activate} />
         <Route path="/product/:id" component={ProductScreen} />
+        <Route path="/category/:name" component={CategoryPage} />
+
         <ProtectedRoute path="/profile" component={Profile} />
       </Switch>
     </>

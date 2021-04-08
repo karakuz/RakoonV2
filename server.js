@@ -11,6 +11,7 @@ const AuthRoutes = require("./backend/routes/Auth/AuthRotes");
 const ForgotRoutes = require("./backend/routes/Forgot/ForgotRoutes");
 const ProductRoutes = require("./backend/routes/Product/ProductRoutes");
 const UserCartRoutes = require("./backend/routes/UserCart/CartRoutes");
+const CategoryRoutes = require("./backend/routes/Menu/CategoryRoutes");
 const Database = require("./backend/config/database");
 const rest = require('./backend/config/rest');
 //----------------------------------------- END OF IMPORTS---------------------------------------------------
@@ -51,6 +52,7 @@ app.use(AuthRoutes);
 app.use(ForgotRoutes);
 app.use(ProductRoutes);
 app.use(UserCartRoutes);
+app.use(CategoryRoutes);
 app.use(rest);
 
 if (process.env.NODE_ENV === 'production') {
