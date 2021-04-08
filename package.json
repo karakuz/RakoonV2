@@ -43,7 +43,7 @@
   "scripts": {
     "start": "concurrently \"react-scripts build\" \"nodemon server.js\" \"react-scripts start\"",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "mocha --timeout 10000",
     "eject": "react-scripts eject",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build"
   },
@@ -65,5 +65,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
+    "mocha": "^8.3.2",
+    "sequelize-test-helpers": "^1.3.2"
   }
 }
