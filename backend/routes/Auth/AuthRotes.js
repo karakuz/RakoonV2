@@ -40,11 +40,14 @@ router.post("/register", async (req, res) => {
       password: hashedPassword,
       name: req.body.name,
       surname: req.body.surname,
-      role_id: 3,
+      role_id: 1,
       is_verified: false,
       activate_token: activate,
     });
-    VerifyMail(newUser, activate);
+    if(req.body.username !== "unregistered_user") VerifyMail(newUser, activate);
+    if(req.body.username === "unregistered_user"){
+      res.send(activate);
+    }
     res.send(true);
   }
 
