@@ -22,6 +22,28 @@ const Register = () => {
   const submit = async (e) => {
     e.preventDefault();
 
+    if(document.querySelector('#formBasicPassword').value !== document.querySelector('#formBasicPassword2').value){
+      document.querySelector('#doesNotMatch').style.display = 'flex';
+      setTimeout(()=>{
+        document.querySelector('#doesNotMatch').style.display = 'none';
+      },3000);
+      return;
+    }
+    else if(document.querySelector('#formBasicPassword').value.length < 6){
+      document.querySelector('#min6Char').style.display = 'flex';
+      setTimeout(()=>{
+        document.querySelector('#min6Char').style.display = 'none';
+      },3000);
+      return;
+    }
+    else if(document.querySelector('#firstName').value.length < 3 || document.querySelector('#lastName').value.length < 3){
+      document.querySelector('#nameError').style.display = 'flex';
+      setTimeout(()=>{
+        document.querySelector('#nameError').style.display = 'none';
+      },3000);
+      return;
+    }
+
     document.querySelector('#submit').disabled = true;
     document.querySelectorAll('input').forEach( input => input.disabled = true );
 
@@ -37,15 +59,13 @@ const Register = () => {
       withCredentials: true,
       url: `http://localhost:${PORT}/register`,
     });
-    console.log("register2");
-    console.log(res.data);
     if(res.data.res==="exists"){
       document.querySelector('#exists').style.display = 'flex';
       setTimeout(()=>{
         document.querySelector('#exists').style.display = 'none';
       },3000);
 
-      document.querySelector('submit').disabled = false;
+      document.querySelector('#submit').disabled = false;
       document.querySelectorAll('input').forEach( input => input.disabled = false );
     }
     else if(res.data===true){
@@ -71,11 +91,41 @@ const Register = () => {
           </div>
         </div>
 
-        <div style={{display: 'flex', padding: '10px', position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='success'>
+        <div style={{display: 'none', padding: '10px', position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='success'>
           <img src={greenTick} alt="success" style={{width: '70px', float: 'left'}}/>
           <div style={{flexGrow: '1', marginTop: '3px', marginLeft: '10px', lineHeight: '0.9'}}>
             <span style={{fontSize: '20px'}}>An email has been sent to {registerUsername} for activation</span>
             <div className="progress-bar-success">
+              <span className="progress-bar-inner"></span>
+            </div>
+          </div>
+        </div>
+
+        <div style={{display: 'none', position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='doesNotMatch'>
+          <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
+          <div style={{flexGrow: '1', marginTop: '3px'}}>
+            <span style={{fontSize: '20px'}}>Passwords does not match</span>
+            <div className="progress-bar-error">
+              <span className="progress-bar-inner"></span>
+            </div>
+          </div>
+        </div>
+
+        <div style={{display: 'none', position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='min6Char'>
+          <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
+          <div style={{flexGrow: '1', marginTop: '3px'}}>
+            <span style={{fontSize: '17px'}}>Password should be minimum 6 characters</span>
+            <div className="progress-bar-error">
+              <span className="progress-bar-inner"></span>
+            </div>
+          </div>
+        </div>
+
+        <div style={{display: 'none', position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='nameError'>
+          <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
+          <div style={{flexGrow: '1', marginTop: '3px'}}>
+            <span style={{fontSize: '17px'}}>Your name or surname can not be empty</span>
+            <div className="progress-bar-error">
               <span className="progress-bar-inner"></span>
             </div>
           </div>
@@ -105,10 +155,10 @@ const Register = () => {
           </Form.Group>
           <Row style={{width: "430px", marginLeft: "auto", display:"flex", justifyContent:"space-between", position: 'relative'}}>
             <Col>
-              <Form.Control placeholder="First name" onChange={(e) => setRegisterName(e.target.value)} style={{border: '1px solid grey'}}/>
+              <Form.Control placeholder="First name" onChange={(e) => setRegisterName(e.target.value)} style={{border: '1px solid grey'}} id="firstName"/>
             </Col>
             <Col>
-              <Form.Control placeholder="Last name" onChange={(e) => setRegisterSurname(e.target.value)} style={{border: '1px solid grey'}}/>
+              <Form.Control placeholder="Last name" onChange={(e) => setRegisterSurname(e.target.value)} style={{border: '1px solid grey'}} id="lastName"/>
             </Col>
             <Nav style={{fontSize: '16px', position: "absolute", right: '0px', bottom: '-40px', textDecoration: 'underline'}}>
               <Nav.Link href='/store_register'>
