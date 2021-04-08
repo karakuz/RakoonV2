@@ -8,7 +8,7 @@ const NavLeft = (props) => {
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID'); 
   var Cart = 'Cart';
 
-  const getProducts = async() => {
+  const getProducts = async () => {
     const res = await Axios({
       method: "POST",
       data:{
@@ -18,12 +18,12 @@ const NavLeft = (props) => {
       url: `http://localhost:4000/getCartItems`,
     });
     const products = res.data;
-    
     if(typeof products != typeof '') props.setNumOfItems(products.length)
   };
 
   useEffect(()=>{
-    if(sessionID!==null)getProducts();
+    console.log(sessionID);
+    if(sessionID!==null) getProducts();
   },[]);
   
   useEffect(()=>{
