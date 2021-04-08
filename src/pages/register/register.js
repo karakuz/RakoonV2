@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
@@ -6,6 +7,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Axios from "axios";
 import redX from '../css/redX.jpg';
+import greenTick from '../css/greenTick.png';
 import '../css/register.css';
 
 const Register = () => {
@@ -15,9 +17,14 @@ const Register = () => {
   const [registerSurname, setRegisterSurname] = useState("");
   const PORT = process.env.PORT || 4000;
 
+  const history = useHistory();
+
   const submit = async (e) => {
     e.preventDefault();
-    console.log("register");
+
+    document.querySelector('#submit').disabled = true;
+    document.querySelectorAll('input').forEach( input => input.disabled = true );
+
     const res = await Axios({
       method: "POST",
       data: {
@@ -30,11 +37,23 @@ const Register = () => {
       withCredentials: true,
       url: `http://localhost:${PORT}/register`,
     });
-
+    console.log("register2");
+    console.log(res.data);
     if(res.data.res==="exists"){
       document.querySelector('#exists').style.display = 'flex';
       setTimeout(()=>{
         document.querySelector('#exists').style.display = 'none';
+      },3000);
+
+      document.querySelector('submit').disabled = false;
+      document.querySelectorAll('input').forEach( input => input.disabled = false );
+    }
+    else if(res.data===true){
+      console.log("in true");
+      document.querySelector('#success').style.display = 'flex';
+      setTimeout(()=>{
+        document.querySelector('#success').style.display = 'none';
+        history.push('/login');
       },3000);
     }
   };
@@ -46,11 +65,22 @@ const Register = () => {
           <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
           <div style={{flexGrow: '1', marginTop: '3px'}}>
             <span style={{fontSize: '20px'}}>User already exists</span>
-            <div className="progress-bar">
+            <div className="progress-bar-error">
               <span className="progress-bar-inner"></span>
             </div>
           </div>
         </div>
+
+        <div style={{display: 'flex', padding: '10px', position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='success'>
+          <img src={greenTick} alt="success" style={{width: '70px', float: 'left'}}/>
+          <div style={{flexGrow: '1', marginTop: '3px', marginLeft: '10px', lineHeight: '0.9'}}>
+            <span style={{fontSize: '20px'}}>An email has been sent to {registerUsername} for activation</span>
+            <div className="progress-bar-success">
+              <span className="progress-bar-inner"></span>
+            </div>
+          </div>
+        </div>
+
         <div style={{marginBottom: '1em', width: '100%', borderBottom: '1px solid grey'}}>
           <Nav style={{display: 'flex', width: '100%'}}>
             <Nav.Link style={{borderRight: '1px solid grey', flex: '1', textAlign: 'center'}} href="/login">LOGIN</Nav.Link>
@@ -87,7 +117,7 @@ const Register = () => {
             </Nav>
           </Row>
           <div>
-            <Button variant="primary" type="submit" onClick={(e)=> submit(e)} style={{marginTop:"20px"}}>
+            <Button variant="primary" type="submit" onClick={(e)=> submit(e)} style={{marginTop:"20px"}} id='submit'>
               Submit
             </Button>
           </div>

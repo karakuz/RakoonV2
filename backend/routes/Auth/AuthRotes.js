@@ -44,6 +44,7 @@ router.post("/register", async (req, res) => {
   }
 
   else {
+    console.log("user exists");
     res.send({res: "exists"})
   }
 });
@@ -76,6 +77,7 @@ router.post("/store_register", async (req, res) => {
     res.send(true);
   }
   else {
+    console.log("user exists");
     res.send({res: "exists"})
   }
 });

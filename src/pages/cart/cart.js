@@ -4,6 +4,7 @@ import ProductCard from '../../components/product/product_card';
 import '../css/body.css';
 import Loading from './loading.gif';
 import { Col } from 'react-bootstrap';
+import CartBuy from './cart_buy.jpg';
 
 const Cart = (props) => {
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID'); 
@@ -60,6 +61,11 @@ const Cart = (props) => {
               <span>Total: ${ products.reduce((a,v) =>  a = a + v.price , 0 ) }</span>
             </div>
           </div>
+          <div style={{display: 'flex', justifyContent: 'center', marginBottom: '10px'}}>
+            <button style={{background: 'green', fontSize: '20px', color: 'white', display: 'inline-block', borderRadius: '20px', padding: '10px 20px'}}>
+              Buy
+            </button>
+          </div>
         </div>
       </div>
     )
@@ -70,7 +76,6 @@ const Cart = (props) => {
         <img src={Loading} alt='Loading...'/>
       </div>
     )
-    
   }
   else{
     return (

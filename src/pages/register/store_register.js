@@ -16,7 +16,9 @@ const Store_Register = () => {
   const [storeName, setStoreName] = useState("");
   const PORT = process.env.PORT || 4000;
 
-  const submit = async () => {
+  const submit = async (e) => {
+    e.preventDefault();
+    console.log("register");
     const res = await Axios({
       method: "POST",
       data: {
@@ -29,7 +31,7 @@ const Store_Register = () => {
       withCredentials: true,
       url: `http://localhost:${PORT}/store_register`,
     });
-
+    console.log(res.data);
     if(res.data.res==="exists"){
       document.querySelector('#exists').style.display = 'flex';
       setTimeout(()=>{
@@ -93,7 +95,7 @@ const Store_Register = () => {
           </Row>
           
           <div>
-            <Button variant="primary" type="submit" onClick={submit} style={{marginTop:"20px"}}>
+            <Button variant="primary" type="submit" onClick={e => submit(e)} style={{marginTop:"20px"}}>
               Submit
             </Button>
           </div>
