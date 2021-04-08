@@ -2,12 +2,11 @@ import React, { useState, useEffect, useRef } from 'react'
 import Axios from 'axios'
 import ProductCard from '../../components/product/product_card';
 import '../css/bootstrap.min.css';
-import { products } from '../../components/product/test_products';
-import { Alert, Col, Row, Container } from 'react-bootstrap';
+import { Col, Row, Container } from 'react-bootstrap';
 
 const Body = (props) => {
   const [products, setProducts] = useState([]);
-  const ref = useRef(false);
+  //const ref = useRef(false);
   
   console.log("Body");
   const getProducts = async () => {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import '../css/login.css'
 import Axios from "axios"
 import Nav from "react-bootstrap/Nav";

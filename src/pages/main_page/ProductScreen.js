@@ -1,6 +1,5 @@
-import { Button } from 'bootstrap'
 import React, { useEffect, useState } from 'react'
-import { Card, Col, Image, ListGroup, ListGroupItem, Row } from 'react-bootstrap'
+import { Card, Col, Image, ListGroup, Row } from 'react-bootstrap'
 import { Link, useParams } from 'react-router-dom'
 import Axios from 'axios';
 import '../css/bootstrap.min.css';
@@ -20,6 +19,7 @@ const ProductScreen = () => {
 
   useEffect(() => {
     getProducts();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

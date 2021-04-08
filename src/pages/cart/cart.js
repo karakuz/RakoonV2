@@ -4,7 +4,7 @@ import ProductCard from '../../components/product/product_card';
 import '../css/body.css';
 import Loading from './loading.gif';
 import { Col } from 'react-bootstrap';
-import CartBuy from './cart_buy.jpg';
+//import CartBuy from './cart_buy.jpg';
 
 const Cart = (props) => {
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
@@ -26,6 +26,7 @@ const Cart = (props) => {
 
   useEffect(() => {
     getProducts();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (products.length !== 0 && typeof products !== typeof '') {
