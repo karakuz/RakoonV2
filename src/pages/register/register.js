@@ -59,6 +59,8 @@ const Register = () => {
       withCredentials: true,
       url: `http://localhost:${PORT}/register`,
     });
+
+
     if(res.data.res==="exists"){
       document.querySelector('#exists').style.display = 'flex';
       setTimeout(()=>{
@@ -70,19 +72,23 @@ const Register = () => {
     }
     else if(res.data.success===true){
     const keys = Object.keys(localStorage);
-    keys.forEach(async productID =>{
-      await Axios({
-        method: "POST",
-        data: {
-          item: productID,
-          user: {user_id: res.data.user_id}
-        },
-        withCredentials: true,
-        url: `http://localhost:4000/cart/product/${productID}`
+    if(keys.length!==0){
+      keys.forEach(async productID =>{
+        console.log("productID: " + productID);
+        console.log("res:");
+        console.log(res);
+        console.log(res.data.user_id);
+        await Axios({
+          method: "POST",
+          data: {
+            item: productID,
+            user: {user_id: res.data.user_id}
+          },
+          withCredentials: true,
+          url: `http://localhost:4000/cart/product/${productID}`
+        }).then(res => console.log(res)).then(()=> localStorage.clear());
       });
-    });
-
-      
+    }
       document.querySelector('#success').style.display = 'flex';
       setTimeout(()=>{
         document.querySelector('#success').style.display = 'none';

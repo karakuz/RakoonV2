@@ -58,8 +58,6 @@ const ProductCard = (props) => {
       props.setNumOfItems((props.numOfItems) - 1);
     }
   }
-  console.log("ın product_card");
-  console.log(product);
   return (
     <Card className='my-3 p-3 rounded' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
       <Link to={`/product/${product.id}`}>

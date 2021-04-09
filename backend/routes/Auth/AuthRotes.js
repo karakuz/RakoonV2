@@ -44,11 +44,11 @@ router.post("/register", async (req, res) => {
       is_verified: false,
       activate_token: activate,
     });
-    if(req.body.username !== "unregistered_user") VerifyMail(newUser, activate);
-    if(req.body.username === "unregistered_user"){
-      res.send(activate);
-    }
-    res.send(true);
+
+    VerifyMail(newUser, activate);
+    const user_id = await require('../../config/database').get(`SELECT user_id FROM users WHERE e_mail='${req.body.username}'`);
+    console.log(user_id[0].user_id);
+    res.send({success: true, user_id: user_id[0].user_id});
   }
 
   else {
@@ -78,13 +78,10 @@ router.post("/store_register", async (req, res) => {
     const db = require('../../config/database');
     db.get(`INSERT INTO store(store_name, owner_id) VALUES('${req.body.storeName}',
       (SELECT user_id FROM users WHERE e_mail='${req.body.username}')
-    );`)
-
-    const user_id = await db.get(`SELECT user_id FROM users WHERE e_mail='${req.body.username}'`);
-    console.log(user_id);
+    );`);
 
     VerifyMail(newUser, activate);
-    res.send({success: true, user_id: user_id[0].user_id});
+    res.send(true);
   }
   else {
     res.send({ res: "exists" })

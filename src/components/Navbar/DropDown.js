@@ -18,7 +18,6 @@ const DropDown = () => {
     });
     setcategories(res.data)
   };
-  console.log(categories);
   useEffect(() => {
     getcategories();
   }, []);

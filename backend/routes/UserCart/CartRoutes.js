@@ -7,27 +7,40 @@ const jwt = require('jsonwebtoken');
 const db = require('../../config/database.js');
 
 router.post("/cart/product/:id", async (req, res) => {
-  const productId = req.params.id;
-  const sessionID = req.body.user;
-  const user = jwt.verify(sessionID, 'shhhhh');
+  const productID = req.params.id;
+  console.log(req.body.user);
+  console.log(typeof req.body.user);
+  const user_id = (typeof req.body.user === typeof []) ? req.body.user.user_id : (jwt.verify(req.body.user, 'shhhhh')).user_id;
+  console.log("user_id: ");
+  console.log(user_id);
 
-  const CartProduct = UserCart.create({
+  await db.get(`INSERT INTO users_cart(item_id,user_id) VALUES(
+      ( SELECT item_id FROM items WHERE item_id=${productID}),
+      ( SELECT user_id FROM users WHERE user_id=${user_id})
+    )`, { raw: true });
+  res.send("done");
+  /* const CartProduct = await UserCart.create({
     item_id: productId,
-    user_id: user.user_id
+    user_id: user_id
   }).then((res) => res.send("done"))
-    .catch(error => res.status(404).send(error));
+    .catch(error => res.status(404).send(error)); */
 });
 
 router.delete("/cart/product/:id", async (req, res) => {
-  const productId = req.params.id;
+  const productID = req.params.id;
   const sessionID = req.body.user;
-  var user = (typeof sessionID == typeof '') ? jwt.verify(sessionID, 'shhhhh') : sessionID;
-  const CartProduct = await UserCart.destroy({
+  const user = jwt.verify(sessionID, 'shhhhh');
+
+  db.get(`DELETE FROM users_cart WHERE item_id=${productID} AND user_id=(
+    SELECT user_id FROM users WHERE e_mail='${user.email}'
+  )`, { raw: true });
+
+  /* const CartProduct = await UserCart.destroy({
     where: {
       item_id: productId,
       user_id: user.user_id
     }
-  });
+  }); */
   res.send(true);
 });
 
