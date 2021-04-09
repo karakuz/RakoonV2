@@ -71,24 +71,24 @@ const Register = () => {
       document.querySelectorAll('input').forEach( input => input.disabled = false );
     }
     else if(res.data.success===true){
-    const keys = Object.keys(localStorage);
-    if(keys.length!==0){
-      keys.forEach(async productID =>{
-        console.log("productID: " + productID);
-        console.log("res:");
-        console.log(res);
-        console.log(res.data.user_id);
-        await Axios({
-          method: "POST",
-          data: {
-            item: productID,
-            user: {user_id: res.data.user_id}
-          },
-          withCredentials: true,
-          url: `http://localhost:4000/cart/product/${productID}`
-        }).then(res => console.log(res)).then(()=> localStorage.clear());
-      });
-    }
+      const keys = Object.keys(localStorage);
+      if(keys.length!==0){
+        keys.forEach(async productID =>{
+          console.log("productID: " + productID);
+          console.log("res:");
+          console.log(res);
+          console.log(res.data.user_id);
+          await Axios({
+            method: "POST",
+            data: {
+              item: productID,
+              user: {user_id: res.data.user_id}
+            },
+            withCredentials: true,
+            url: `http://localhost:4000/cart/product/${productID}`
+          }).then(res => console.log(res)).then(()=> localStorage.clear());
+        });
+      }
       document.querySelector('#success').style.display = 'flex';
       setTimeout(()=>{
         document.querySelector('#success').style.display = 'none';
@@ -152,8 +152,8 @@ const Register = () => {
 
         <div style={{marginBottom: '1em', width: '100%', borderBottom: '1px solid grey'}}>
           <Nav style={{display: 'flex', width: '100%'}}>
-            <Nav.Link style={{borderRight: '1px solid grey', flex: '1', textAlign: 'center'}} href="/login">LOGIN</Nav.Link>
-            <Nav.Link eventKey={2} href="/register" style={{flex: '1', textAlign: 'center', background: 'rgb(225,225,225)'}}>SIGN UP</Nav.Link>
+            <Nav.Link style={{borderRight: '1px solid grey', flex: '1', textAlign: 'center', background: 'rgb(225,225,225)'}} href="/login">LOGIN</Nav.Link>
+            <Nav.Link eventKey={2} href="/register" style={{flex: '1', textAlign: 'center'}}>SIGN UP</Nav.Link>
           </Nav>
         </div>
         <Form style={{margin: "0 auto", width: "500px"}}>

@@ -50,6 +50,11 @@ const Cart = (props) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log(products);
+  console.log(typeof products);
+  console.log(products.length !== 0);
+  console.log(typeof products !== typeof '');
+  console.log(products.length !== 0 && typeof products !== typeof '');
   if (products.length !== 0 && typeof products !== typeof '') {
     return (
       <div className="container" style={{}}>
@@ -95,7 +100,7 @@ const Cart = (props) => {
       </div>
     )
   }
-  else if (products[0] === undefined && localStorage.getItem('sessionID') === undefined) {
+  else if (products[0] === undefined) {
     return (
       <div className="container">
         <img src={Loading} alt='Loading...' />

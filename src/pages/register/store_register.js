@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Nav from "react-bootstrap/Nav";
@@ -16,7 +17,8 @@ const Store_Register = () => {
   const [registerSurname, setRegisterSurname] = useState("");
   const [storeName, setStoreName] = useState("");
   const PORT = process.env.PORT || 4000;
-
+  const history = useHistory();
+  
   const submit = async (e) => {
     e.preventDefault();
 
@@ -71,6 +73,13 @@ const Store_Register = () => {
       document.querySelectorAll('input').forEach( input => input.disabled = false );
       setTimeout(()=>{
         document.querySelector('#exists').style.display = 'none';
+      },3000);
+    } 
+    else if(res.data){
+      document.querySelector('#success').style.display = 'flex';
+      setTimeout(()=>{
+        document.querySelector('#success').style.display = 'none';
+        history.push('/login');
       },3000);
     }
   };

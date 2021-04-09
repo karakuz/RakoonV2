@@ -30,8 +30,6 @@ const DropDown = () => {
           return <NavDropdown.Item href={url} >{category.category}</NavDropdown.Item>
         })
       }
-
-
     </NavDropdown>
   )
 }
