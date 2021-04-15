@@ -35,6 +35,7 @@ const Main = () => {
         <Route path="/activate/:token" component={Activate} />
         <Route path="/product/:id" component={ProductScreen} />
         <Route path="/category/:name" component={CategoryPage} />
+        <Route path="/search/:keyword"  component={() => (<Body numOfItems={numOfItems} setNumOfItems={setNumOfItems} />)} />
 
         <ProtectedRoute path="/profile" component={Profile} />
       </Switch>

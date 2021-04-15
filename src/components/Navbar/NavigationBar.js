@@ -2,6 +2,8 @@ import Navbar from "react-bootstrap/Navbar";
 import RakoonLogo from '../rakoon_logo/RakoonLogo';
 import NavLeft from './NavLeft';
 import NavRight from './NavRight';
+import SearchBar from './SearchBar';
+import { Route } from 'react-router-dom';
 
 const NavigationBar = (props) => {
     return (
@@ -12,8 +14,9 @@ const NavigationBar = (props) => {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <NavLeft numOfItems={props.numOfItems} setNumOfItems={props.setNumOfItems}/>
+                <Route render = {({history}) => <SearchBar history = {history} /> }  />
                 <NavRight/>
-            </Navbar.Collapse>
+            </Navbar.Collapse>   
         </Navbar>
     );
 
