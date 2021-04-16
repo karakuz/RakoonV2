@@ -1,24 +1,54 @@
+import { Tab } from 'bootstrap';
 import React from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, Tabs } from 'react-bootstrap';
+
 
 const Profile = (props) => {
   console.log(`In profile: `);
-  var nameSurname= JSON.stringify(props.user.name,null,2)+JSON.stringify(props.user.surname,null,2);
-  var eMail = JSON.stringify(props.user.username);
+  const userInfo = {
+    name: props.user.name,
+    surname: props.user.surname,
+    email: props.user.email
+  };
+
   return (
-    <div style={{ display: 'flex',justifyContent: 'center'}}>
+    <div style={{ margin: '2rem', justifyContent: 'center'}}>
       {      
-       <Card style={{ margin: '5rem', width: '18rem' }}>
-       <Card.Body>
-         <Card.Title style={{textTransform: 'capitalize'}}>{nameSurname}</Card.Title>
-         <Card.Subtitle className="mb-2 text-muted">{eMail}</Card.Subtitle>
-         <Card.Text>
-           User information
-         </Card.Text>
-         <Card.Link href="#">Purchases</Card.Link>
-         <Card.Link href="#">Payment Information</Card.Link>
-       </Card.Body>
-     </Card>
+    <Tabs>
+    <Tab eventKey="account" title="Account">
+    </Tab>
+    <Tab eventKey="privacy" title="Privacy">
+    </Tab>
+    <Tab eventKey="orders" title="Orders">
+    </Tab>
+
+    <Tab.Content eventKey="account" style={{margin: '2rem'}}>
+       <Card>
+          <Card.Body>
+            <Card.Title>Name: {userInfo.name} </Card.Title>
+            <Card.Title>Surname: {userInfo.surname}</Card.Title>
+            <Card.Title>E-Mail Address: {userInfo.email}</Card.Title>
+          </Card.Body>
+        </Card>
+    </Tab.Content>
+
+    <Tab.Content eventKey="privacy" style={{margin: '2rem'}}>
+       <Card>
+          <Card.Body> 
+            </Card.Body>
+        </Card>
+    </Tab.Content>
+
+    <Tab.Content eventKey="orders" style={{margin: '2rem'}}>
+       <Card>
+          <Card.Body>
+            <Card.Title>You have no orders yet. </Card.Title>
+            </Card.Body>
+        </Card>
+    </Tab.Content>
+
+
+  </Tabs>
       }
     </div>
   )
