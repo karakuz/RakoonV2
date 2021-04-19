@@ -1,21 +1,23 @@
 import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import Axios from 'axios'
+
 const SearchBar = ({ history }) => {
     const [keyword, setKeyword] = useState('')
 
     const submitHandler = async (e) => {
         e.preventDefault()
-        const res = await Axios({
+        /* const res = await Axios({
             method: "POST",
             withCredentials: true,
             url: `http://localhost:4000/search/${keyword}`,
-        });
-        console.log(res.data);
-    }
+        }); */
+        //console.log(res.data);
+        history.push(`/search/${keyword}`);
+      }
 
     return (
-        <Form onSubmit={submitHandler} inline>
+        <Form onSubmit={e => submitHandler(e)} inline>
             <Form.Control
                 type='text'
                 name='q'

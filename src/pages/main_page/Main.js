@@ -14,6 +14,7 @@ import Activate from '../login/activate';
 import ProductScreen from './ProductScreen';
 import Store_Register from '../register/store_register';
 import CategoryPage from '../category/CategoryPage';
+import Search from '../../components/search/Search';
 
 const jwt = require('jsonwebtoken');
 
@@ -35,8 +36,7 @@ const Main = () => {
         <Route path="/activate/:token" component={Activate} />
         <Route path="/product/:id" component={ProductScreen} />
         <Route path="/category/:name" component={CategoryPage} />
-        <Route path="/search/:keyword"  component={() => (<Body numOfItems={numOfItems} setNumOfItems={setNumOfItems} />)} />
-
+        <Route path="/search/:keyword"  component={() => (<Search numOfItems={numOfItems} setNumOfItems={setNumOfItems} />)} />
         <ProtectedRoute path="/profile" component={Profile} />
       </Switch>
     </>
