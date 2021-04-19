@@ -8,6 +8,7 @@ import Axios from "axios";
 
 const Profile = (props) => {
   console.log(`In profile: `);
+  console.log(props);
   const userInfo = {
     name: props.user.name,
     surname: props.user.surname,

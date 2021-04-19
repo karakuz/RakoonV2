@@ -1,14 +1,10 @@
-
 import NavDropdown from "react-bootstrap/NavDropdown";
 import React, { useState, useEffect, useRef } from 'react'
 import Axios from 'axios'
 
-
-
 const DropDown = () => {
   const [categories, setcategories] = useState([]);
   //const ref = useRef(false);
-
 
   const getcategories = async () => {
     const res = await Axios({
