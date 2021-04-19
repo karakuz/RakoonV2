@@ -8,13 +8,13 @@ import { Col } from 'react-bootstrap';
 
 function numeral(number) {
   number = String(number);
-  if(number.indexOf('.')!==-1)
-    for(let i=number.indexOf('.')-3; i>0; i-=3)
-      number = number.substring(0,i) + ',' + number.substring(i);
+  if (number.indexOf('.') !== -1)
+    for (let i = number.indexOf('.') - 3; i > 0; i -= 3)
+      number = number.substring(0, i) + ',' + number.substring(i);
   else
-    for(let i=number.length-3; i>0; i-=3)
-      number = number.substring(0,i) + ',' + number.substring(i);
-  number = number.split('.')[0] + '.' + number.split('.')[1].substring(0,3);
+    for (let i = number.length - 3; i > 0; i -= 3)
+      number = number.substring(0, i) + ',' + number.substring(i);
+  number = number.split('.')[0] + '.' + number.split('.')[1].substring(0, 3);
   return number;
 }
 
@@ -37,9 +37,9 @@ const Cart = (props) => {
   };
 
   useEffect(() => {
-    if(Object.keys(localStorage).includes('sessionID')) getProducts();
-    else{
-      var arr=[]
+    if (Object.keys(localStorage).includes('sessionID')) getProducts();
+    else {
+      var arr = []
       Object.keys(localStorage).forEach(productID => {
         arr.push(JSON.parse(localStorage.getItem(productID)));
       });
@@ -47,7 +47,7 @@ const Cart = (props) => {
       console.log(products);
       console.log(typeof products);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   console.log(products);
@@ -91,8 +91,8 @@ const Cart = (props) => {
               <span>Total: ${numeral(products.reduce((a, v) => a = a + v.price, 0))}</span>
             </div>
           </div>
-          <div style={{display: 'flex', justifyContent: 'center', marginBottom: '10px'}}>
-            <button style={{background: 'green', fontSize: '20px', color: 'white', display: 'inline-block', borderRadius: '20px', padding: '10px 20px'}}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
+            <button style={{ background: 'green', fontSize: '20px', color: 'white', display: 'inline-block', borderRadius: '20px', padding: '10px 20px' }}>
               Buy
             </button>
           </div>
@@ -110,8 +110,8 @@ const Cart = (props) => {
   else {
     return (
       <div className="container">
-        <span style={{fontSize: '20px', marginTop: '30px'}}>
-        You have no item in your cart
+        <span style={{ fontSize: '20px', marginTop: '30px' }}>
+          You have no item in your cart
         </span>
       </div>
     )
