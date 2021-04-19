@@ -13,6 +13,7 @@ const ProductRoutes = require("./backend/routes/Product/ProductRoutes");
 const UserCartRoutes = require("./backend/routes/UserCart/CartRoutes");
 const CategoryRoutes = require("./backend/routes/Menu/CategoryRoutes");
 const ProfileRoutes = require("./backend/routes/Profile/ProfileRoutes");
+const SearchRoutes = require("./backend/routes/Search/SearchRoutes");
 const Database = require("./backend/config/database");
 const rest = require('./backend/config/rest');
 //----------------------------------------- END OF IMPORTS---------------------------------------------------
@@ -55,6 +56,7 @@ app.use(ProductRoutes);
 app.use(UserCartRoutes);
 app.use(CategoryRoutes);
 app.use(ProfileRoutes);
+app.use(SearchRoutes);
 app.use(rest);
 
 if (process.env.NODE_ENV === 'production') {
