@@ -40,6 +40,10 @@ const Login = () => {
       history.push('/');
     }
 
+    else if (user.data === "twofa") {
+      history.push('/2fa');
+    }
+
     else {
       document.querySelector('.error').style.display = 'block';
     }
@@ -54,8 +58,8 @@ const Login = () => {
       <div className="form_container" style={{ width: '590px', margin: '0 auto', fontSize: '2em' }}>
         <div style={{ marginBottom: '1em', width: '100%', borderBottom: '1px solid grey' }}>
           <Nav style={{ display: 'flex', width: '100%' }}>
-            <Nav.Link style={{ borderRight: '1px solid grey', flex: '1', textAlign: 'center'}} href="/login">LOGIN</Nav.Link>
-            <Nav.Link eventKey={2} href="/register" style={{ flex: '1', textAlign: 'center', background: 'rgb(225,225,225)'}}>SIGN UP</Nav.Link>
+            <Nav.Link style={{ borderRight: '1px solid grey', flex: '1', textAlign: 'center' }} href="/login">LOGIN</Nav.Link>
+            <Nav.Link eventKey={2} href="/register" style={{ flex: '1', textAlign: 'center', background: 'rgb(225,225,225)' }}>SIGN UP</Nav.Link>
           </Nav>
         </div>
         <form onSubmit={Submit}>
