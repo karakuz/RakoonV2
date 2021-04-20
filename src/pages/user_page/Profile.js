@@ -101,18 +101,32 @@ const Profile = (props) => {
           <Tab.Content eventKey="privacy" style={{ margin: '2rem' }}>
             <Card>
               <Card.Body> 
-              <ButtonGroup toggle>
-                  2 Factor Authentication :
+              <Form style={{ margin: "2rem auto" }}>
+                  <ButtonGroup toggle>
+                    2 Factor Authentication :
                   <ToggleButton
-                    type="radio" variant="primary" name="radio" value="Enable" onChange={(e) => setRadioValue(e.currentTarget.value)}>
-                    Enable
+                      type="radio" variant="primary" name="radio" value="Enable" onChange={(e) => setRadioValue(e.currentTarget.value)}>
+                      Enable
                   </ToggleButton>
 
-                  <ToggleButton
-                    type="radio" variant="secondary" name="radio" value="Disable" onChange={(e) => setRadioValue(e.currentTarget.value)}>
-                    Disable
+                    <ToggleButton
+                      type="radio" variant="secondary" name="radio" value="Disable" onChange={(e) => setRadioValue(e.currentTarget.value)}>
+                      Disable
                   </ToggleButton>
-                </ButtonGroup>
+
+                  </ButtonGroup>
+
+                  <Form.Group controlId="formBasicPassword">
+                    <Form.Label>Old Password</Form.Label>
+                    <Form.Control type="password" />
+                    <Form.Label>New Password</Form.Label>
+                    <Form.Control type="password" />
+                  </Form.Group>
+
+                  <Button variant="primary" type="submit">
+                    Change Password
+                </Button>
+                </Form>
 
               </Card.Body>
             </Card>
