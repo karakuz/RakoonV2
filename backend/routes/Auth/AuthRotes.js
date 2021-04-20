@@ -17,6 +17,9 @@ router.post("/login", (req, res, next) => {
       res.send("notVerified");
 
     }
+    else if (user.is_twofa === 1) {
+      res.send("twofa");
+    }
     else {
       req.logIn(user, (err) => {
         if (err) throw err;
@@ -48,7 +51,7 @@ router.post("/register", async (req, res) => {
     VerifyMail(newUser, activate);
     const user_id = await require('../../config/database').get(`SELECT user_id FROM users WHERE e_mail='${req.body.username}'`);
     console.log(user_id[0].user_id);
-    res.send({success: true, user_id: user_id[0].user_id});
+    res.send({ success: true, user_id: user_id[0].user_id });
   }
 
   else {
