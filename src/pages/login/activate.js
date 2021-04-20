@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import Form from "react-bootstrap/Form";
+import React from 'react';
 import Button from "react-bootstrap/Button";
 import { useParams, useHistory } from 'react-router-dom';
 
@@ -13,6 +12,7 @@ const Activate = () => {
     var url = `http://localhost:${PORT}/activate/${token}`
     const submit = async (e) => {
         e.preventDefault();
+        // eslint-disable-next-line no-unused-vars
         const res = await Axios.post(url).catch(err => console.log(`Error in activate.js: ${err}`));
         history.push("/login");
     };

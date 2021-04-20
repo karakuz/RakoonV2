@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Tab } from 'bootstrap';
 import React, { useState, useRef, useEffect } from 'react';
 import { Card, Tabs } from 'react-bootstrap';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { useParams, useHistory } from 'react-router-dom';
+//import { useParams, useHistory } from 'react-router-dom';
 import Axios from "axios";
 
 const Profile = (props) => {
@@ -11,12 +12,11 @@ const Profile = (props) => {
 
   const ref = useRef(true);
 
-
-  const { token } = useParams();
+  //const { token } = useParams();
   const [registerName, setRegisterName] = useState("");
   const [registerSurname, setRegisterSurname] = useState("");
   const [registerEmail, setRegisterEmail] = useState("");
-  const history = useHistory();
+  //const history = useHistory();
   const PORT = process.env.PORT || 4000;
 
   var url = `http://localhost:${PORT}/profile/update`
@@ -102,7 +102,7 @@ const Profile = (props) => {
             <Card>
               <Card.Body> 
               <Form style={{ margin: "2rem auto" }}>
-                  <ButtonGroup toggle>
+                  {/* <ButtonGroup toggle>
                     2 Factor Authentication :
                   <ToggleButton
                       type="radio" variant="primary" name="radio" value="Enable" onChange={(e) => setRadioValue(e.currentTarget.value)}>
@@ -114,7 +114,7 @@ const Profile = (props) => {
                       Disable
                   </ToggleButton>
 
-                  </ButtonGroup>
+                  </ButtonGroup> */}
 
                   <Form.Group controlId="formBasicPassword">
                     <Form.Label>Old Password</Form.Label>

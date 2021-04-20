@@ -18,6 +18,7 @@ const ProductCard = (props) => {
     e.preventDefault();
     if (!props.isRemovable) {
       if(sessionID!==null){
+        // eslint-disable-next-line no-unused-vars
         const res = await Axios({
           method: "POST",
           data: {
@@ -42,6 +43,7 @@ const ProductCard = (props) => {
     }
     else if (props.isRemovable) {
       if(sessionID!==null){
+        // eslint-disable-next-line no-unused-vars
         const res = await Axios({
           method: "DELETE",
           data: {
