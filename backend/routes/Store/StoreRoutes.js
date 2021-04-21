@@ -9,5 +9,15 @@ router.post("/getStoreName", async (req, res) => {
   res.send(storeName);
 });
 
+router.post("/getStoreItems", async (req, res) => {
+  const user_id = req.body.user_id;
+  const items = await db.get(`SELECT * FROM rakoon.items WHERE store_id=
+	  (SELECT store_id FROM rakoon.store WHERE owner_id=${user_id})
+  `);
+
+  res.send(items);
+});
+
+
 
 module.exports = router;

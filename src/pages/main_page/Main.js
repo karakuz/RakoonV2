@@ -19,6 +19,7 @@ import Search from '../../components/search/Search';
 import Store from '../store/Store';
 import StoreAdd from '../store/StoreAdd';
 import StoreShow from '../store/StoreShow';
+import StoreItemEdit from '../store/StoreItemEdit';
 
 const Main = () => {
   const [numOfItems, setNumOfItems] = useState(0);
@@ -41,8 +42,9 @@ const Main = () => {
         <Route path="/search/:keyword"  component={() => (<Search numOfItems={numOfItems} setNumOfItems={setNumOfItems} />)} />
         <ProtectedStoreRoute path="/store" exact component={Store}/>
         <ProtectedStoreRoute path="/store/additem" component={StoreAdd}/>
-        <ProtectedStoreRoute path="/store/showitems" component={StoreShow}/>
-        <ProtectedRoute path="/profile" component={Profile} />
+        <ProtectedStoreRoute path="/store/showitems" exact component={StoreShow}/>
+        <Route path="/store/showitems/:item_id" component={StoreItemEdit}/>
+        <ProtectedRoute path="/profile" component={Profile}/>
       </Switch>
     </>
   )
