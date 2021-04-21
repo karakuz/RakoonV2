@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
 import ProductCard from '../../components/product/product_card';
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import '../css/bootstrap.min.css';
 import { Col, Row, Container } from 'react-bootstrap';
 
@@ -22,6 +22,7 @@ const CategoryPage = (props) => {
 
     useEffect(() => {
         getProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

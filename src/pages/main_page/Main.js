@@ -7,6 +7,7 @@ import Register from "../register/register";
 import NavigationBar from "../../components/Navbar/NavigationBar";
 import ProtectedRoute from './Routes/ProtectedProfileRouter';
 import ProtectedLoginRouter from './Routes/ProtectedLoginRouter';
+import ProtectedStoreRoute from './Routes/ProtectedStoreRouter';
 import Profile from '../user_page/Profile';
 import Forgot from '../forgot/forgot';
 import Reset from '../forgot/reset';
@@ -15,8 +16,10 @@ import ProductScreen from './ProductScreen';
 import Store_Register from '../register/store_register';
 import CategoryPage from '../category/CategoryPage';
 import Search from '../../components/search/Search';
-
-const jwt = require('jsonwebtoken');
+import Store from '../store/Store';
+import StoreAdd from '../store/StoreAdd';
+import StoreShow from '../store/StoreShow';
+import StoreItemEdit from '../store/StoreItemEdit';
 
 const Main = () => {
   const [numOfItems, setNumOfItems] = useState(0);
@@ -37,7 +40,11 @@ const Main = () => {
         <Route path="/product/:id" component={ProductScreen} />
         <Route path="/category/:name" component={CategoryPage} />
         <Route path="/search/:keyword"  component={() => (<Search numOfItems={numOfItems} setNumOfItems={setNumOfItems} />)} />
-        <ProtectedRoute path="/profile" component={Profile} />
+        <ProtectedStoreRoute path="/store" exact component={Store}/>
+        <ProtectedStoreRoute path="/store/additem" component={StoreAdd}/>
+        <ProtectedStoreRoute path="/store/showitems" exact component={StoreShow}/>
+        <Route path="/store/showitems/:item_id" component={StoreItemEdit}/>
+        <ProtectedRoute path="/profile" component={Profile}/>
       </Switch>
     </>
   )

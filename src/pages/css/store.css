@@ -1,0 +1,23 @@
+#nav > span{
+  font-size: 1.2rem;
+  border-right: 1px solid black;
+  font-weight: bold;
+  color: rgba(0,0,0,.5);
+  margin-left: 1rem;
+  padding-right: 1rem;
+  cursor: pointer;
+}
+
+#add > div{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+#add > div > input {
+  width: 275px;
+} 
+
+#add > div > label {
+  margin-bottom: 0;
+} 

@@ -11,8 +11,8 @@ const ProtectedLoginRouter = ({component: Component}) => {
       }
       else
         return <Redirect to={{pathname: '/'}}/>  
-    }
-  }/>
+      }
+    }/>
   )
 }
 

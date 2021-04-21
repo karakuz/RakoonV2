@@ -50,18 +50,12 @@ const Cart = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(products);
-  console.log(typeof products);
-  console.log(products.length !== 0);
-  console.log(typeof products !== typeof '');
-  console.log(products.length !== 0 && typeof products !== typeof '');
   if (products.length !== 0 && typeof products !== typeof '') {
     return (
       <div className="container" style={{}}>
         <div className='row' style={{ marginRight: '220px' }}>
           {
             products.map((product) => {
-              console.log(product);
               return (
                 <Col sm={12} md={6} lg={4} xl={3}>
                   <ProductCard key={product.id} {...product} isRemovable={true} numOfItems={props.numOfItems} setNumOfItems={props.setNumOfItems} />
