@@ -46,6 +46,12 @@ const User = db.sequelize.define('User', {
     activate_token: {
         type: DataTypes.STRING
     },
+    is_twofa: {
+        type: DataTypes.INTEGER
+    },
+    twofa_token: {
+        type: DataTypes.STRING
+    }
 }, {
     tableName: "users",
     timestamps: false

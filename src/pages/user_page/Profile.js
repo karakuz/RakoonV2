@@ -14,18 +14,22 @@ const Profile = (props) => {
 
   const { token } = useParams();
   const [registerName, setRegisterName] = useState("");
+  const [registerOldPassword, setRegisterOldPassword] = useState("");
+  const [registerNewPassword, setRegisterNewPassword] = useState("");
   const [registerSurname, setRegisterSurname] = useState("");
   const [registerEmail, setRegisterEmail] = useState("");
+  var [twofaenable, setTwofaenable] = useState(true);
   const history = useHistory();
   const PORT = process.env.PORT || 4000;
-
+  console.log(twofaenable);
   var url = `http://localhost:${PORT}/profile/update`
 
   var userInfo = {
     name: "",
     surname: "",
     email: "",
-    oldemail: ""
+    oldemail: "",
+    twofa: false
   };
   useEffect(() => {
     const getProfile = async () => {
@@ -41,7 +45,7 @@ const Profile = (props) => {
       userInfo.name = res.data.name;
       userInfo.surname = res.data.surname;
       userInfo.email = res.data.e_mail;
-
+      twofaenable = res.data.is_twofa;
     };
     getProfile().then(() => {
       console.log(userInfo);
@@ -54,7 +58,30 @@ const Profile = (props) => {
     });
   }, []);
 
+  const submitPrivacy = async (e) => {
+    e.preventDefault();
+    if (registerOldPassword === "" && registerNewPassword === "") {
+      // Only send two fa
+      console.log("This is twofa " + twofaenable);
+      const res = await Axios.put(`http://localhost:4000/profile/2fa/update`, {
+        twofaenable: twofaenable,
+        sessionID: sessionID
+      }).catch(err => console.log(`Error 2fa.js: ${err}`));
+      window.location.reload();
 
+
+    }
+    else if (registerOldPassword === "" && registerNewPassword !== "") {
+      // ERROR
+    }
+    else if (registerOldPassword !== "" && registerNewPassword === "") {
+      // ERROR
+    }
+    else {
+      // verify old password and update all
+    }
+
+  }
 
 
   const submit = async (e) => {
@@ -100,31 +127,25 @@ const Profile = (props) => {
 
           <Tab.Content eventKey="privacy" style={{ margin: '2rem' }}>
             <Card>
-              <Card.Body> 
-              <Form style={{ margin: "2rem auto" }}>
-                  <ButtonGroup toggle>
-                    2 Factor Authentication :
-                  <ToggleButton
-                      type="radio" variant="primary" name="radio" value="Enable" onChange={(e) => setRadioValue(e.currentTarget.value)}>
-                      Enable
-                  </ToggleButton>
-
-                    <ToggleButton
-                      type="radio" variant="secondary" name="radio" value="Disable" onChange={(e) => setRadioValue(e.currentTarget.value)}>
-                      Disable
-                  </ToggleButton>
-
-                  </ButtonGroup>
+              <Card.Body>
+                <Form style={{ margin: "2rem auto" }} onSubmit={submitPrivacy}>
+                  <Form.Check
+                    type="switch"
+                    id="custom-switch"
+                    label="2-Factor Authentication"
+                    value={twofaenable}
+                    onClick={(e) => setTwofaenable(!twofaenable)}
+                  />
 
                   <Form.Group controlId="formBasicPassword">
                     <Form.Label>Old Password</Form.Label>
-                    <Form.Control type="password" />
+                    <Form.Control type="password" onChange={e => setRegisterOldPassword(e.target.value)} />
                     <Form.Label>New Password</Form.Label>
-                    <Form.Control type="password" />
+                    <Form.Control type="password" onChange={e => setRegisterNewPassword(e.target.value)} />
                   </Form.Group>
 
-                  <Button variant="primary" type="submit">
-                    Change Password
+                  <Button variant="primary" type="submit" onClick={submitPrivacy}>
+                    Update
                 </Button>
                 </Form>
 

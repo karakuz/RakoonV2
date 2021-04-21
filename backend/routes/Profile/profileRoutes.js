@@ -23,7 +23,22 @@ router.post("/profile/user", async (req, res) => {
   const user = await jwt.verify(sessionID, 'shhhhh');
   var updatedUser = await User.findOne({ where: { user_id: user.user_id } });
   res.send(updatedUser);
-})
+});
+
+
+router.put("/profile/2fa/update", async (req, res) => {
+  const sessionID = req.body.sessionID;
+  console.log(sessionID);
+  const user = await jwt.verify(sessionID, 'shhhhh');
+  const twofaenable = req.body.twofaenable;
+
+  await User.update({ is_twofa: twofaenable ? 1 : 0 }, {
+    where: {
+      user_id: user.user_id
+    }
+  });
+  res.send(true);
+});
 
 
 module.exports = router;
