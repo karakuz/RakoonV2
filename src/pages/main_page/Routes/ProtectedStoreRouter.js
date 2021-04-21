@@ -5,10 +5,6 @@ const jwt = require("jsonwebtoken");
 const ProtectedStoreRouter = ({component: Component}) => {
   const sessionID = localStorage.getItem('sessionID');
   const user = jwt.verify(sessionID, 'shhhhh');
-  console.log("In route");
-  console.log(user);
-  console.log(user.role_id);
-  console.log(Component);
   
   return (
     <Route render={() => {

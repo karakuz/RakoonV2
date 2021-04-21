@@ -7,3 +7,17 @@
   padding-right: 1rem;
   cursor: pointer;
 }
+
+#add > div{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+#add > div > input {
+  width: 275px;
+} 
+
+#add > div > label {
+  margin-bottom: 0;
+} 

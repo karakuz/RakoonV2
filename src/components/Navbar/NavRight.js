@@ -31,8 +31,6 @@ const NavRight = () => {
   }
 
   useEffect(() => {
-    console.log(user);
-    console.log(user.role_id);
     if(user.role_id===3)
       getStoreName();
   // eslint-disable-next-line react-hooks/exhaustive-deps
