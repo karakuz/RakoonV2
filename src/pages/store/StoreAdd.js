@@ -20,13 +20,13 @@ const StoreAdd = () => {
       url: `http://localhost:4000/categories`,
     });
     setCategories(res.data);
-    setCategory(categories[0].category)
     console.log(categories);
+    if(categories[0]!==undefined) setCategory(categories[0].category);
   }
 
   useEffect(() => {
     getCategories();
-  }, [])
+  }, []);
 
   const submit = async (e) =>{
     e.preventDefault();
