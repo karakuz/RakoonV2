@@ -7,7 +7,8 @@ const jwt = require("jsonwebtoken");
 const NavLeft = (props) => {
   const ref = useRef(false);
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID'); 
-  const user = jwt.verify(sessionID, 'shhhhh');
+  let user = null;
+  if(sessionID != null) user = jwt.verify(sessionID, 'shhhhh');
   var Cart = 'Cart';
 
   const getProducts = async () => {
@@ -33,7 +34,7 @@ const NavLeft = (props) => {
   },[]);
   
   useEffect(()=>{
-    if(ref.current && user.role_id !== 3){
+    if(user!=null && ref.current && user.role_id !== 3){
       let text = document.getElementById('cart').innerHTML;
       if(props.numOfItems===0) text=`Cart`;
       else if(!text.includes('(')) text += ` (${props.numOfItems})`;
@@ -43,7 +44,7 @@ const NavLeft = (props) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[props.numOfItems]);
   
-  if(user.role_id===3){
+  if(user!=null && user.role_id===3){
     return (
       <Nav className="mr-auto">
         <DropDown/>
