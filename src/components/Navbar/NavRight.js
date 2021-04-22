@@ -8,7 +8,8 @@ const NavRight = () => {
   const [storeName, setStoreName] = useState("STORE");
   let history = useHistory();
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID'); 
-  const user = jwt.verify(sessionID, 'shhhhh');
+  let user = null;
+  if(sessionID != null) user = jwt.verify(sessionID, 'shhhhh');
   //console.log(user);
 
   const logout = () => {
@@ -31,7 +32,7 @@ const NavRight = () => {
   }
 
   useEffect(() => {
-    if(user.role_id===3)
+    if(user!=null && user.role_id===3)
       getStoreName();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -44,7 +45,7 @@ const NavRight = () => {
       </Nav>
     )
   }
-  else if(user.role_id===3){
+  else if(user!=null && user.role_id===3){
     return(
       <Nav>
         <Nav.Link href="/store">{storeName}</Nav.Link>
