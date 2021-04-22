@@ -41,7 +41,16 @@ const Login = () => {
     }
 
     else if (user.data === "twofa") {
-      history.push('/2-factor-auth');
+      const req = await Axios({
+        method: "POST",
+        data: {
+          email: email,
+        },
+        credentials: 'include',
+        withCredentials: true,
+        url: "http://localhost:4000/2fa/generateSecret",
+      });
+      history.push(`/2-factor-auth/${req.data}`);
     }
 
     else if (user.data === "UserNotExist") {

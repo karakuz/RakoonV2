@@ -8,6 +8,7 @@ const app = express();
 const flash = require("connect-flash");
 const path = require('path');
 const AuthRoutes = require("./backend/routes/Auth/AuthRotes");
+const TwoFARoutes = require("./backend/routes/Auth/2faRoutes");
 const ForgotRoutes = require("./backend/routes/Forgot/ForgotRoutes");
 const ProductRoutes = require("./backend/routes/Product/ProductRoutes");
 const UserCartRoutes = require("./backend/routes/UserCart/CartRoutes");
@@ -58,6 +59,7 @@ app.use(CategoryRoutes);
 app.use(ProfileRoutes);
 app.use(SearchRoutes);
 app.use(StoreRoutes);
+app.use(TwoFARoutes);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('build'));
