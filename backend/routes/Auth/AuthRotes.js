@@ -8,6 +8,7 @@ const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 const passportLocal = require("passport-local").Strategy;
 
+/*
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) throw err;
@@ -27,6 +28,36 @@ router.post("/login", (req, res, next) => {
       });
     }
   })(req, res, next);
+});
+*/
+
+router.post("/login", async (req, res) => {
+  const user = await User.findOne({ where: { e_mail: req.body.username } });
+
+  if (user === null || user === undefined) {
+    res.send("UserNotExist");
+  }
+  else {
+    bcrypt.compare(req.body.password, user.password, (err, result) => {
+      if (result === true) {
+        if (user.is_verified) {
+          if (user.is_twofa) {
+            res.send("twofa");
+          }
+          else {
+            // Succesful login
+            res.send(user);
+          }
+        }
+        else {
+          res.send("notVerified")
+        }
+      }
+      else {
+        res.send("WrongPassword");
+      }
+    })
+  }
 });
 
 router.post("/register", async (req, res) => {

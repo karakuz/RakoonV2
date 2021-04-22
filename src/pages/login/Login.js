@@ -41,11 +41,16 @@ const Login = () => {
     }
 
     else if (user.data === "twofa") {
-      history.push('/2fa');
+      history.push('/2-factor-auth');
     }
 
-    else {
+    else if (user.data === "UserNotExist") {
       document.querySelector('.error').style.display = 'block';
+    }
+
+    else if (user.data === "WrongPassword") {
+      // Wrong Password
+      document.querySelector('.WrongPassword').style.display = 'block';
     }
   }
 
@@ -80,6 +85,7 @@ const Login = () => {
             />
             <span style={{ fontSize: '16px', position: 'absolute', right: '0', bottom: '-25px', color: 'red', display: 'none' }} className='error'>Email or Password is wrong!</span>
             <span style={{ fontSize: '16px', position: 'absolute', right: '0', bottom: '-25px', color: 'red', display: 'none' }} className='notverified'>User is not verified</span>
+            <span style={{ fontSize: '16px', position: 'absolute', right: '0', bottom: '-25px', color: 'red', display: 'none' }} className='WrongPassword'>Your password is wrong</span>
             <span style={{ fontSize: '16px', position: 'absolute', right: '0', bottom: '-55px', color: 'red', cursor: 'pointer' }} onClick={() => redirect()}>Forgot Password?</span>
           </div>
           <div>
