@@ -34,6 +34,7 @@ const TwoFactorAuth = () => {
 
         }
         else {
+            // zeliha error invalid code
             document.querySelector('.InvalidCode').style.display = 'block';
         }
 

@@ -22,6 +22,7 @@ const Reset = () => {
       history.push('/login');
     }
     else if (res.data) {
+      // change the alert zeliha
       alert('Your password has been changed');
       history.push('/login');
     }

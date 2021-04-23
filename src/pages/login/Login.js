@@ -58,7 +58,7 @@ const Login = () => {
     }
 
     else if (user.data === "WrongPassword") {
-      // Wrong Password
+      // Wrong Password zeliha
       document.querySelector('.WrongPassword').style.display = 'block';
     }
   }
