@@ -18,7 +18,7 @@ const Profile = (props) => {
   const [registerNewPassword, setRegisterNewPassword] = useState("");
   const [registerSurname, setRegisterSurname] = useState("");
   const [registerEmail, setRegisterEmail] = useState("");
-  var [twofaenable, setTwofaenable] = useState(true);
+  var [twofaenable, setTwofaenable] = useState("");
   const history = useHistory();
   const PORT = process.env.PORT || 4000;
   console.log(twofaenable);
@@ -55,6 +55,7 @@ const Profile = (props) => {
       setRegisterName(userInfo.name);
       setRegisterSurname(userInfo.surname);
       setRegisterEmail(userInfo.email);
+      setTwofaenable(!twofaenable);
     });
   }, []);
 
@@ -64,7 +65,7 @@ const Profile = (props) => {
       // Only send two fa
       console.log("This is twofa " + twofaenable);
       const res = await Axios.put(`http://localhost:4000/profile/2fa/update`, {
-        twofaenable: twofaenable,
+        twofaenable: twofaenable == "On" ? 1 : 0,
         sessionID: sessionID
       }).catch(err => console.log(`Error 2fa.js: ${err}`));
       window.location.reload();
@@ -129,13 +130,12 @@ const Profile = (props) => {
             <Card>
               <Card.Body>
                 <Form style={{ margin: "2rem auto" }} onSubmit={submitPrivacy}>
-                  <Form.Check
-                    type="switch"
-                    id="custom-switch"
-                    label="2-Factor Authentication"
-                    value={twofaenable}
-                    onClick={(e) => setTwofaenable(!twofaenable)}
-                  />
+                  <Form.Label>Two Factor Auth</Form.Label>
+                  <Form.Control as="select" onChange={e => setTwofaenable(e.target.value)}>
+                    <option>On</option>
+                    <option>Off</option>
+
+                  </Form.Control>
 
                   <Form.Group controlId="formBasicPassword">
                     <Form.Label>Old Password</Form.Label>

@@ -43,7 +43,7 @@ const TwoFactorAuth = () => {
     return (
         <Form style={{ margin: "3em auto" }}>
             <Form.Group controlId="formBasicPassword">
-                <Form.Label>Verification Code has been sent to your E-Mail address. Please check your E-Mail Address.</Form.Label>
+                <Form.Label>Verification Code</Form.Label>
                 <Form.Control type="number" onChange={e => setRegisterCode(e.target.value)} />
             </Form.Group>
             <span style={{ fontSize: '16px', position: 'absolute', right: '0', bottom: '-25px', color: 'red', display: 'none' }} className='InvalidCode'>Code is invalid</span>
