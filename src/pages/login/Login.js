@@ -50,7 +50,7 @@ const Login = () => {
         withCredentials: true,
         url: "http://localhost:4000/2fa/generateSecret",
       });
-      history.push(`/two-factor-auth/${req.data}`);
+      history.push(`/two-factor-auth/${req.data.user_id}`);
     }
 
     else if (user.data === "UserNotExist") {

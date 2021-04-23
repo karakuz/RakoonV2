@@ -11,10 +11,13 @@ router.post("/2fa/generateSecret", async (req, res) => {
     console.log(newSecret);
     console.log(newSecret.secret);
     const user = await User.findOne({ where: { e_mail: req.body.email } });
-    await User.update({ twofa_token: newSecret.secret }, { where: { e_mail: req.body.email } });
     const token = twofactor.generateToken(newSecret.secret).token;
+    await User.update({ twofa_token: token }, { where: { e_mail: req.body.email } });
     TwoFAMail(req.body.email, token);
-
+    const info = {
+        "user_id": user.user_id
+    }
+    res.send(info);
 });
 
 router.post("/2fa/verifySecret/:token", async (req, res) => {
@@ -23,14 +26,13 @@ router.post("/2fa/verifySecret/:token", async (req, res) => {
     const id = req.body.id;
     const user = await User.findOne({ where: { user_id: id } });
 
-    const verified = await twofactor.verifyToken(user.twofa_token, inputToken);
+    const verified = inputToken == user.twofa_token ? true : false;
     console.log(verified);
     if (verified) {
-        res.send(true);
-
+        res.send(user);
     }
     else {
-        res.send(false);
+        res.send("WrongCode");
     }
 })
 

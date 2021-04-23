@@ -4,6 +4,7 @@ import { useParams, useHistory } from 'react-router-dom';
 
 import Axios from "axios";
 import { Form } from 'react-bootstrap';
+const jwt = require("jsonwebtoken");
 
 const TwoFactorAuth = () => {
     const { token } = useParams();
@@ -25,17 +26,27 @@ const TwoFactorAuth = () => {
             credentials: 'include',
             withCredentials: true,
             url: url
-        })
-        history.push("/login");
+        });
+        if (typeof res.data == typeof {}) {
+            const token = jwt.sign(res.data, 'shhhhh');
+            sessionStorage.setItem('sessionID', token);
+            history.push('/');
+
+        }
+        else {
+            document.querySelector('.InvalidCode').style.display = 'block';
+        }
+
     };
 
 
     return (
         <Form style={{ margin: "3em auto" }}>
             <Form.Group controlId="formBasicPassword">
-                <Form.Label>New Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" onChange={e => setRegisterCode(e.target.value)} />
+                <Form.Label>Verification Code has been sent to your E-Mail address. Please check your E-Mail Address.</Form.Label>
+                <Form.Control type="number" onChange={e => setRegisterCode(e.target.value)} />
             </Form.Group>
+            <span style={{ fontSize: '16px', position: 'absolute', right: '0', bottom: '-25px', color: 'red', display: 'none' }} className='InvalidCode'>Code is invalid</span>
             <Button variant="primary" style={{ margin: "3em auto" }} type="submit" onClick={(e) => submit(e)}>
                 Send
         </Button>
