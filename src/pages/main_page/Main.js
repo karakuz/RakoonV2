@@ -20,6 +20,7 @@ import Store from '../store/Store';
 import StoreAdd from '../store/StoreAdd';
 import StoreShow from '../store/StoreShow';
 import StoreItemEdit from '../store/StoreItemEdit';
+import TwoFactorAuth from '../login/twofactorauth';
 
 const Main = () => {
   const [numOfItems, setNumOfItems] = useState(0);
@@ -31,6 +32,7 @@ const Main = () => {
       <Switch>
         <Route path="/" exact component={() => (<Body numOfItems={numOfItems} setNumOfItems={setNumOfItems} />)} />
         <ProtectedLoginRouter path="/login" component={Login} />
+        <Route path="/two-factor-auth/:token" component={TwoFactorAuth} />
         <Route path="/cart" component={() => (<Cart numOfItems={numOfItems} setNumOfItems={setNumOfItems} />)} />
         <Route path="/register" component={Register} />
         <Route path="/store_register" component={Store_Register} />
@@ -39,12 +41,12 @@ const Main = () => {
         <Route path="/activate/:token" component={Activate} />
         <Route path="/product/:id" component={ProductScreen} />
         <Route path="/category/:name" component={CategoryPage} />
-        <Route path="/search/:keyword"  component={() => (<Search numOfItems={numOfItems} setNumOfItems={setNumOfItems} />)} />
-        <ProtectedStoreRoute path="/store" exact component={Store}/>
-        <ProtectedStoreRoute path="/store/additem" component={StoreAdd}/>
-        <ProtectedStoreRoute path="/store/showitems" exact component={StoreShow}/>
-        <Route path="/store/showitems/:item_id" component={StoreItemEdit}/>
-        <ProtectedRoute path="/profile" component={Profile}/>
+        <Route path="/search/:keyword" component={() => (<Search numOfItems={numOfItems} setNumOfItems={setNumOfItems} />)} />
+        <ProtectedStoreRoute path="/store" exact component={Store} />
+        <ProtectedStoreRoute path="/store/additem" component={StoreAdd} />
+        <ProtectedStoreRoute path="/store/showitems" exact component={StoreShow} />
+        <Route path="/store/showitems/:item_id" component={StoreItemEdit} />
+        <ProtectedRoute path="/profile" component={Profile} />
       </Switch>
     </>
   )
