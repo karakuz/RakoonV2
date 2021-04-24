@@ -22,7 +22,6 @@ const StoreAdd = () => {
       url: `http://localhost:4000/categories`,
     });
     setCategories(res.data);
-    console.log(categories);
     if(categories[0]!==undefined) setCategory("");
   }
 
@@ -45,6 +44,7 @@ const StoreAdd = () => {
     
     document.querySelector('#emptyError').style.display = "flex";
     setTimeout( () => document.querySelector('#emptyError').style.display = "none", 3000);
+    
     return;  
     }
     
@@ -86,9 +86,19 @@ const StoreAdd = () => {
       brand: brand,
       count: count,
       category: category,
-      img: imgURL
+      image: imgURL
     }
     console.log(item);
+
+    const res = await Axios({
+      method: "POST",
+      data:{
+        item: item
+      },
+      withCredentials: true,
+      url: `http://localhost:4000/addProduct`,
+    });
+    console.log(res);
   }
 
   return (
