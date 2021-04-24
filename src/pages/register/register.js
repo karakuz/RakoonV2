@@ -74,10 +74,6 @@ const Register = () => {
       const keys = Object.keys(localStorage);
       if(keys.length!==0){
         keys.forEach(async productID =>{
-          console.log("productID: " + productID);
-          console.log("res:");
-          console.log(res);
-          console.log(res.data.user_id);
           await Axios({
             method: "POST",
             data: {

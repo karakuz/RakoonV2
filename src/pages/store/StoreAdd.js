@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import StoreNav from './StoreNav';
 import Axios from 'axios';
 import '../css/store.css';
+import '../css/register.css';
+import redX from '../css/redX.jpg';
 const jwt = require("jsonwebtoken");
 
 const StoreAdd = () => {
@@ -32,18 +34,33 @@ const StoreAdd = () => {
     e.preventDefault();
     const queries = ["#name", "#description", "#price", "#category", "#count", "#brand"]
 
-    for(let id of queries){
-      if(document.querySelector(id) === "")
-        alert("One of the inputs can not be empty");
+    let emptyInputs=[];
+    for(let id of queries)
+      if(document.querySelector(id).value === "")
+        emptyInputs.push(id);
+    
+    if(emptyInputs.length!==0){
+      for(let input of emptyInputs)
+        document.querySelector(input).style.border = "3px solid red";
+    
+    document.querySelector('#emptyError').style.display = "flex";
+    setTimeout( () => document.querySelector('#emptyError').style.display = "none", 3000);
+    return;  
     }
-
+    
     const url = "https://api.cloudinary.com/v1_1/rakoon/image/upload";
     
     const files = document.querySelector("[type=file]").files;
+    if(files.length>1){
+      document.querySelector('#selectOnlyOneErr').style.display = "flex";
+      setTimeout( () => document.querySelector('#selectOnlyOneErr').style.display = "none", 3000);
+      return;
+    }
     const file = (files.length === 1) ? document.querySelector("[type=file]").files[0] : null;
     
     if(file === null) {
-      alert("Select only 1 image");
+      document.querySelector('#selectImgErr').style.display = "flex";
+      setTimeout( () => document.querySelector('#selectImgErr').style.display = "none", 3000);
       return;
     };
 
@@ -78,7 +95,35 @@ const StoreAdd = () => {
     <div style={{margin:"2em", display: "flex", flexDirection:"column"}}>
       <StoreNav/>
       <h3 style={{textAlign: "center"}}>Add Product</h3>
-      <div style={{margin:"2em auto", display: "inline-flex", flexDirection:"column", fontSize: "1.3rem", width:"430px"}} id="add">
+      <div style={{margin:"2em auto", display: "inline-flex", flexDirection:"column", fontSize: "1.3rem", width:"430px", position: "relative"}} id="add">
+        <div style={{display: "none", position: 'absolute', overflow: 'auto', width: '550px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='emptyError'>
+          <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
+          <div style={{flexGrow: '1', marginTop: '8px'}}>
+            <span style={{fontSize: '20px'}}>One of the following inputs can not be empty</span>
+            <div className="progress-bar-error">
+              <span className="progress-bar-inner"></span>
+            </div>
+          </div>
+        </div>
+        <div style={{display: "none", position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='selectOnlyOneErr'>
+          <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
+          <div style={{flexGrow: '1', marginTop: '8px'}}>
+            <span style={{fontSize: '20px'}}>Select only one image</span>
+            <div className="progress-bar-error">
+              <span className="progress-bar-inner"></span>
+            </div>
+          </div>
+        </div>
+        <div style={{display: "none", position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='selectImgErr'>
+          <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
+          <div style={{flexGrow: '1', marginTop: '8px'}}>
+            <span style={{fontSize: '20px'}}>Select an image</span>
+            <div className="progress-bar-error">
+              <span className="progress-bar-inner"></span>
+            </div>
+          </div>
+        </div>
+
         <div>
           <label>Name:</label>
           <input type="text" onChange={(e)=> setItemName(e.target.value)} id="name"/>
