@@ -19,7 +19,7 @@ const Activate = () => {
 
 
     return (
-
+        // zeliha
         <Button variant="primary" style={{ margin: "3em auto" }} type="submit" onClick={(e) => submit(e)}>
             Activate
         </Button>
