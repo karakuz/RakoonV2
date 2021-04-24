@@ -54,11 +54,12 @@ const Login = () => {
     }
 
     else if (user.data === "UserNotExist") {
+      document.querySelector('.WrongPassword').style.display = 'none';
       document.querySelector('.error').style.display = 'block';
     }
 
     else if (user.data === "WrongPassword") {
-      // Wrong Password zeliha
+      document.querySelector('.error').style.display = 'none';
       document.querySelector('.WrongPassword').style.display = 'block';
     }
   }
