@@ -21,7 +21,7 @@ const StoreAdd = () => {
     });
     setCategories(res.data);
     console.log(categories);
-    if(categories[0]!==undefined) setCategory(categories[0].category);
+    if(categories[0]!==undefined) setCategory("");
   }
 
   useEffect(() => {
@@ -30,9 +30,23 @@ const StoreAdd = () => {
 
   const submit = async (e) =>{
     e.preventDefault();
+    const queries = ["#name", "#description", "#price", "#category", "#count", "#brand"]
+
+    for(let id of queries){
+      if(document.querySelector(id) === "")
+        alert("One of the inputs can not be empty");
+    }
+
     const url = "https://api.cloudinary.com/v1_1/rakoon/image/upload";
-    const file = document.querySelector("[type=file]").files[0];
     
+    const files = document.querySelector("[type=file]").files;
+    const file = (files.length === 1) ? document.querySelector("[type=file]").files[0] : null;
+    
+    if(file === null) {
+      alert("Select only 1 image");
+      return;
+    };
+
     const data = new FormData();
     data.append('file', file);
     data.append('upload_preset', "ml_default");
@@ -63,19 +77,19 @@ const StoreAdd = () => {
   return (
     <div style={{margin:"2em", display: "flex", flexDirection:"column"}}>
       <StoreNav/>
-      <h3 style={{textAlign: "center"}}>Add Item</h3>
+      <h3 style={{textAlign: "center"}}>Add Product</h3>
       <div style={{margin:"2em auto", display: "inline-flex", flexDirection:"column", fontSize: "1.3rem", width:"430px"}} id="add">
         <div>
           <label>Name:</label>
-          <input type="text" onChange={(e)=> setItemName(e.target.value)}/>
+          <input type="text" onChange={(e)=> setItemName(e.target.value)} id="name"/>
         </div>
         <div>
           <label>Description:</label>
-          <textarea rows="5" cols="23" onChange={(e)=> setDescription(e.target.value)}></textarea>
+          <textarea rows="5" cols="23" onChange={(e)=> setDescription(e.target.value)} id="description"></textarea>
         </div>
         <div>
           <label>Price:</label>
-          <input type="text" onChange={(e)=> setPrice(e.target.value)}/>
+          <input type="text" onChange={(e)=> setPrice(e.target.value)} id="price"/>
         </div>
         <div style={{position: "relative"}}>
           <label>Image:</label>
@@ -84,21 +98,23 @@ const StoreAdd = () => {
         </div>
         <div>
           <label>Category</label>
-          <select name="categories" id="categories" onChange={(e)=> setCategory(e.target.value)}>
+          <select name="categories" id="category" onChange={(e)=> setCategory(e.target.value)}>
+            {<option value="" selected></option>}
             {
               categories.map( category => {
-                return <option value={category.category}>{category.category}</option>
+                const categoryName = category.category;
+                return <option value={category.category}>{categoryName[0].toUpperCase() + categoryName.slice(1)}</option>
               })
             }
           </select>
         </div>
         <div>
           <label>Count</label>
-          <input type="number" min="1" onChange={(e)=> setCount(e.target.value)}/>
+          <input type="number" min="1" onChange={(e)=> setCount(e.target.value)} id="count"/>
         </div>
         <div>
           <label>Brand</label>
-          <input type="text" onChange={(e)=> setBrand(e.target.value)}/>
+          <input type="text" onChange={(e)=> setBrand(e.target.value)} id="brand"/>
         </div>
         <div style={{display: "flex", marginTop:"1rem"}}>
           <input type="submit" value="Add Item" style={{margin: "0 auto", width: "initial", background: "black", color: "white", padding: "0.5rem", borderRadius: "7px"}} 
