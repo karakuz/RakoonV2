@@ -27,7 +27,7 @@ const StoreProductCart = (props) => {
       <Card.Body>
         <Card.Text as='h5'>${product.price}</Card.Text>
         <Button variant="success">
-          <span onClick={() => history.push(`/store/showitems/${product.id}`)}>Edit</span>
+          <span onClick={() => history.push(`/store/products/${product.id}`)}>Edit</span>
         </Button>
       </Card.Body>
     </Card>

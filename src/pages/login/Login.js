@@ -15,7 +15,6 @@ const Login = () => {
   const Submit = async (e) => {
     e.preventDefault();
     const rememberMe = document.querySelector('#rememberMe').checked;
-    console.log(rememberMe);
     setEmail('');
     setPassword('');
     const user = await Axios({
@@ -28,7 +27,6 @@ const Login = () => {
       withCredentials: true,
       url: `http://localhost:${PORT}/login`,
     });
-    console.log(user);
     if (user.data === "notVerified") {
       document.querySelector('.notverified').style.display = 'block';
     }

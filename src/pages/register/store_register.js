@@ -66,7 +66,6 @@ const Store_Register = () => {
       withCredentials: true,
       url: `http://localhost:${PORT}/store_register`,
     });
-    console.log(res.data);
     if(res.data.res==="exists"){
       document.querySelector('#exists').style.display = 'flex';
       document.querySelector('#submit').disabled = false;

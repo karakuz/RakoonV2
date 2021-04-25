@@ -11,7 +11,6 @@ const Forgot = () => {
 
   const submit = async (e) => {
     e.preventDefault();
-    console.log(registerUsername);
     if(registerUsername===''){
       alert('Enter your email!');
       return;

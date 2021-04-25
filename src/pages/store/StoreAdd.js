@@ -47,6 +47,13 @@ const StoreAdd = () => {
     
     return;  
     }
+    const re = new RegExp("[+-]?([0-9]*[.])?[0-9]+");
+    const regRes = re.exec(String(price)) 
+    if(regRes.input !== regRes[0]){
+      document.querySelector('#priceErr').style.display = "flex";
+      setTimeout( () => document.querySelector('#priceErr').style.display = "none", 3000);
+      return;
+    }
     
     const url = "https://api.cloudinary.com/v1_1/rakoon/image/upload";
     
@@ -128,6 +135,15 @@ const StoreAdd = () => {
           <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
           <div style={{flexGrow: '1', marginTop: '8px'}}>
             <span style={{fontSize: '20px'}}>Select an image</span>
+            <div className="progress-bar-error">
+              <span className="progress-bar-inner"></span>
+            </div>
+          </div>
+        </div>
+        <div style={{display: "none", position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='priceErr'>
+          <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
+          <div style={{flexGrow: '1', marginTop: '8px'}}>
+            <span style={{fontSize: '20px'}}>Enter valid price</span>
             <div className="progress-bar-error">
               <span className="progress-bar-inner"></span>
             </div>

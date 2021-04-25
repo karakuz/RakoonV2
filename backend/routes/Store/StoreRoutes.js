@@ -47,6 +47,33 @@ router.post("/addProduct", async (req, res) => {
   res.send("done");
 });
 
+/* const item = {
+  user_id: user.user_id,
+  name : itemName,
+  description: description,
+  price: price,
+  brand: brand,
+  count: count,
+  category: category,
+  image: imgURL
+} */
+
+router.put("/editProduct", async (req, res) => {
+  const item = req.body.item;
+  await db.get(`UPDATE rakoon.items SET 
+    item_name = '${item.name}',
+    price = ${parseFloat(item.price)},
+    description = '${item.description}',
+    image = '${item.image}',
+    category = '${item.category}',
+    store_id = (SELECT store_id FROM rakoon.store WHERE owner_id=${item.user_id}),
+    countInStock = ${parseInt(item.count)},
+    brand = '${item.brand}'
+    WHERE item_id=${item.item_id};`);
+
+  res.send("done");
+});
+
 
 
 module.exports = router;

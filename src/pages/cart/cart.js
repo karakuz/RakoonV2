@@ -44,8 +44,6 @@ const Cart = (props) => {
         arr.push(JSON.parse(localStorage.getItem(productID)));
       });
       setProducts(arr);
-      console.log(products);
-      console.log(typeof products);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

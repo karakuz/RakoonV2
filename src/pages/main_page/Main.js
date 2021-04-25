@@ -43,9 +43,9 @@ const Main = () => {
         <Route path="/category/:name" component={CategoryPage} />
         <Route path="/search/:keyword" component={() => (<Search numOfItems={numOfItems} setNumOfItems={setNumOfItems} />)} />
         <ProtectedStoreRoute path="/store" exact component={Store} />
-        <ProtectedStoreRoute path="/store/additem" component={StoreAdd} />
-        <ProtectedStoreRoute path="/store/showitems" exact component={StoreShow} />
-        <Route path="/store/showitems/:item_id" component={StoreItemEdit} />
+        <ProtectedStoreRoute path="/store/addproduct" component={StoreAdd} />
+        <ProtectedStoreRoute path="/store/products" exact component={StoreShow} />
+        <Route path="/store/products/:item_id" component={StoreItemEdit} />
         <ProtectedRoute path="/profile" component={Profile} />
       </Switch>
     </>

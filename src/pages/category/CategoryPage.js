@@ -10,7 +10,6 @@ const CategoryPage = (props) => {
     //const ref = useRef(false);
     const { name } = useParams();
 
-    console.log("Body");
     const getProducts = async () => {
         const res = await Axios({
             method: "GET",

@@ -7,8 +7,8 @@ const StoreNav = () => {
   return (
     <div style={{marginBottom: "1rem"}} id='nav'>
       <span onClick={()=> history.push("/store")}>Store Info</span>
-      <span onClick={()=> history.push("/store/additem")}>Add Item</span>
-      <span  onClick={()=> history.push("/store/showitems")} style={{border: "none"}}>Show Items</span>
+      <span onClick={()=> history.push("/store/addproduct")}>Add Product</span>
+      <span  onClick={()=> history.push("/store/products")} style={{border: "none"}}>Products</span>
     </div>
   )
 }
