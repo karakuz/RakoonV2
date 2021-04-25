@@ -78,15 +78,43 @@ const Profile = (props) => {
     }
     else if (registerOldPassword === "" && registerNewPassword !== "") {
       // ERROR
+      alert("Please enter the old Password");
     }
     else if (registerOldPassword !== "" && registerNewPassword === "") {
       // ERROR
+
+      alert("Please provide a new Password");
     }
     else {
       // verify old password and update all
+      console.log("asdasd");
+      const verifyPassword = await Axios.post(`http://localhost:4000/profile/passwordUpdate`, {
+        sessionID: sessionID,
+        oldPassword: registerOldPassword,
+        newPassword: registerNewPassword
+      });
+
+      if (verifyPassword.data) {
+        alert("Your password has been changed succesfully");
+        if (twofaenable === 1 || twofaenable === 0) {
+          return;
+        }
+
+        const res = await Axios.put(`http://localhost:4000/profile/2fa/update`, {
+          twofaenable: twofaenable == "Off" ? 0 : 1,
+          sessionID: sessionID
+        }).catch(err => console.log(`Error 2fa.js: ${err}`));
+        window.location.reload();
+      }
+      else {
+        alert("Your old password is wrong");
+      }
+
     }
 
   }
+
+
 
 
   const submit = async (e) => {

@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../../models/user");
+const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 
 
@@ -40,6 +41,33 @@ router.put("/profile/2fa/update", async (req, res) => {
   });
   res.send(true);
 });
+
+router.post("/profile/passwordUpdate", async (req, res) => {
+  const sessionID = req.body.sessionID;
+  const sessionuser = await jwt.verify(sessionID, 'shhhhh');
+  const oldPassword = req.body.oldPassword;
+  const newPassword = req.body.newPassword;
+  var user = await User.findOne(({ where: { user_id: sessionuser.user_id } }));
+
+  bcrypt.compare(oldPassword, user.password, async (err, result) => {
+    console.log(result);
+    if (result) {
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+      await User.update({ password: hashedPassword }, {
+        where: {
+          user_id: user.user_id
+        }
+      });
+      res.send(true);
+    }
+    else {
+      res.send(false);
+    }
+  })
+});
+
+
 
 
 module.exports = router;
