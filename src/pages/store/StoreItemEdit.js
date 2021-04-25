@@ -6,7 +6,6 @@ import Axios from 'axios';
 import '../css/store.css';
 import StoreNav from './StoreNav';
 import redX from '../css/redX.jpg';
-import { set } from 'mongoose';
 const jwt = require("jsonwebtoken");
 
 const StoreItemEdit = () => {
@@ -79,7 +78,6 @@ const StoreItemEdit = () => {
         return;
       }
     }
-    
 
     const url = "https://api.cloudinary.com/v1_1/rakoon/image/upload";
     

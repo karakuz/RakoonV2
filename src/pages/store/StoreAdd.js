@@ -95,7 +95,6 @@ const StoreAdd = () => {
       category: category,
       image: imgURL
     }
-    console.log(item);
 
     const res = await Axios({
       method: "POST",
@@ -105,7 +104,6 @@ const StoreAdd = () => {
       withCredentials: true,
       url: `http://localhost:4000/addProduct`,
     });
-    console.log(res);
   }
 
   return (
