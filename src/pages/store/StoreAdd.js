@@ -175,7 +175,7 @@ const StoreAdd = () => {
             {
               categories.map( category => {
                 const categoryName = category.category;
-                return <option value={category.category}>{categoryName[0].toUpperCase() + categoryName.slice(1)}</option>
+                return <option value={category.category}>{categoryName[0] + categoryName.slice(1)}</option>
               })
             }
           </select>
