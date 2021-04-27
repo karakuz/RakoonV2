@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-duplicate-props */
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 import { Card, Col, Image, ListGroup, Row } from 'react-bootstrap'
 import Axios from 'axios';
@@ -19,8 +19,10 @@ const StoreItemEdit = () => {
   const [count, setCount] = useState();
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
+  const ref = useRef(false);
 
   const history = useHistory();
+  const queries = ["#name", "#description", "#price", "#category", "#count", "#brand"]
 
   useEffect(() => {
     (async ()=>{
@@ -50,9 +52,12 @@ const StoreItemEdit = () => {
     setCategory(product.category);
   }, [product])
 
+  useEffect(() => { if(ref.current) document.querySelectorAll('.list-group-item>h3')[0].innerText = itemName }, [itemName])
+  useEffect(() => { if(ref.current) document.querySelectorAll('.list-group-item')[2].innerText = description }, [description])
+  useEffect(() => { if(ref.current) document.querySelectorAll('.list-group-item')[1].innerText = document.querySelectorAll('.list-group-item')[1].innerText.substring(0,8)+price }, [price])
+
   const submit = async (e) => {
     e.preventDefault();
-    const queries = ["#name", "#description", "#price", "#category", "#count", "#brand"]
 
     let emptyInputs=[];
     for(let id of queries)
@@ -131,123 +136,125 @@ const StoreItemEdit = () => {
     }
 }
 
-  return (
-    <div style={{margin:"2em", display: "flex", flexDirection:"column"}}>
-      <StoreNav/>
-      <h3 style={{textAlign: "center"}}>Edit Product</h3>
-      <div style={{margin:"2em auto", display: "inline-flex", flexDirection:"column", fontSize: "1.3rem", width:"430px", position: "relative"}} id="add">
-      <div style={{display: "none", position: 'absolute', overflow: 'auto', width: '550px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='emptyError'>
-          <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
-          <div style={{flexGrow: '1', marginTop: '8px'}}>
-            <span style={{fontSize: '20px'}}>One of the following inputs can not be empty</span>
-            <div className="progress-bar-error">
-              <span className="progress-bar-inner"></span>
-            </div>
-          </div>
-        </div>
-        <div style={{display: "none", position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='selectOnlyOneErr'>
-          <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
-          <div style={{flexGrow: '1', marginTop: '8px'}}>
-            <span style={{fontSize: '20px'}}>Select only one image</span>
-            <div className="progress-bar-error">
-              <span className="progress-bar-inner"></span>
-            </div>
-          </div>
-        </div>
-        <div style={{display: "none", position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='priceErr'>
-          <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
-          <div style={{flexGrow: '1', marginTop: '8px'}}>
-            <span style={{fontSize: '20px'}}>Enter valid price</span>
-            <div className="progress-bar-error">
-              <span className="progress-bar-inner"></span>
-            </div>
-          </div>
-        </div>
+const setPreview = (e) => {document.querySelectorAll('img')[4].src = URL.createObjectURL(e.target.files[0]); console.log("fired");}
 
-        <div>
-          <label>Name:</label>
-          <input type="text" onChange={(e)=> setItemName(e.target.value)} value={itemName} id="name"/>
-        </div>
-        <div>
-          <label>Description:</label>
-          <textarea rows="5" cols="23" onChange={(e)=> setDescription(e.target.value)} value={description} id="description"></textarea>
-        </div>
-        <div>
-          <label>Price:</label>
-          <input type="text" onChange={(e)=> setPrice(parseFloat(e.target.value))} value={price} id="price"/>
-        </div>
-        <div style={{position: "relative"}}>
-          <label>Image:</label>
-          <button style={{display: "block", width:"275px", height:"35px"}} onClick={()=> document.getElementById('image').click()}>Change Image</button>
-          
-          <input name="file" type="file" style={{position: "absolute", right: "0", display: "none"}} id="image"/>
-          {/* <input type="file" style={{position: "absolute", right: "0"}}/> */}
-        </div>
-        <div>
-          <label>Category</label>
-          <select name="categories" id="categories" onChange={(e)=> setCategory(e.target.value)} value={category} id="category">
-            {
-              categories.map( category => {
-                return <option value={category.category}>{category.category}</option>
-              })
-            }
-          </select>
-        </div>
-        <div>
-          <label>Count</label>
-          <input type="number" min="1" onChange={(e)=> setCount(e.target.value)} value={count} id="count"/>
-        </div>
-        <div>
-          <label>Brand</label>
-          <input type="text" onChange={(e)=> setBrand(e.target.value)} value={brand} id="brand"/>
-        </div>
-        <div style={{display: "flex", marginTop:"1rem"}}>
-          <input type="submit" value="Update" style={{margin: "0 auto", width: "initial", background: "black", color: "white", padding: "0.5rem", borderRadius: "7px"}} 
-            onClick={(e)=> submit(e)}/>
+return (
+  <div style={{margin:"2em", display: "flex", flexDirection:"column"}}>
+    <StoreNav/>
+    <h3 style={{textAlign: "center"}}>Edit Product</h3>
+    <div style={{margin:"2em auto", display: "inline-flex", flexDirection:"column", fontSize: "1.3rem", width:"430px", position: "relative"}} id="add">
+    <div style={{display: "none", position: 'absolute', overflow: 'auto', width: '550px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='emptyError'>
+        <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
+        <div style={{flexGrow: '1', marginTop: '8px'}}>
+          <span style={{fontSize: '20px'}}>One of the following inputs can not be empty</span>
+          <div className="progress-bar-error">
+            <span className="progress-bar-inner"></span>
+          </div>
         </div>
       </div>
-      <h3 style={{textAlign: "center", marginTop: "1rem"}}>Preview</h3>
+      <div style={{display: "none", position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='selectOnlyOneErr'>
+        <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
+        <div style={{flexGrow: '1', marginTop: '8px'}}>
+          <span style={{fontSize: '20px'}}>Select only one image</span>
+          <div className="progress-bar-error">
+            <span className="progress-bar-inner"></span>
+          </div>
+        </div>
+      </div>
+      <div style={{display: "none", position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='priceErr'>
+        <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
+        <div style={{flexGrow: '1', marginTop: '8px'}}>
+          <span style={{fontSize: '20px'}}>Enter valid price</span>
+          <div className="progress-bar-error">
+            <span className="progress-bar-inner"></span>
+          </div>
+        </div>
+      </div>
+
       <div>
-      <Row style={{ margin: '2rem' }}>
-        <Col md={6}>
-          <Image src={product.image} alt={product.name} style={{ position: 'relative', maxWidth: '100%', height: 'auto' }} />
-        </Col>
-        <Col md={3} >
-          <ListGroup variant='flush' >
-            <ListGroup.Item><h3>{product.item_name}</h3> </ListGroup.Item>
-            <ListGroup.Item>Price: ${product.price} </ListGroup.Item>
-            <ListGroup.Item>Description: {product.description} </ListGroup.Item>
-          </ListGroup>
-        </Col>
-        <Col md={3}>
-          <Card style={{ margin: '2rem' }}>
-            <ListGroup variant='flush' >
-              <ListGroup.Item>
-                <Row>
-                  <Col>Price: </Col>
-                  <Col><srong> $ {product.price} </srong></Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <Row>
-                  <Col>Status: </Col>
-                  <Col> <srong> {product.countInStock > 0 ? 'In Stock' : 'Out Of Stock'} </srong> </Col>
-                </Row>
-              </ListGroup.Item>
-              <ListGroup.Item>
-                {/* <Button className='btn-block'
-                type='button'
-                disabled={product.countInStock == 0} >
-              Add To Cart
-              </Button> */}
-              </ListGroup.Item>
-            </ListGroup>
-          </Card>
-        </Col>
-      </Row>
+        <label>Name:</label>
+        <input type="text" onChange={(e)=> {setItemName(e.target.value); ref.current=true}} value={itemName} id="name"/>
+      </div>
+      <div>
+        <label>Description:</label>
+        <textarea rows="5" cols="23" onChange={(e)=> {setDescription(e.target.value); ref.current=true}} value={description} id="description"></textarea>
+      </div>
+      <div>
+        <label>Price:</label>
+        <input type="text" onChange={(e)=> {setPrice(parseFloat(e.target.value)); ref.current=true}} value={price} id="price"/>
+      </div>
+      <div style={{position: "relative"}}>
+        <label>Image:</label>
+        <button style={{display: "block", width:"275px", height:"35px"}} onClick={()=> document.getElementById('image').click()}>Change Image</button>
+        
+        <input name="file" type="file" style={{position: "absolute", right: "0", display: "none"}} onChange={(e)=> setPreview(e)} id="image"/>
+        {/* <input type="file" style={{position: "absolute", right: "0"}}/> */}
+      </div>
+      <div>
+        <label>Category</label>
+        <select name="categories" id="categories" onChange={(e)=> setCategory(e.target.value)} value={category} id="category">
+          {
+            categories.map( category => {
+              return <option value={category.category}>{category.category}</option>
+            })
+          }
+        </select>
+      </div>
+      <div>
+        <label>Count</label>
+        <input type="number" min="1" onChange={(e)=> setCount(e.target.value)} value={count} id="count"/>
+      </div>
+      <div>
+        <label>Brand</label>
+        <input type="text" onChange={(e)=> setBrand(e.target.value)} value={brand} id="brand"/>
+      </div>
+      <div style={{display: "flex", marginTop:"1rem"}}>
+        <input type="submit" value="Update" style={{margin: "0 auto", width: "initial", background: "black", color: "white", padding: "0.5rem", borderRadius: "7px"}} 
+          onClick={(e)=> submit(e)}/>
       </div>
     </div>
-  )
+    <h3 style={{textAlign: "center", marginTop: "1rem"}}>Preview</h3>
+    <div>
+    <Row style={{ margin: '2rem' }}>
+      <Col md={6}>
+        <Image src={product.image} alt={product.name} style={{ position: 'relative', maxWidth: '100%', height: 'auto' }} />
+      </Col>
+      <Col md={3} >
+        <ListGroup variant='flush' >
+          <ListGroup.Item><h3>{product.item_name}</h3> </ListGroup.Item>
+          <ListGroup.Item>Price: ${product.price} </ListGroup.Item>
+          <ListGroup.Item>{product.description} </ListGroup.Item>
+        </ListGroup>
+      </Col>
+      <Col md={3}>
+        <Card style={{ margin: '2rem' }}>
+          <ListGroup variant='flush' >
+            <ListGroup.Item>
+              <Row>
+                <Col>Price: </Col>
+                <Col><srong> $ {product.price} </srong></Col>
+              </Row>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Row>
+                <Col>Status: </Col>
+                <Col> <srong> {product.countInStock > 0 ? 'In Stock' : 'Out Of Stock'} </srong> </Col>
+              </Row>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              {/* <Button className='btn-block'
+              type='button'
+              disabled={product.countInStock == 0} >
+            Add To Cart
+            </Button> */}
+            </ListGroup.Item>
+          </ListGroup>
+        </Card>
+      </Col>
+    </Row>
+    </div>
+  </div>
+)
 }
 
 export default StoreItemEdit

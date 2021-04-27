@@ -104,6 +104,9 @@ const StoreAdd = () => {
       withCredentials: true,
       url: `http://localhost:4000/addProduct`,
     });
+
+    if(res.data === "done")
+     alert("Product is added")
   }
 
   return (
