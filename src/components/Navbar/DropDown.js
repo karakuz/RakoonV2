@@ -22,7 +22,7 @@ const DropDown = () => {
       {
         categories.map((category) => {
           const url = `/category/${category.category}`
-          return <NavDropdown.Item href={url} >{category.category}</NavDropdown.Item>
+          return <NavDropdown.Item href={url} style={{fontSize: "20px"}}>{category.category}</NavDropdown.Item>
         })
       }
     </NavDropdown>

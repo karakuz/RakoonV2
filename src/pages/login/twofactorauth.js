@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Button from "react-bootstrap/Button";
 import { useParams, useHistory } from 'react-router-dom';
-
 import Axios from "axios";
 import { Form } from 'react-bootstrap';
 const jwt = require("jsonwebtoken");
@@ -27,11 +26,12 @@ const TwoFactorAuth = () => {
             withCredentials: true,
             url: url
         });
+        console.log(res.data);
+        console.log(typeof res.data);
         if (typeof res.data == typeof {}) {
             const token = jwt.sign(res.data, 'shhhhh');
             sessionStorage.setItem('sessionID', token);
             history.push('/');
-
         }
         else {
             // zeliha error invalid code
@@ -42,15 +42,19 @@ const TwoFactorAuth = () => {
 
 
     return (
-        <Form style={{ margin: "3em auto" }}>
-            <Form.Group controlId="formBasicPassword">
-                <Form.Label>Verification Code</Form.Label>
-                <Form.Control type="number" onChange={e => setRegisterCode(e.target.value)} />
-            </Form.Group>
-            <span style={{ fontSize: '16px', position: 'absolute', right: '0', bottom: '-25px', color: 'red', display: 'none' }} className='InvalidCode'>Code is invalid</span>
+        <Form style={{ margin: "3em auto", position: "relative" }}>
+          <Form.Group controlId="formBasicPassword">
+              <Form.Label>Verification Code</Form.Label>
+              <Form.Control type="number" onChange={e => setRegisterCode(e.target.value)} />
+          </Form.Group>
+          <span style={{ fontSize: '16px', position: 'absolute', right: '0', color: 'red', display: 'none' }} className='InvalidCode'>Code is invalid</span>
+          
+          <div style={{display: "flex"}}>
             <Button variant="primary" style={{ margin: "3em auto" }} type="submit" onClick={(e) => submit(e)}>
                 Send
-        </Button>
+            </Button>
+          </div>
+          
         </Form>
     )
 }

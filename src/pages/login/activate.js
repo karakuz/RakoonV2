@@ -14,16 +14,20 @@ const Activate = () => {
         e.preventDefault();
         // eslint-disable-next-line no-unused-vars
         const res = await Axios.post(url).catch(err => console.log(`Error in activate.js: ${err}`));
+        if(res.data === "NoUser")
+          alert("Invalid Token")
         history.push("/login");
-    };
+      };
 
 
     return (
         // zeliha
-        <Button variant="primary" style={{ margin: "3em auto" }} type="submit" onClick={(e) => submit(e)}>
+        <div style={{display: "flex"}}>
+          <Button variant="primary" style={{ margin: "3em auto" }} type="submit" onClick={(e) => submit(e)}>
             Activate
-        </Button>
-
+          </Button>
+        </div>
+        
     )
 }
 

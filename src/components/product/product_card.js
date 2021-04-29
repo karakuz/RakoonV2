@@ -62,16 +62,16 @@ const ProductCard = (props) => {
   }
   return (
     <Card className='my-3 p-3 rounded' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
-      <Link to={`/product/${product.id}`}>
+      <Link to={`/product/${product.id}`} style={{}}>
         <Card.Img src={product.img} variant='top' style={{ flexShrink: '0', minWidth: '100%', minHeight: '100%' }}></Card.Img>
       </Link>
       <Link to={`/product/${product.id}`}>
         <Card.Title as='div'>
-          <strong>{product.name}</strong>
+          <strong style={{ display: "block", marginTop: "1rem" }}>{product.name}</strong>
         </Card.Title>
       </Link>
       <Card.Body>
-        <Card.Text as='h5'>${product.price}</Card.Text>
+        <Card.Text as='h5' style={{textAlign: "center"}}>${product.price}</Card.Text>
         <Button variant="success">
           <span onClick={(e) => change(e)}>{addOrDelete}</span>
         </Button>
