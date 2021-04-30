@@ -21,6 +21,8 @@ import StoreAdd from '../store/StoreAdd';
 import StoreShow from '../store/StoreShow';
 import StoreItemEdit from '../store/StoreItemEdit';
 import TwoFactorAuth from '../login/twofactorauth';
+import Checkout from '../checkout/checkout';
+
 
 const Main = () => {
   const [numOfItems, setNumOfItems] = useState(0);
@@ -35,6 +37,7 @@ const Main = () => {
         <Route path="/two-factor-auth/:token" component={TwoFactorAuth} />
         <Route path="/cart" component={() => (<Cart numOfItems={numOfItems} setNumOfItems={setNumOfItems} />)} />
         <Route path="/register" component={Register} />
+        <Route path="/checkout" component={Checkout} />
         <Route path="/store_register" component={Store_Register} />
         <Route path="/forgot" component={Forgot} />
         <Route path="/reset/:token" component={Reset} />
