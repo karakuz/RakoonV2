@@ -3,6 +3,7 @@ import React from 'react'
 import { Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
+import Stars from './Stars';
 
 const ProductCard = (props) => {
   const addOrDelete = (!props.isRemovable) ? 'Add To Cart' : 'Delete';
@@ -70,6 +71,7 @@ const ProductCard = (props) => {
           <strong style={{ display: "block", marginTop: "1rem" }}>{product.name}</strong>
         </Card.Title>
       </Link>
+      <Stars/>
       <Card.Body>
         <Card.Text as='h5' style={{textAlign: "center"}}>${product.price}</Card.Text>
         <Button variant="success">
