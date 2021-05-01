@@ -15,6 +15,7 @@ const ProductScreen = () => {
       url: `http://localhost:4000/product/${id}`,
     });
     setProduct(res.data);
+    console.log(res.data);
   };
 
   useEffect(() => {
@@ -23,13 +24,13 @@ const ProductScreen = () => {
   }, []);
 
   return (
-    <>
+    <div>
       <Link className='btn btn-light my-3' to='/'>
         Go Back
       </Link>
       <Row style={{ margin: '2rem' }}>
         <Col md={6}>
-          <Image src={product.image} alt={product.name} style={{ position: 'relative', maxWidth: '100%', height: 'auto' }} />
+          <Image src={product.image} alt={product.item_name} style={{ position: 'relative', maxWidth: '100%', height: 'auto' }} />
         </Col>
         <Col md={3} >
           <ListGroup variant='flush' >
@@ -64,7 +65,11 @@ const ProductScreen = () => {
           </Card>
         </Col>
       </Row>
-    </>
+      <div>
+        <h3 style={{textAlign: "center"}}>Comments</h3>
+        {/* {(product.rate === 0) ? <p style={{textAlign: "center"}}>No comments</p> : <p>Some comment</p>}  */}
+      </div>
+    </div>
   )
 }
 
