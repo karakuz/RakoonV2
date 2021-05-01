@@ -33,6 +33,7 @@ const Cart = (props) => {
       url: `http://localhost:4000/cart/products`,
     });
     setProducts(res.data);
+    console.log(res.data);
     ref.current = false;
   };
 

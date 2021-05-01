@@ -17,11 +17,24 @@ const ProductScreen = () => {
     setProduct(res.data);
     console.log(res.data);
   };
+  
+  const getComments = async () => {
+    const res = await Axios({
+      method: "GET",
+      withCredentials: true,
+      url: `http://localhost:4000/getComments/${id}`,
+    });
+    
+  }
 
   useEffect(() => {
     getProducts();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    getComments();
+  }, [product])
 
   return (
     <div>

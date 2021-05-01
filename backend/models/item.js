@@ -36,9 +36,6 @@ const Item = db.sequelize.define('Item', {
     countInStock: {
         type: DataTypes.INTEGER,
     },
-    rating_id: {
-        type: DataTypes.INTEGER,
-    },
     brand: {
         type: DataTypes.STRING,
     },

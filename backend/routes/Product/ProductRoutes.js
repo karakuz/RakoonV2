@@ -20,13 +20,12 @@ router.get("/product/:id", async (req, res) => {
 });
 
 router.get("/products", async (req, res) => {
-    /* var products = await db.get(`
-      SELECT item_id, item_name, price, description, image, category, store_id, countInStock, brand, rate
-        FROM rakoon.items JOIN ratings ON items.item_id=ratings.item_id;`); */
-    var products = await db.get(`
-      SELECT * FROM rakoon.items`);
-    
-    res.send(products);
+  var products = await db.get(`
+    SELECT item_id, item_name, price, description, image, category, store_id, countInStock, brand, rate
+      FROM rakoon.items JOIN ratings ON items.item_id=ratings.item_id;`);
+  //var products = await db.get(`SELECT * FROM rakoon.items`);
+  
+  res.send(products);
 })
 
 module.exports = router;

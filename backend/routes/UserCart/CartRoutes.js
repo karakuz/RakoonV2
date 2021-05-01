@@ -41,6 +41,7 @@ router.delete("/cart/product/:id", async (req, res) => {
 });
 
 router.post("/cart/products", async (req, res) => {
+  console.log("IN ROUTE");
   const sessionID = req.body.sessionID;
   const user = jwt.verify(sessionID, 'shhhhh');
   const productIDs = await UserCart.findAll({
@@ -51,6 +52,7 @@ router.post("/cart/products", async (req, res) => {
   });
 
   let products = await getProducts(productIDs);
+  console.log(products);
   if (products.length !== 0) res.send(products);
   else res.send("none");
 });
