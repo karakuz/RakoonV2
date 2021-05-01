@@ -6,9 +6,10 @@ const jwt = require("jsonwebtoken");
 
 const Store = () => {
   const [store, setStore] = useState("");
+  const [salesManagers, setSalesManagers] = useState([]);
+  const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
 
   const getStoreInfo = async () => {
-    const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
     const user = await jwt.verify(sessionID, 'shhhhh');
 
     const res = await Axios({
@@ -22,9 +23,27 @@ const Store = () => {
     setStore(res.data);
   }
 
+  const getSalesManagers = async () =>{
+    const user = await jwt.verify(sessionID, 'shhhhh');
+
+    const res = await Axios({
+      method: "POST",
+      data: {
+        user_id: user.user_id
+      },
+      withCredentials: true,
+      url: `http://localhost:4000/getSalesManagers`,
+    });
+    setSalesManagers(res.data);
+  }
+
   useEffect(() => {
     getStoreInfo();
-  }, [])
+    getSalesManagers();
+  }, []);
+
+  console.log("salesManagers");
+  console.log(salesManagers);
 
   return (
     <div style={{margin:"2em"}}>
@@ -42,17 +61,30 @@ const Store = () => {
               <td>{store.owner}</td>
             </tr>
             <tr>
-              <th rowSpan={(store.items !== undefined ) ? store.items.length+1 : 1} style={{borderBottom: "hidden"}}>Products:</th>
+              <th rowSpan={(store.items !== undefined ) ? store.categories.length+1 : 1}>Products:</th>
             </tr>
             {
               (store.categories !== undefined) ?
               store.categories.map( category => {
                 return (
                   <tr>
-                    <td style={{borderBottom: "hidden"}}>{category[0]} : {category[1]}</td>
+                    <td>{category[0]} : {category[1]}</td>
                   </tr>
                 );  
               }) : "loading"
+            }
+            <tr>
+              <th rowSpan={(salesManagers.length !== 0 ) ? salesManagers.length+1 : 1} style={{borderBottom: "hidden"}}>Sales Managers:</th>
+            </tr>
+            {
+              (salesManagers.length !==0 ) ?
+                salesManagers.map(manager => {
+                  return(
+                    <tr>
+                      <td style={{borderBottom: "hidden"}}>{manager.name} {manager.surname}</td>
+                    </tr>
+                  );
+                }) : "No Sales Managers Assigned"
             }
           </table>
         </div>

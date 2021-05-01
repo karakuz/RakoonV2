@@ -27,26 +27,36 @@ const StoreShow = () => {
     getItems();
   }, [])
   
-  return (
-    <div style={{margin:"2em"}}>
-      <StoreNav/>
+  if(items.length !== 0){
+    return (
+      <div style={{margin:"2em"}}>
+        <StoreNav/>
+        <div>
+        <Container>
+          <Row>
+            {
+              items.map( item => {
+                return (
+                  <Col sm={12} md={6} lg={4} xl={3}>
+                    <ProductCard key={item.item_id} id={item.item_id} {...item}/>
+                  </Col>
+                )
+              })
+            }
+          </Row>
+        </Container>
+        </div>  
+      </div>
+    )
+  }
+  else{
+    return(
       <div>
-      <Container>
-        <Row>
-          {
-            items.map( item => {
-              return (
-                <Col sm={12} md={6} lg={4} xl={3}>
-                  <ProductCard key={item.item_id} id={item.item_id} {...item}/>
-                </Col>
-              )
-            })
-          }
-        </Row>
-      </Container>
-      </div>  
-    </div>
-  )
+        <p style={{textAlign: "center"}}>You have no products in your store</p>
+      </div>
+    )
+  }
+  
 }
 
 export default StoreShow
