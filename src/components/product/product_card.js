@@ -13,7 +13,8 @@ const ProductCard = (props) => {
     name: props.item_name,
     text: props.description,
     img: props.image,
-    price: props.price
+    price: props.price,
+    rate: props.rate
   };
   const change = async (e) => {
     e.preventDefault();
@@ -71,7 +72,7 @@ const ProductCard = (props) => {
           <strong style={{ display: "block", marginTop: "1rem" }}>{product.name}</strong>
         </Card.Title>
       </Link>
-      <Stars/>
+      <Stars rate={product.rate}/>
       <Card.Body>
         <Card.Text as='h5' style={{textAlign: "center"}}>${product.price}</Card.Text>
         <Button variant="success">

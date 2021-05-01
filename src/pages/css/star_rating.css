@@ -16,7 +16,6 @@
   width:1em;
   overflow:hidden;
   white-space:nowrap;
-  cursor:pointer;
   font-size:30px;
   color:#ccc;
 }
@@ -24,7 +23,7 @@
   content: '★ ';
 }
 
-.rate:not(:checked) > label:hover,
+/* .rate:not(:checked) > label:hover,
 .rate:not(:checked) > label:hover ~ label {
   color: #deb217;  
-}
+} */

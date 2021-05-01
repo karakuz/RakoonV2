@@ -8,22 +8,24 @@ router.get("/product/:id", async (req, res) => {
     if (product === null || product === undefined) {
         res.sendStatus(404);
     }
-
     else {
         res.send(product.toJSON());
     }
+});
 
-
+router.get("/product/:id", async (req, res) => {
+  const productID = req.params.id;
+  
+  const comments = await db.get(`SELECT comment, rate FROM ratings WHERE rating(SELECT rating_id, rate FROM items WHERE item_id=${productID})`);
 });
 
 router.get("/products", async (req, res) => {
-    var products = await db.get(`
+    /* var products = await db.get(`
       SELECT item_id, item_name, price, description, image, category, store_id, countInStock, brand, rate
-        FROM rakoon.items JOIN ratings ON ratings.rating_id=items.rating_id;`);
-    for(let product of products){
-      console.log(product);
-    }
-
+        FROM rakoon.items JOIN ratings ON items.item_id=ratings.item_id;`); */
+    var products = await db.get(`
+      SELECT * FROM rakoon.items`);
+    
     res.send(products);
 })
 
