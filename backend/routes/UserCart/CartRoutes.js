@@ -8,11 +8,7 @@ const db = require('../../config/database.js');
 
 router.post("/cart/product/:id", async (req, res) => {
   const productID = req.params.id;
-  console.log(req.body.user);
-  console.log(typeof req.body.user);
   const user_id = (typeof req.body.user === typeof []) ? req.body.user.user_id : (jwt.verify(req.body.user, 'shhhhh')).user_id;
-  console.log("user_id: ");
-  console.log(user_id);
 
   await db.get(`INSERT INTO users_cart(item_id,user_id) VALUES(
       ( SELECT item_id FROM items WHERE item_id=${productID}),
@@ -31,8 +27,8 @@ router.delete("/cart/product/:id", async (req, res) => {
   const sessionID = req.body.user;
   const user = jwt.verify(sessionID, 'shhhhh');
 
-  db.get(`DELETE FROM users_cart WHERE item_id=${productID} AND user_id=(
-    SELECT user_id FROM users WHERE e_mail='${user.email}'
+  await db.get(`DELETE FROM users_cart WHERE item_id=${productID} AND user_id=(
+    SELECT user_id FROM users WHERE e_mail='${user.e_mail}'
   )`, { raw: true });
 
   /* const CartProduct = await UserCart.destroy({

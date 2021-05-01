@@ -37,7 +37,7 @@ const Cart = (props) => {
   };
 
   useEffect(() => {
-    if (Object.keys(localStorage).includes('sessionID')) getProducts();
+    if (sessionID !== null) getProducts();
     else {
       var arr = []
       Object.keys(localStorage).forEach(productID => {

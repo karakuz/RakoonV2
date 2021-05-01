@@ -8,7 +8,8 @@ const StoreNav = () => {
     <div style={{marginBottom: "1rem"}} id='nav'>
       <span onClick={()=> history.push("/store")}>Store Info</span>
       <span onClick={()=> history.push("/store/addproduct")}>Add Product</span>
-      <span  onClick={()=> history.push("/store/products")} style={{border: "none"}}>Products</span>
+      <span  onClick={()=> history.push("/store/products")}>Products</span>
+      <span  onClick={()=> history.push("/store/addsalesmanager")} style={{border: "none"}}>Add Sales Manager</span>
     </div>
   )
 }

@@ -22,6 +22,7 @@ import StoreShow from '../store/StoreShow';
 import StoreItemEdit from '../store/StoreItemEdit';
 import TwoFactorAuth from '../login/twofactorauth';
 import Checkout from '../checkout/Checkout';
+import StoreAddSalesManager from '../store/StoreAddSalesManager';
 
 
 const Main = () => {
@@ -46,8 +47,9 @@ const Main = () => {
         <Route path="/category/:name" component={CategoryPage} />
         <Route path="/search/:keyword" component={() => (<Search numOfItems={numOfItems} setNumOfItems={setNumOfItems} />)} />
         <ProtectedStoreRoute path="/store" exact component={Store} />
-        <ProtectedStoreRoute path="/store/addproduct" component={StoreAdd} />
+        <ProtectedStoreRoute path="/store/addproduct" exact component={StoreAdd} />
         <ProtectedStoreRoute path="/store/products" exact component={StoreShow} />
+        <ProtectedStoreRoute path="/store/addsalesmanager" exact component={StoreAddSalesManager} />
         <Route path="/store/products/:item_id" component={StoreItemEdit} />
         <ProtectedRoute path="/profile" component={Profile} />
       </Switch>
