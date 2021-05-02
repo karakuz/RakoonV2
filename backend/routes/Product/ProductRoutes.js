@@ -38,8 +38,10 @@ router.get("/products", async (req, res) => {
 router.post("/addComment", async (req, res) => {
   const data = req.body.data;
 
-  await db.get(`INSERT INTO ratings(item_id,user_id,comment,rate,is_verified,date) VALUES(
-    ${data.productID}, ${data.user_id}, '${data.comment}', ${data.rate}, ${0}, '${data.date}'
+  await db.get(`INSERT INTO ratings(item_id,store_id,user_id,comment,rate,is_verified,date) VALUES(
+    ${data.productID}, (
+        SELECT store_id FROM rakoon.items WHERE item_id=${data.productID}
+    ),${data.user_id}, '${data.comment}', ${data.rate}, ${0}, '${data.date}'
   )`);
   res.send("done");
 })

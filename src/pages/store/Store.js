@@ -8,10 +8,9 @@ const Store = () => {
   const [store, setStore] = useState("");
   const [salesManagers, setSalesManagers] = useState([]);
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
+  const user = jwt.verify(sessionID, 'shhhhh');
 
   const getStoreInfo = async () => {
-    const user = await jwt.verify(sessionID, 'shhhhh');
-
     const res = await Axios({
       method: "POST",
       data: {
@@ -24,8 +23,6 @@ const Store = () => {
   }
 
   const getSalesManagers = async () =>{
-    const user = await jwt.verify(sessionID, 'shhhhh');
-
     const res = await Axios({
       method: "POST",
       data: {

@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Card, Tabs } from 'react-bootstrap';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { useParams, useHistory } from 'react-router-dom';
+//import { useParams, useHistory } from 'react-router-dom';
 import Axios from "axios";
 
 const Profile = (props) => {
@@ -19,9 +19,8 @@ const Profile = (props) => {
   const [registerSurname, setRegisterSurname] = useState("");
   const [registerEmail, setRegisterEmail] = useState("");
   var [twofaenable, setTwofaenable] = useState("");
-  const history = useHistory();
+  //const history = useHistory();
   const PORT = process.env.PORT || 4000;
-  console.log(twofaenable);
   var url = `http://localhost:${PORT}/profile/update`
 
   var userInfo = {
@@ -48,7 +47,6 @@ const Profile = (props) => {
       twofaenable = res.data.is_twofa;
     };
     getProfile().then(() => {
-      console.log(userInfo);
       document.getElementById("name").value = userInfo.name;
       document.getElementById("surname").value = userInfo.surname;
       document.getElementById("email").value = userInfo.email;
@@ -63,7 +61,6 @@ const Profile = (props) => {
     e.preventDefault();
     if (registerOldPassword === "" && registerNewPassword === "") {
       // Only send two fa
-      console.log("This is twofa " + twofaenable);
       if (twofaenable === 1 || twofaenable === 0) {
         return;
       }
@@ -72,6 +69,7 @@ const Profile = (props) => {
         twofaenable: twofaenable == "Off" ? 0 : 1,
         sessionID: sessionID
       }).catch(err => console.log(`Error 2fa.js: ${err}`));
+      alert("2FA is enabled")
       window.location.reload();
 
 
@@ -87,7 +85,6 @@ const Profile = (props) => {
     }
     else {
       // verify old password and update all
-      console.log("asdasd");
       const verifyPassword = await Axios.post(`http://localhost:4000/profile/passwordUpdate`, {
         sessionID: sessionID,
         oldPassword: registerOldPassword,
@@ -109,13 +106,9 @@ const Profile = (props) => {
       else {
         alert("Your old password is wrong");
       }
-
     }
 
   }
-
-
-
 
   const submit = async (e) => {
     e.preventDefault();

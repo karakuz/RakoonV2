@@ -1,7 +1,6 @@
 import React from 'react'
 import Stars from './Stars';
 import Axios from 'axios';
-const jwt = require("jsonwebtoken");
 
 const AddComment = (props) => {
   const [comment, setComment] = React.useState("");
@@ -18,7 +17,6 @@ const AddComment = (props) => {
       alert("Please choose a rate") 
       return
     }
-    const user = await jwt.verify(sessionID, 'shhhhh');
     
     const today = new Date();
     const mm = (today.getMonth()+1<10) ? '0' + String(today.getMonth()+1) : String(today.getMonth()+1);
@@ -29,7 +27,7 @@ const AddComment = (props) => {
       method: "POST",
       data:{
         data: {
-          user_id: user.user_id,
+          user_id: props.user.user_id,
           date: date,
           comment: comment,
           rate: rate,

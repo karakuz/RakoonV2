@@ -5,12 +5,15 @@ import Axios from 'axios';
 import '../css/bootstrap.min.css';
 import Comment from '../../components/product/Comment';
 import AddComment from '../../components/product/AddComment';
+const jwt = require("jsonwebtoken");
 
 const ProductScreen = () => {
   const [product, setProduct] = useState([]);
   const [comments, setComments] = useState([]);
   const { id } = useParams();
-
+  const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
+  let user = jwt.verify(sessionID, 'shhhhh');
+  
   const getProducts = async () => {
     const res = await Axios({
       method: "GET",
@@ -91,11 +94,12 @@ const ProductScreen = () => {
           })
           
         } 
-      </div>
+      </div>{console.log(user)}
+      {(user.role_id === 1) ?
       <div  style={{marginBottom: "5rem"}}>
         <h3 style={{textAlign: "center"}}>Add Comment</h3>
-        <AddComment productID={id}/>
-      </div>
+        <AddComment productID={id} user={user}/>
+      </div> : null}
     </div>
   )
 }

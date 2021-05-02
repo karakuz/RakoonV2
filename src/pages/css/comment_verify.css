@@ -1,0 +1,7 @@
+.buttonDiv > button{
+  margin-right: 1.5rem;
+  padding: 7px;
+  background-color: blue;
+  color: white;
+  font-size: 1rem;
+}

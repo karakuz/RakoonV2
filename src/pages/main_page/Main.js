@@ -23,6 +23,7 @@ import StoreItemEdit from '../store/StoreItemEdit';
 import TwoFactorAuth from '../login/twofactorauth';
 import Checkout from '../checkout/Checkout';
 import StoreAddSalesManager from '../store/StoreAddSalesManager';
+import StoreComments from '../store/StoreComments';
 
 
 const Main = () => {
@@ -50,6 +51,7 @@ const Main = () => {
         <ProtectedStoreRoute path="/store/addproduct" exact component={StoreAdd} />
         <ProtectedStoreRoute path="/store/products" exact component={StoreShow} />
         <ProtectedStoreRoute path="/store/addsalesmanager" exact component={StoreAddSalesManager} />
+        <ProtectedStoreRoute path="/store/comments" exact component={StoreComments} />
         <Route path="/store/products/:item_id" component={StoreItemEdit} />
         <ProtectedRoute path="/profile" component={Profile} />
       </Switch>

@@ -142,4 +142,57 @@ router.post("/getComments/:id", async (req, res) => {
   res.send(comments);
 });
 
+router.post("/getStoreComments", async (req, res) => {
+  const user_id = req.body.user_id;
+
+  const unrated = await db.get(`
+  SELECT * FROM
+    (SELECT 
+      ratings.rating_id,
+        ratings.user_id,
+        ratings.comment,
+        ratings.rate,
+        ratings.date,
+        ratings.store_id,
+        ratings.is_verified,
+        items.item_id,
+        items.item_name,
+        users.name,
+        users.surname
+      FROM ratings
+      JOIN items ON ratings.item_id = items.item_id
+      JOIN users ON users.user_id = ratings.user_id) AS J
+    WHERE J.store_id = (SELECT store_id FROM rakoon.store WHERE owner_id=${user_id}) 
+    AND J.is_verified = 0
+  `);
+
+  /* const map = new Map();
+  for(let comment of unrated){
+    console.log(comment);
+    if(map.get(comment.item_id) !== undefined)
+      map.set(comment.item_id, [...map.get(comment.item_id),comment]);
+    else 
+      map.set(comment.item_id, [comment]);
+    }
+  console.log(map) */
+  
+  //const rates = await db.get(`SELECT `);
+  res.send(unrated);
+});
+
+router.put("/verifyComment", async (req, res) => {
+  const rating_id = req.body.rating_id;
+  const accept = req.body.accept;
+
+  if(accept){
+    await db.get(`UPDATE rakoon.ratings SET is_verified=1 WHERE rating_id=${rating_id}`);
+    res.send("verified");
+  } 
+  else{
+    await db.get(`UPDATE rakoon.ratings SET is_verified=-1 WHERE rating_id=${rating_id}`);
+    res.send("notverified");
+  }
+});
+
+
 module.exports = router;
