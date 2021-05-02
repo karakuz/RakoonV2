@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Form from "react-bootstrap/Form";
 import Axios from "axios";
 import { Button, Col, Container } from 'react-bootstrap';
@@ -83,8 +83,10 @@ const Checkout = (props) => {
   }, []);
 
   return (
-    <div style={{ margin: '2rem' }}>
-
+    <div >
+      <Link className='btn btn-light my-3' to='/cart'>
+        Go Back
+      </Link>
       <div style={{ display: 'none', position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px' }} id='addressError'>
         <img src={redX} alt="error" style={{ width: '70px', float: 'left' }} />
         <div style={{ flexGrow: '1', marginTop: '3px' }}>
@@ -129,7 +131,7 @@ const Checkout = (props) => {
                 <div>
                   <h6 class="my-0">Total: </h6>
                 </div>
-             
+
               </li>
               <div style={{ marginTop: '1rem' }}> <Button>Proceed to Payment</Button></div>
             </ul>
@@ -137,7 +139,7 @@ const Checkout = (props) => {
 
           <div class="col-md-8 order-md-1">
             <Form style={{ width: 'auto' }} >
-              <h4 class="mb-4">Shipping Address</h4>
+              <h4 class="mb-4"> Address</h4>
               <Form.Row>
                 <Form.Group as={Col} controlId="formGridCity">
                   <Form.Label>First Name <span class="text-muted">*</span></Form.Label>
@@ -186,7 +188,7 @@ const Checkout = (props) => {
                 </Form.Group>
               </Form.Row>
               <Form.Text className="text-muted">
-               * must be filled out
+                * must be filled out
               </Form.Text>
             </Form>
 
@@ -198,59 +200,6 @@ const Checkout = (props) => {
               <Form.Check type="checkbox" label="Save this information for next time" />
             </Form.Group>
             <hr class="mb-4"></hr>
-            <Form style={{ width: 'auto' }} >
-              <h4 class="mb-4">Billing Address</h4>
-              <Form.Row>
-                <Form.Group as={Col} controlId="formGridCity">
-                  <Form.Label>First Name <span class="text-muted">*</span></Form.Label>
-                  <Form.Control id="firstname" type="firstname" /*onChange={e => setRegisterFirstname(e.target.value)}*/ />
-                </Form.Group>
-                <Form.Group as={Col} controlId="formGridZip">
-                  <Form.Label>Surname <span class="text-muted">*</span></Form.Label>
-                  <Form.Control id="surname" type="surname" /*onChange={e => setRegisterSurname(e.target.value)}*/ />
-                </Form.Group>
-              </Form.Row>
-
-              <Form.Group controlId="formGridAddress1">
-                <Form.Label style={{ marginRight: '1rem' }}>Address <span class="text-muted">*</span></Form.Label>
-                <Form.Control placeholder="1234 Main St" id="adress" type="adress" /*onChange={e => setRegisterAdress(e.target.value)}*/ />
-              </Form.Group>
-
-              <Form.Group controlId="formGridAddress2">
-                <Form.Label style={{ marginRight: '1rem' }}>Address 2 <span class="text-muted">(Optional)</span></Form.Label>
-                <Form.Control placeholder="Apartment, studio, or floor" id="adress2" type="adress2" /*onChange={e => setRegisterAdress2(e.target.value)}*/ />
-              </Form.Group>
-
-              <Form.Row>
-                <Form.Group as={Col} controlId="formGridZip">
-                  <Form.Label>Country <span class="text-muted">*</span> </Form.Label>
-                  <Form.Control id="country" type="country" /*onChange={e => setRegisterCountry(e.target.value)}*/ />
-                </Form.Group>
-                <Form.Group as={Col} controlId="formGridCity">
-                  <Form.Label>City <span class="text-muted">*</span> </Form.Label>
-                  <Form.Control id="city" type="city" /*onChange={e => setRegisterCity(e.target.value)}*/ />
-                </Form.Group>
-                <Form.Group as={Col} controlId="formGridZip">
-                  <Form.Label>Zip <span class="text-muted">*</span></Form.Label>
-                  <Form.Control id="zipCode" type="zipCode" /*onChange={e => setRegisterZipCode(e.target.value)}*/ />
-                </Form.Group>
-              </Form.Row>
-
-              <Form.Row>
-                <Form.Group as={Col} controlId="formGridZip">
-                  <Form.Label >Phone Number <span class="text-muted">*</span></Form.Label>
-                  <Form.Control id="phoneNumber" type="phoneNumber" /*onChange={e => setRegisterPhoneNumber(e.target.value)}*/ />
-                </Form.Group>
-
-                <Form.Group as={Col} controlId="formGridCity">
-                  <Form.Label >E-Mail Address <span class="text-muted">(Optional)</span> </Form.Label>
-                  <Form.Control id="email" type="email" /*onChange={e => setRegisterEmail(e.target.value)}*/ />
-                </Form.Group>
-              </Form.Row>
-              <Form.Text className="text-muted">
-               * must be filled out
-              </Form.Text>
-            </Form>
 
             <div class="d-block my-3">
               <Form style={{ width: 'auto' }} >

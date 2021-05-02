@@ -3,7 +3,8 @@ import Axios from 'axios'
 import ProductCard from '../../components/product/product_card';
 import '../css/body.css';
 import Loading from './loading.gif';
-import { Col } from 'react-bootstrap';
+import { Button, Col, Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 //import CartBuy from './cart_buy.jpg';
 
 function numeral(number) {
@@ -51,45 +52,51 @@ const Cart = (props) => {
 
   if (products.length !== 0 && typeof products !== typeof '') {
     return (
-      <div className="container" style={{}}>
-        <div className='row' style={{ marginRight: '220px' }}>
-          {
-            products.map((product) => {
-              return (
-                <Col sm={12} md={6} lg={4} xl={3}>
-                  <ProductCard key={product.id} {...product} isRemovable={true} numOfItems={props.numOfItems} setNumOfItems={props.setNumOfItems} />
-                </Col>
-              );
-            })
-          }
-        </div>
-        <div style={{ borderRadius: '15px', boxShadow: '0 0 15px grey', position: 'fixed', zindex: '1', right: '0', width: '330px', margin: '1em 2em 0 0' }}>
-          <p style={{ fontSize: '20px', color: 'black', margin: '1em 0 1em 1em' }}>Cart Items:</p>
-          <div>
-            <ul>
-              {
-                products.map((product) => {
-                  return (
-                    <li style={{ margin: '0 1rem 1rem 0' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <span>{product.item_name}</span>
-                        <span style={{ color: 'black', fontSize: '1rem' }}>{product.price}</span>
-                      </div>
-                    </li>
-                  );
-                })
-              }
-            </ul>
-            <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '0 1rem 1rem', color: 'black', fontSize: '1rem' }}>
-              <span>Total: ${numeral(products.reduce((a, v) => a = a + v.price, 0))}</span>
+      <div style={{ margin: '2rem' }}>
+        <h4 class="mb-5" style={{ textAlign: 'center' }}>My Cart</h4>
+        <Container style={{ display: 'block' }}>
+          <div class="row" >
+            <div class="col-md-4 order-md-2 mb-4">
+              <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">Your cart</span>
+              </h4>
+              <ul class="list-group mb-3">
+                {
+                  products.map((product) => {
+                    return (
+                      <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                          <h6 class="my-0">{product.item_name}</h6>
+                        </div>
+                        <span class="text-muted">${product.price}</span>
+                      </li>
+                    );
+                  })
+                }
+                <li class="list-group-item d-flex justify-content-between" >
+                  <div>
+                    <h6 class="my-0">Total:</h6>
+                  </div>
+                  <span>${numeral(products.reduce((a, v) => a = a + v.price, 0))}</span>
+                </li>
+                <div style={{ marginTop: '1rem' }}> <Button href="/checkout">Checkout</Button></div>
+              </ul>
+            </div>
+            <div class="col-md-8 order-md-1">
+              <div className='row' >
+                {
+                  products.map((product) => {
+                    return (
+                      <Col sm={12} md={6} lg={5} xl={4}>
+                        <ProductCard key={product.id} {...product} isRemovable={true} numOfItems={props.numOfItems} setNumOfItems={props.setNumOfItems} />
+                      </Col>
+                    );
+                  })
+                }
+              </div>
             </div>
           </div>
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '10px' }}>
-            <button style={{ background: 'green', fontSize: '20px', color: 'white', display: 'inline-block', borderRadius: '20px', padding: '10px 20px' }}>
-              Buy
-            </button>
-          </div>
-        </div>
+        </Container>
       </div>
     )
   }
