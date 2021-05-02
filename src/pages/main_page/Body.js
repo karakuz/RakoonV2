@@ -13,7 +13,7 @@ const Body = (props) => {
       withCredentials: true,
       url: `http://localhost:4000/products`,
     });
-    setProducts(res.data)
+    setProducts(res.data);
   };
 
   useEffect(() => {

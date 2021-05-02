@@ -131,4 +131,15 @@ router.post("/getSalesManagers", async (req, res) => {
   res.send(salesManagers);
 });
 
+router.post("/getComments/:id", async (req, res) => {
+  const productID = req.params.id;
+
+  const comments = await db.get(`
+    SELECT name, surname, comment, rate, DATE_FORMAT(date, '%d/%m/%Y') AS date FROM rakoon.ratings 
+      JOIN users ON ratings.user_id=users.user_id WHERE item_id=${productID} AND ratings.is_verified=1;
+  `);
+  
+  res.send(comments);
+});
+
 module.exports = router;

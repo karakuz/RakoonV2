@@ -6,26 +6,12 @@ const Stars = (props) => {
   const stars = ['5','4','3','2','1'];
 
   return (
-    <div className="rate">
+    <div className="rate" id={props.id} style={{position: "relative"}}>
       {
         stars.map( (num) => {
-          return <Star num={num} highlited={props.rate}/>
+          return <Star num={num} highlited={props.rate} addComment={props.addComment} setRate={props.setRate}/>
         })
       }
-      {/* <input type="radio" name="rate" value="5"/>
-      <label for="star5" title="text" ></label>
-
-      <input type="radio" name="rate" value="4" />
-      <label for="star4" title="text"></label>
-      
-      <input type="radio" name="rate" value="3" />
-      <label for="star3" title="text" style={{color: "red"}}>3 stars</label>
-      
-      <input type="radio" name="rate" value="2" />
-      <label for="star2" title="text"></label>
-      
-      <input type="radio" name="rate" value="1" />
-      <label for="star1" title="text"></label> */}
     </div>
   )
 }

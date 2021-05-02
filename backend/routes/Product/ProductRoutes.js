@@ -20,12 +20,28 @@ router.get("/product/:id", async (req, res) => {
 });
 
 router.get("/products", async (req, res) => {
-  /* var products = await db.get(`
-    SELECT item_id, item_name, price, description, image, category, store_id, countInStock, brand, rate
-      FROM rakoon.items JOIN ratings ON items.item_id=ratings.item_id;`); */
-  var products = await db.get(`SELECT * FROM rakoon.items`);
+  let all_products = await db.get(`SELECT *, 0 as rate FROM items`);
+  let map = new Map();
+  for(let product of all_products)
+    map.set(product.item_id, {...product});
   
-  res.send(products);
+  const rated_products = await db.get(`
+    SELECT items.item_id, item_name, price, description, image, category, store_id, countInStock, brand, AVG(rate) AS rate
+	    FROM rakoon.items RIGHT JOIN ratings ON items.item_id=ratings.item_id`);
+  
+  for(let product of rated_products)
+    map.set(product.item_id, product);
+
+  res.send(Array.from(map.values()));
+})
+
+router.post("/addComment", async (req, res) => {
+  const data = req.body.data;
+
+  await db.get(`INSERT INTO ratings(item_id,user_id,comment,rate,is_verified,date) VALUES(
+    ${data.productID}, ${data.user_id}, '${data.comment}', ${data.rate}, ${0}, '${data.date}'
+  )`);
+  res.send("done");
 })
 
 module.exports = router;

@@ -14,8 +14,9 @@ const ProductCard = (props) => {
     text: props.description,
     img: props.image,
     price: props.price,
-    rate: props.rate
+    rate: parseFloat(props.rate)
   };
+
   const change = async (e) => {
     e.preventDefault();
     if (!props.isRemovable) {
@@ -62,6 +63,7 @@ const ProductCard = (props) => {
       props.setNumOfItems((props.numOfItems) - 1);
     }
   }
+
   return (
     <Card className='my-3 p-3 rounded' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
       <Link to={`/product/${product.id}`} style={{}}>
@@ -72,7 +74,7 @@ const ProductCard = (props) => {
           <strong style={{ display: "block", marginTop: "1rem" }}>{product.name}</strong>
         </Card.Title>
       </Link>
-      <Stars rate={product.rate}/>
+      <Stars rate={Math.floor(product.rate)}/>
       <Card.Body>
         <Card.Text as='h5' style={{textAlign: "center"}}>${product.price}</Card.Text>
         <Button variant="success">

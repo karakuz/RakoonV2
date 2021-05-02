@@ -3,9 +3,12 @@ import { Card, Col, Image, ListGroup, Row } from 'react-bootstrap'
 import { Link, useParams } from 'react-router-dom'
 import Axios from 'axios';
 import '../css/bootstrap.min.css';
+import Comment from '../../components/product/Comment';
+import AddComment from '../../components/product/AddComment';
 
 const ProductScreen = () => {
   const [product, setProduct] = useState([]);
+  const [comments, setComments] = useState([]);
   const { id } = useParams();
 
   const getProducts = async () => {
@@ -15,16 +18,15 @@ const ProductScreen = () => {
       url: `http://localhost:4000/product/${id}`,
     });
     setProduct(res.data);
-    console.log(res.data);
   };
   
   const getComments = async () => {
     const res = await Axios({
-      method: "GET",
+      method: "POST",
       withCredentials: true,
       url: `http://localhost:4000/getComments/${id}`,
     });
-    
+    setComments(res.data);
   }
 
   useEffect(() => {
@@ -34,6 +36,7 @@ const ProductScreen = () => {
 
   useEffect(() => {
     getComments();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product])
 
   return (
@@ -78,9 +81,20 @@ const ProductScreen = () => {
           </Card>
         </Col>
       </Row>
-      <div>
+      <div style={{marginBottom: "2rem"}}>
         <h3 style={{textAlign: "center"}}>Comments</h3>
-        {/* {(product.rate === 0) ? <p style={{textAlign: "center"}}>No comments</p> : <p>Some comment</p>}  */}
+        {
+          (comments.length === 0) ? <p style={{textAlign: "center"}}>No comments</p> : 
+        
+          comments.map((comment)=>{
+            return <Comment comment={comment}/>
+          })
+          
+        } 
+      </div>
+      <div  style={{marginBottom: "5rem"}}>
+        <h3 style={{textAlign: "center"}}>Add Comment</h3>
+        <AddComment productID={id}/>
       </div>
     </div>
   )
