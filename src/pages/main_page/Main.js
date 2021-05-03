@@ -21,7 +21,7 @@ import StoreAdd from '../store/StoreAdd';
 import StoreShow from '../store/StoreShow';
 import StoreItemEdit from '../store/StoreItemEdit';
 import TwoFactorAuth from '../login/twofactorauth';
-import Checkout from '../checkout/Checkout';
+import Checkout from '../checkout/checkout';
 import StoreAddSalesManager from '../store/StoreAddSalesManager';
 import StoreComments from '../store/StoreComments';
 import Privacy from '../user_page/Privacy';
