@@ -1,0 +1,14 @@
+.ordercard{
+  display: flex;
+  margin: 1rem auto;
+  padding: 1rem;
+  flex-direction: row;
+}
+
+.ordercard > div {
+  font-size: 18px;
+}
+
+.orderInfo > p{
+  margin: 0.5rem
+}
