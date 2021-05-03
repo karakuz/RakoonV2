@@ -1,0 +1,14 @@
+nav{
+  margin-bottom: 20px;
+}
+
+nav > span {
+  padding: 20px;
+  font-size: 18px;
+  margin-right: 15px;
+}
+
+nav > span:hover {
+  cursor: pointer;
+  color: black;
+}
