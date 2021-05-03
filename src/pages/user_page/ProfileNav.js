@@ -8,9 +8,9 @@ const ProfileNav = () => {
   return (
     <>
      <nav>
-        <span onClick={()=> history.push('/')}>Account</span>
-        <span>Privacy</span>
-        <span>Orders</span>
+        <span onClick={()=> history.push('/profile')}>Account</span>
+        <span onClick={()=> history.push('/profile/privacy')}>Privacy</span>
+        <span onClick={()=> history.push('/profile/orders')}>Orders</span>
       </nav> 
     </>
   )

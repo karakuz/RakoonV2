@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Card, Form, Button } from 'react-bootstrap';
 import Axios from "axios";
+import ProfileNav from './ProfileNav';
 
 const Privacy = (props) => {
   const [registerOldPassword, setRegisterOldPassword] = React.useState("");
@@ -58,7 +59,8 @@ const Privacy = (props) => {
   }
 
   return (
-    <>
+    <div style={{ margin: '2rem', justifyContent: 'center' }}>
+      <ProfileNav/>
       <Card>
         <Card.Body>
           <Form style={{ margin: "2rem auto" }} onSubmit={e => submit(e)}>
@@ -67,7 +69,6 @@ const Privacy = (props) => {
               <option>Select</option>
               <option>On</option>
               <option>Off</option>
-
             </Form.Control>
 
             <Form.Group controlId="formBasicPassword">
@@ -84,7 +85,7 @@ const Privacy = (props) => {
 
         </Card.Body>
       </Card>
-    </>
+    </div>
   )
 }
 
