@@ -7,6 +7,7 @@ const passport = require("passport");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 const passportLocal = require("passport-local").Strategy;
+const Web3 = require("web3");
 
 /*
 router.post("/login", (req, res, next) => {
@@ -68,7 +69,7 @@ router.post("/register", async (req, res) => {
 
     let activate = await bcrypt.hash(req.body.name, 10);
     activate = activate.replace(/\//g, "");
-
+    const wallet = await createWallet();
     const newUser = await User.create({
       e_mail: req.body.username,
       password: hashedPassword,
@@ -77,6 +78,8 @@ router.post("/register", async (req, res) => {
       role_id: 1,
       is_verified: false,
       activate_token: activate,
+      wallet_address: wallet.address,
+      wallet_private_key: wallet.privateKey
     });
 
     VerifyMail(newUser, activate);
@@ -98,7 +101,7 @@ router.post("/store_register", async (req, res) => {
 
     let activate = await bcrypt.hash(req.body.name, 10);
     activate = activate.replace(/\//g, "");
-
+    const wallet = createWallet();
     const newUser = await User.create({
       e_mail: req.body.username,
       password: hashedPassword,
@@ -107,6 +110,8 @@ router.post("/store_register", async (req, res) => {
       role_id: 3,
       is_verified: false,
       activate_token: activate,
+      wallet_address: wallet.address,
+      wallet_private_key: wallet.privateKey
     });
 
     const db = require('../../config/database');
@@ -160,5 +165,26 @@ const VerifyMail = function (user, token) {
     console.log('Success! e-mail has been sent');
   });
 }
+
+
+const createWallet = async function () {
+  const web3 = new Web3('https://data-seed-prebsc-1-s1.binance.org:8545');
+  const account = web3.eth.accounts.create();
+  const admin_address = "0x27E18653d007324f1946D40bE63E71Fd1b638B9b";
+  const admin_private_key = "0xdd62dedf7d92dcd4b1754a2b3c2829528538d3bb30f8860a1a948442becd8ffa"
+  // send 1 bnb to new account
+  const tx = await web3.eth.accounts.signTransaction({
+    to: account.address,
+    value: '10000000000000000', // 0.1 BNB
+    gas: 2000000
+  }, admin_private_key);
+
+  console.log(tx.rawTransaction);
+
+  await web3.eth.sendSignedTransaction(tx.rawTransaction);
+  return account;
+}
+
+
 
 module.exports = router;

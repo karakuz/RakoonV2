@@ -50,6 +50,7 @@ const Account = (props) => {
       user: userInfo,
       sessionID: props.sessionID
     }).catch(err => console.log(`Error in update.js: ${err}`));
+    alert("Your information has been updated.")
     window.location.reload();
   }
 
@@ -58,11 +59,17 @@ const Account = (props) => {
       <Card>
         <Card.Body>
           <Form style={{ margin: "2rem auto" }}>
-            <Form.Group controlId="formName">
-              <Form.Label style={{ paddingRight: "3rem" }}> Name: </Form.Label>
-              <Form.Control id="name" type="name" onChange={e => setRegisterName(e.target.value)} />
-              <Form.Control id="surname" type="surname" onChange={e => setRegisterSurname(e.target.value)} />
-            </Form.Group>
+          <Form.Row>
+                <Form.Group  controlId="formName">
+                  <Form.Label>First Name</Form.Label>
+                  <Form.Control id="name" type="name" onChange={e => setRegisterName(e.target.value)} />
+                </Form.Group>
+                <Form.Group controlId="formName">
+                  <Form.Label>Surname</Form.Label>
+                  <Form.Control id="surname" type="surname" onChange={e => setRegisterSurname(e.target.value)} />
+                </Form.Group>
+              </Form.Row>
+        
             <Form.Group controlId="formEmail">
               <Form.Label> E-Mail Address: </Form.Label>
               <Form.Control id="email" type="email" onChange={e => setRegisterEmail(e.target.value)} />

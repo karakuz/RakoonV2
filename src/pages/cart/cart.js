@@ -52,7 +52,10 @@ const Cart = (props) => {
 
   if (products.length !== 0 && typeof products !== typeof '') {
     return (
-      <div style={{ margin: '2rem' }}>
+      <div >
+        <Link className='btn btn-light my-3' to='/'>
+        Go Back
+      </Link>
         <h4 class="mb-5" style={{ textAlign: 'center' }}>My Cart</h4>
         <Container style={{ display: 'block' }}>
           <div class="row" >
