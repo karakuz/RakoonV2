@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require("../../models/user");
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
-
+const db = require('../../config/database');
 
 router.put("/profile/update", async (req, res) => {
   const sessionID = req.body.sessionID;
@@ -65,6 +65,28 @@ router.post("/profile/passwordUpdate", async (req, res) => {
       res.send(false);
     }
   })
+});
+
+router.post("/profile/orders", async (req, res) => {
+  const user = await jwt.verify(req.body.sessionID, 'shhhhh');
+  const user_id = user.user_id;
+  console.log("User id: " + user_id);
+ 
+  const orders = await db.get(`
+    SELECT * FROM(
+      SELECT 
+        orders.* ,
+        items.item_name,
+            items.price,
+            items.image
+          FROM orders 
+          JOIN items 
+          JOIN store ON store.store_id = orders.sender_id
+                AND items.item_id = orders.item_id)
+    AS orders WHERE receiver_id = ${user_id}
+  `);
+
+  res.send(orders);
 });
 
 

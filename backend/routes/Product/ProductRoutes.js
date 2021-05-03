@@ -33,7 +33,6 @@ router.get("/products", async (req, res) => {
   for(let product of rated_products)
     map.set(product.item_id, product);
   
-    console.log(Array.from(map.values()));
   res.send(Array.from(map.values()));
 })
 
