@@ -131,6 +131,7 @@ const Checkout = (props) => {
                 <div>
                   <h6 class="my-0">Total: </h6>
                 </div>
+                <span>${products.reduce((a, v) => a = a + v.price, 0)}</span>
 
               </li>
               <div style={{ marginTop: '1rem' }}> <Button>Proceed to Payment</Button></div>
@@ -193,9 +194,6 @@ const Checkout = (props) => {
             </Form>
 
             <hr class="mb-4"></hr>
-            <Form.Group controlId="formBasicCheckbox">
-              <Form.Check type="checkbox" label="Billing address is the same as my shipping address" />
-            </Form.Group>
             <Form.Group controlId="formBasicCheckbox">
               <Form.Check type="checkbox" label="Save this information for next time" />
             </Form.Group>
