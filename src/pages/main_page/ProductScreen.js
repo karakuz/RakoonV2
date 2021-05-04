@@ -11,8 +11,9 @@ const ProductScreen = () => {
   const [product, setProduct] = useState([]);
   const [comments, setComments] = useState([]);
   const { id } = useParams();
+  let user;
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
-  let user = jwt.verify(sessionID, 'shhhhh');
+  if(sessionID !== null) user = jwt.verify(sessionID, 'shhhhh');
   
   const getProducts = async () => {
     const res = await Axios({
@@ -94,8 +95,8 @@ const ProductScreen = () => {
           })
           
         } 
-      </div>{console.log(user)}
-      {(user.role_id === 1) ?
+      </div>
+      {(user && user.role_id === 1) ?
       <div  style={{marginBottom: "5rem"}}>
         <h3 style={{textAlign: "center"}}>Add Comment</h3>
         <AddComment productID={id} user={user}/>

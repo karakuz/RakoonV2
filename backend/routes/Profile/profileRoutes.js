@@ -73,20 +73,41 @@ router.post("/profile/orders", async (req, res) => {
   console.log("User id: " + user_id);
  
   const orders = await db.get(`
-    SELECT * FROM(
-      SELECT 
-        orders.* ,
-        items.item_name,
-            items.price,
-            items.image
-          FROM orders 
-          JOIN items 
-          JOIN store ON store.store_id = orders.sender_id
-                AND items.item_id = orders.item_id)
-    AS orders WHERE receiver_id = ${user_id}
+    SELECT orders.*, 
+      items.item_name, 
+      items.image,
+      items.price FROM (SELECT orders.*,
+        order_items.item_id,
+        order_items.quantity,
+            order_items.status FROM orders 
+            JOIN order_items 
+            ON orders.order_id = order_items.order_id
+        ) AS orders
+      JOIN items 
+      ON items.item_id = orders.item_id 
+      WHERE customer_id = ${user_id}
   `);
+  /* console.log("orders:");
+  console.log(orders); */
 
-  res.send(orders);
+  //pending
+  //preparing
+  //in cargo
+  //delivered
+
+  const map = new Map();
+  for(let order of orders){
+    if(map.get(order.order_id) === undefined) map.set(order.order_id, [order])
+    else map.set(order.order_id, [...map.get(order.order_id), order]);
+  }
+  console.log(map);
+
+  const obj = {};
+  const it = map.keys();
+  for(let next = it.next(); next.value !== undefined; next = it.next())
+    obj[next.value] = map.get(next.value)
+  
+  res.send(obj);
 });
 
 

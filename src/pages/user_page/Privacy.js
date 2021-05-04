@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Card, Form, Button } from 'react-bootstrap';
 import Axios from "axios";
 import ProfileNav from './ProfileNav';
 
-const Privacy = (props) => {
+const Privacy = () => {
   const [registerOldPassword, setRegisterOldPassword] = React.useState("");
   const [registerNewPassword, setRegisterNewPassword] = React.useState("");
   const [twofaenable, setTwofaenable] = React.useState("");
   
+  const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
+
   const submit = async (e) => {
     e.preventDefault();
     if (registerOldPassword === "" && registerNewPassword === "") {
@@ -18,7 +20,7 @@ const Privacy = (props) => {
 
       const res = await Axios.put(`http://localhost:4000/profile/2fa/update`, {
         twofaenable: twofaenable == "Off" ? 0 : 1,
-        sessionID: props.sessionID
+        sessionID: sessionID
       }).catch(err => console.log(`Error 2fa.js: ${err}`));
       alert("2FA is enabled")
       window.location.reload();
@@ -37,7 +39,7 @@ const Privacy = (props) => {
     else {
       // verify old password and update all
       const verifyPassword = await Axios.post(`http://localhost:4000/profile/passwordUpdate`, {
-        sessionID: props.sessionID,
+        sessionID: sessionID,
         oldPassword: registerOldPassword,
         newPassword: registerNewPassword
       });
@@ -49,7 +51,7 @@ const Privacy = (props) => {
 
         const res = await Axios.put(`http://localhost:4000/profile/2fa/update`, {
           twofaenable: twofaenable === "Off" ? 0 : 1,
-          sessionID: props.sessionID
+          sessionID: sessionID
         }).catch(err => console.log(`Error 2fa.js: ${err}`));
         window.location.reload();
       }
