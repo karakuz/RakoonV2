@@ -100,7 +100,6 @@ router.post("/profile/orders", async (req, res) => {
     if(map.get(order.order_id) === undefined) map.set(order.order_id, [order])
     else map.set(order.order_id, [...map.get(order.order_id), order]);
   }
-  console.log(map);
 
   const obj = {};
   const it = map.keys();

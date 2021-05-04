@@ -12,3 +12,8 @@
 .orderInfo > p{
   margin: 0.5rem
 }
+
+.disabled{
+  opacity: 0.3; 
+  cursor: not-allowed;
+}
