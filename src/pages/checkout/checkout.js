@@ -55,6 +55,19 @@ const Checkout = (props) => {
     });
   
   }; */
+  // TO DO 
+  const proceedPayment = async (productid, price) => {
+    const res = await Axios({
+      method: "POST",
+      data: {
+        sessionID: sessionID,
+        price: price,
+        productid: productid
+      },
+      withCredentials: true,
+      url: `http://localhost:4000/cart/products`,
+    });
+  }
 
 
   const getProducts = async () => {

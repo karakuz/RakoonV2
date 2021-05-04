@@ -54,10 +54,10 @@ const Wallet = (props) => {
             <Card>
                 <Card.Body>
                     <Card.Title>Wallet address: {walletAddress}  </Card.Title>
-                    <Card.Title>Balance: {walletBalance}  </Card.Title>
+                    <Card.Title>Balance: {walletBalance} RKN </Card.Title>
                     <Form style={{ margin: "3em auto", position: "relative" }}>
                         <Form.Group controlId="formBasicPassword" onChange={e => setInputToken(e.target.value)}>
-                            <Form.Label>Send Me Rakoon Token</Form.Label>
+                            <Form.Label>Send Me RKN</Form.Label>
                             <Form.Control type="number" />
                         </Form.Group>
                         <span style={{ fontSize: '16px', position: 'absolute', right: '0', color: 'red', display: 'none' }} className='InvalidCode'>Code is invalid</span>
