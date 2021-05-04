@@ -2,16 +2,34 @@ import React from 'react'
 import '../../pages/css/ordercard.css'
 
 const OrderCard = (props) => {
+  const [status, setStatus] = React.useState(props.status);
+  console.log(props);
+
   const product = {
     image: props.image,
     name: props.item_name,
     price: props.price,
-    status: props.status,
     date: props.date,
     id: props.item_id
   }
 
-  console.log(product);
+  const changeStatus = (e) => {
+    e.target.parentElement.parentElement.parentElement.parentElement.parentElement.lastChild.firstChild.disabled = false;
+    e.target.parentElement.parentElement.parentElement.parentElement.parentElement.lastChild.firstChild.removeAttribute("class");
+    setStatus(e.target.value);
+    const itemName = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.firstChild.innerText.toLowerCase();
+
+    const copyOrders = props.orders;
+    for(let i=0; i<copyOrders.length; i++){
+      const order = copyOrders[i];
+      if(order.item_name.toLowerCase() === itemName){
+        copyOrders[i].status = e.target.value.toLowerCase();
+        break
+      }
+    }
+    props.setOrders(copyOrders);
+  }
+
   return (
     <div className="ordercard">
       <a href={"/product/" + product.id}>
@@ -25,9 +43,22 @@ const OrderCard = (props) => {
         </div>
         <div style={{width: "fit-content", float: "right"}} className="orderInfo">
           <p>Price: {product.price}</p>
-          <p>Status: {product.status.charAt(0) + product.status.slice(1)}</p>
+          {
+            (props.isStore === undefined) ? 
+              <p>Status: {status.charAt(0).toUpperCase() + status.slice(1)}</p> :
+              <p>Status: 
+                <select name="status" id="status" style={{marginLeft: "5px"}} 
+                value={status.charAt(0).toUpperCase() + status.slice(1)}
+                onChange={(e)=> changeStatus(e)}>
+                  <option value="Pending">Pending</option>
+                  <option value="Confirmed">Confirmed</option>
+                  <option value="In cargo">In cargo</option>
+                  <option value="Delivered">Delivered</option>
+                </select>
+              </p>
+              
+          }
         </div>
-        <p style={{position: "absolute", margin: "0", right: "0", bottom: "0"}}>Order Date: {product.date.split('-')[2] + '/' + product.date.split('-')[1] + '/' + product.date.split('-')[0]}</p>
       </div>
     </div>
 

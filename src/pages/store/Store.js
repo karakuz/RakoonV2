@@ -14,7 +14,8 @@ const Store = () => {
     const res = await Axios({
       method: "POST",
       data: {
-        user_id: user.user_id
+        user_id: user.user_id,
+        role_id: user.role_id
       },
       withCredentials: true,
       url: `http://localhost:4000/getStoreInfo`,
@@ -26,7 +27,8 @@ const Store = () => {
     const res = await Axios({
       method: "POST",
       data: {
-        user_id: user.user_id
+        user_id: user.user_id,
+        role_id: user.role_id
       },
       withCredentials: true,
       url: `http://localhost:4000/getSalesManagers`,
@@ -44,7 +46,7 @@ const Store = () => {
 
   return (
     <div style={{margin:"2em"}}>
-      <StoreNav/>
+      <StoreNav user={user}/>
       <div style={{display: "flex", justifyContent: "center", marginTop: "2rem"}}>
         <div style={{width: "400px"}}>
           <h3 style={{textAlign: "center"}}>Store Info</h3>

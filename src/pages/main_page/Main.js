@@ -26,6 +26,7 @@ import StoreAddSalesManager from '../store/StoreAddSalesManager';
 import StoreComments from '../store/StoreComments';
 import Privacy from '../user_page/Privacy';
 import Orders from '../user_page/Orders';
+import StoreOrders from '../store/StoreOrders';
 
 
 const Main = () => {
@@ -54,6 +55,7 @@ const Main = () => {
         <ProtectedStoreRoute path="/store/products" exact component={StoreShow} />
         <ProtectedStoreRoute path="/store/addsalesmanager" exact component={StoreAddSalesManager} />
         <ProtectedStoreRoute path="/store/comments" exact component={StoreComments} />
+        <ProtectedStoreRoute path="/store/orders" exact component={StoreOrders} />
         <Route path="/store/products/:item_id" component={StoreItemEdit} />
         <ProtectedRoute path="/profile" exact component={Profile}/>
         <ProtectedRoute path="/profile/privacy" component={Privacy}/>

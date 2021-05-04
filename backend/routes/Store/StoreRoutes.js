@@ -28,24 +28,35 @@ const VerifyMail = function (user, token) {
 
 router.post("/getStoreName", async (req, res) => {
   const user_id = req.body.user_id;
-  const storeName = await db.get(`SELECT store_name FROM store WHERE owner_id=${user_id}`);
+  const storeName = (req.body.role_id === 3) ? 
+    await db.get(`SELECT store_name FROM store WHERE owner_id=${user_id}`) :
+    await db.get(`SELECT store_name FROM store WHERE store_id=(
+        SELECT store_id FROM sales_managers WHERE user_id=${user_id}
+      )`);
 
   res.send(storeName);
 });
 
 router.post("/getStoreItems", async (req, res) => {
   const user_id = req.body.user_id;
-  const items = await db.get(`SELECT * FROM rakoon.items WHERE store_id=
+  const items = ( req.body.role_id === 3 ) ? await db.get(`SELECT * FROM rakoon.items WHERE store_id=
 	  (SELECT store_id FROM rakoon.store WHERE owner_id=${user_id})
-  `);
+  `) : 
+  await db.get(`SELECT * FROM rakoon.items WHERE store_id=(
+    SELECT store_id FROM sales_managers WHERE user_id=${user_id}
+  )`);
   res.send(items);
 });
 
 router.post("/getStoreInfo", async (req, res) => {
   const user_id = req.body.user_id;
-  const storeInfo = await db.get(`SELECT * FROM rakoon.store WHERE owner_id=${user_id}`);
+  const storeInfo = (req.body.role_id === 3) ? await db.get(`SELECT * FROM rakoon.store WHERE owner_id=${user_id}`) : 
+    await db.get(`
+      SELECT * FROM store WHERE store_id=
+        (SELECT store_id FROM sales_managers WHERE user_id=${user_id})`);
+  
   const items = await db.get(`SELECT item_id, category FROM rakoon.items WHERE store_id=${storeInfo[0].store_id}`);
-  let ownerName = await db.get(`SELECT name, surname FROM rakoon.users WHERE user_id=${user_id}`);
+  let ownerName = await db.get(`SELECT name, surname FROM rakoon.users WHERE user_id=${storeInfo[0].owner_id}`);
   ownerName = `${ownerName[0].name} ${ownerName[0].surname}`; 
 
   const categories = new Map();
@@ -119,15 +130,20 @@ router.post("/addSalesManager", async (req, res) => {
 });
 
 router.post("/getSalesManagers", async (req, res) => {
-  const owner_id = req.body.user_id;
+  const user_id = req.body.user_id;
 
-  const salesManagers = await db.get(`
+  const salesManagers = (req.body.role_id === 3) ? await db.get(`
     SELECT name, surname FROM users JOIN (
       SELECT user_id FROM rakoon.sales_managers 
-        WHERE store_id = (SELECT store_id FROM store WHERE owner_id=${owner_id})
+        WHERE store_id = (SELECT store_id FROM store WHERE owner_id=${user_id})
       ) sales_managers ON users.user_id=sales_managers.user_id`
-  );
-  
+    ) : 
+    await db.get(`
+    SELECT name, surname FROM users JOIN (
+      SELECT user_id FROM rakoon.sales_managers 
+        WHERE store_id = (SELECT store_id FROM sales_managers WHERE user_id=${user_id})
+      ) sales_managers ON users.user_id=sales_managers.user_id`);
+    
   res.send(salesManagers);
 });
 
@@ -194,5 +210,48 @@ router.put("/verifyComment", async (req, res) => {
   }
 });
 
+router.post("/store/orders", async (req, res) => {
+  const user = req.body.user;
+  console.log(user);
+  
+  const orders = await db.get(`
+    SELECT orders.*, 
+      items.item_name, 
+      items.image,
+      items.price FROM (SELECT orders.*,
+        order_items.item_id,
+        order_items.quantity,
+            order_items.status FROM orders 
+            JOIN order_items 
+            ON orders.order_id = order_items.order_id
+        ) AS orders
+      JOIN items 
+      ON items.item_id = orders.item_id 
+      WHERE seller_id=(
+        SELECT store_id FROM sales_managers WHERE user_id = ${user.user_id}
+      )
+  `);
+
+  const map = new Map();
+  for(let order of orders){
+    if(map.get(order.order_id) === undefined) map.set(order.order_id, [order])
+    else map.set(order.order_id, [...map.get(order.order_id), order]);
+  }
+
+  const obj = {};
+  const it = map.keys();
+  for(let next = it.next(); next.value !== undefined; next = it.next())
+    obj[next.value] = map.get(next.value)
+
+  res.send(obj);
+});
+
+router.put("/store/updateorder", async (req, res) => {
+  const orders = req.body.orders;
+
+  for(let order of orders)
+    await db.get(`UPDATE order_items SET status='${order.status}' WHERE item_id=${order.item_id} AND order_id=${order.order_id}`);
+  res.send("done");
+});
 
 module.exports = router;

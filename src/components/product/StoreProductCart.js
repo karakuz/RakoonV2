@@ -26,9 +26,12 @@ const StoreProductCart = (props) => {
       </Link>
       <Card.Body>
         <Card.Text as='h5'>${product.price}</Card.Text>
-        <Button variant="success">
-          <span onClick={() => history.push(`/store/products/${product.id}`)}>Edit</span>
-        </Button>
+        {
+          (props.role_id === 3) ? 
+          <Button variant="success">
+            <span onClick={() => history.push(`/store/products/${product.id}`)}>Edit</span>
+          </Button> : null
+        }
       </Card.Body>
     </Card>
   )

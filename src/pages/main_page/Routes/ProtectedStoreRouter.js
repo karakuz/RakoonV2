@@ -8,7 +8,7 @@ const ProtectedStoreRouter = ({component: Component}) => {
   
   return (
     <Route render={() => {
-      if(user.role_id===3)
+      if(user.role_id===3 || user.role_id===2)
         return <Component/>
       else
         return <Redirect to={{pathname: '/'}}/>

@@ -7,15 +7,15 @@ const jwt = require("jsonwebtoken");
 
 const StoreShow = () => {
   const [items, setItems] = useState([]);
-
+  const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
+  const user = jwt.verify(sessionID, 'shhhhh');
+ 
   const getItems = async () =>{
-    const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
-    const user = await jwt.verify(sessionID, 'shhhhh');
-    
     const res = await Axios({
       method: "POST",
       data: {
-        user_id: user.user_id
+        user_id: user.user_id,
+        role_id: user.role_id
       },
       withCredentials: true,
       url: `http://localhost:4000/getStoreItems`,
@@ -25,12 +25,13 @@ const StoreShow = () => {
   
   useEffect(() => {
     getItems();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   
   if(items.length !== 0){
     return (
       <div style={{margin:"2em"}}>
-        <StoreNav/>
+        <StoreNav user={user}/>
         <div>
         <Container>
           <Row>
@@ -38,7 +39,7 @@ const StoreShow = () => {
               items.map( item => {
                 return (
                   <Col sm={12} md={6} lg={4} xl={3}>
-                    <ProductCard key={item.item_id} id={item.item_id} {...item}/>
+                    <ProductCard key={item.item_id} id={item.item_id} {...item} role_id={user.role_id}/>
                   </Col>
                 )
               })

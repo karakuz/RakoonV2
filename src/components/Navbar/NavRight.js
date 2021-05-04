@@ -22,7 +22,8 @@ const NavRight = () => {
     const res = await Axios({
       method: "POST",
       data:{
-        user_id: user.user_id
+        user_id: user.user_id,
+        role_id: user.role_id
       },
       withCredentials: true,
       url: `http://localhost:4000/getStoreName`,
@@ -32,7 +33,7 @@ const NavRight = () => {
   }
 
   useEffect(() => {
-    if(user!=null && user.role_id===3)
+    if(user!=null && (user.role_id===3 || user.role_id===2))
       getStoreName();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -45,7 +46,7 @@ const NavRight = () => {
       </Nav>
     )
   }
-  else if(user!=null && user.role_id===3){
+  else if(user!=null && (user.role_id===3 || user.role_id===2)){
     return(
       <Nav>
         <Nav.Link href="/store">{storeName}</Nav.Link>
