@@ -21,11 +21,12 @@ import StoreAdd from '../store/StoreAdd';
 import StoreShow from '../store/StoreShow';
 import StoreItemEdit from '../store/StoreItemEdit';
 import TwoFactorAuth from '../login/twofactorauth';
-import Checkout from '../checkout/Checkout';
+import Checkout from '../checkout/checkout';
 import StoreAddSalesManager from '../store/StoreAddSalesManager';
 import StoreComments from '../store/StoreComments';
 import Privacy from '../user_page/Privacy';
 import Orders from '../user_page/Orders';
+import Wallet from '../user_page/Wallet';
 
 
 const Main = () => {
@@ -55,9 +56,10 @@ const Main = () => {
         <ProtectedStoreRoute path="/store/addsalesmanager" exact component={StoreAddSalesManager} />
         <ProtectedStoreRoute path="/store/comments" exact component={StoreComments} />
         <Route path="/store/products/:item_id" component={StoreItemEdit} />
-        <ProtectedRoute path="/profile" exact component={Profile}/>
-        <ProtectedRoute path="/profile/privacy" component={Privacy}/>
-        <ProtectedRoute path="/profile/orders" component={Orders}/>
+        <ProtectedRoute path="/profile" exact component={Profile} />
+        <ProtectedRoute path="/profile/privacy" component={Privacy} />
+        <ProtectedRoute path="/profile/orders" component={Orders} />
+        <ProtectedRoute path="/profile/wallet" component={Wallet} />
       </Switch>
     </>
   )

@@ -16,6 +16,7 @@ const CategoryRoutes = require("./backend/routes/Menu/CategoryRoutes");
 const ProfileRoutes = require("./backend/routes/Profile/ProfileRoutes");
 const SearchRoutes = require("./backend/routes/Search/SearchRoutes");
 const StoreRoutes = require("./backend/routes/Store/StoreRoutes");
+const PaymentRoutes = require("./backend/routes/Payment/PaymentRoutes");
 const Database = require("./backend/config/database");
 //----------------------------------------- END OF IMPORTS---------------------------------------------------
 
@@ -60,6 +61,7 @@ app.use(ProfileRoutes);
 app.use(SearchRoutes);
 app.use(StoreRoutes);
 app.use(TwoFARoutes);
+app.use(PaymentRoutes);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('build'));
