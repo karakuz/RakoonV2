@@ -15,36 +15,70 @@ router.post("/payment/faucet", async (req, res) => {
 });
 
 
-router.post("/payment/walletbalance", async (req, res) => {
-    console.log("asda");
+router.post("/payment/walletaddress", async (req, res) => {
+
     const sessionID = req.body.sessionID;
     const sessionuser = await jwt.verify(sessionID, 'shhhhh');
     const user = await User.findOne({ where: { user_id: sessionuser.user_id } });
-    transfer(1, user.wallet_address);
-    /*
-    const balance = await balanceOf(user.wallet_address);
+    res.send(user.wallet_address);
+});
+
+router.post("/payment/walletbalance", async (req, res) => {
+
+    const sessionID = req.body.sessionID;
+    const sessionuser = await jwt.verify(sessionID, 'shhhhh');
+    const user = await User.findOne({ where: { user_id: sessionuser.user_id } });
+    let balance = await balanceOf(user.wallet_address);
     const info = {
-        "wallet_address": user.wallet_address,
-        "balance": balance
-    
+        address: user.wallet_address,
+        balance: balance / 1000000000000000000
     }
-    */
-})
+    res.json(info);
+});
+
+router.post("/payment/transferFaucet", async (req, res) => {
+
+    const sessionID = req.body.sessionID;
+    const sessionuser = await jwt.verify(sessionID, 'shhhhh');
+    const token = req.body.input;
+    console.log(token);
+    const user = await User.findOne({ where: { user_id: sessionuser.user_id } });
+    await transfer(token, user.wallet_address);
+
+    res.send(true);
+});
+
+
 
 
 
 const transfer = async function (amount, user_wallet_address) {
     const web3 = new Web3('https://data-seed-prebsc-1-s1.binance.org:8545');
     var admin_address = '0xeF9b4260259317A9094b6378B642cbD331a890cD';
-    var myContract = await new web3.eth.Contract(Token.abi, '0x4114fc29c232a9e18a81af22423f3340d79cabb0');
+    const privatekey = "0x90c50c5ef4ce5dfdcadeb15296d3e2f58924a2cabffd6437f47071506311231f";
+    web3.eth.defaultAccount = admin_address;
+    await web3.eth.accounts.wallet.add(privatekey);
+    const contract = new web3.eth.Contract(Token.abi, '0x4114fc29c232a9e18a81af22423f3340d79cabb0', { from: '0xeF9b4260259317A9094b6378B642cbD331a890cD', gas: 100000 });
+    await contract.methods.transfer(user_wallet_address, amount * 100000000000000).send().then(console.log).catch(console.error);
+    const price = await contract.methods.balanceOf(user_wallet_address).call();
+    console.log(price);
+    /*
+    const web3 = new Web3('https://data-seed-prebsc-1-s1.binance.org:8545');
+    var admin_address = '0xeF9b4260259317A9094b6378B642cbD331a890cD';
+    var myContract = new web3.eth.Contract(Token.abi, '0x4114fc29c232a9e18a81af22423f3340d79cabb0', {
+        from: '0xeF9b4260259317A9094b6378B642cbD331a890cD', // default from address
+        gasPrice: '2000' // default gas price in wei, 20 gwei in this case
+    });
     const privatekey = "0x90c50c5ef4ce5dfdcadeb15296d3e2f58924a2cabffd6437f47071506311231f";
 
     console.log(1);
+    web3.eth.defaultAccount = admin_address;
     await web3.eth.accounts.wallet.add(privatekey);
     const gas = await web3.eth.estimateGas({ from: '0xeF9b4260259317A9094b6378B642cbD331a890cD', to: user_wallet_address }) + 4000;
     console.log(gas);
     const gasPrice = await web3.eth.getGasPrice();
     console.log(gasPrice);
+
     const tx = await myContract.methods.transfer(user_wallet_address, amount).send({ from: admin_address, gasPrice: gasPrice, gas: gas });
 
 
@@ -56,7 +90,7 @@ const transfer = async function (amount, user_wallet_address) {
         {
             to: user_wallet_address,
             data,
-            gas: 2000000,
+            gas: 2000,
             gasPrice,
             nonce
         },
@@ -64,14 +98,15 @@ const transfer = async function (amount, user_wallet_address) {
     );
 
     await web3.eth.sendSignedTransaction(signedTx.rawTransaction);
+    */
 
 }
 
 const balanceOf = async function (address) {
     const web3 = new Web3('https://data-seed-prebsc-1-s1.binance.org:8545');
     var myContract = new web3.eth.Contract(Token.abi, '0x4114fc29c232a9e18a81af22423f3340d79cabb0', {
-        from: '0x6A42544685C10110818764f0C5e039F4985Be6b0', // default from address
-        gasPrice: '20000000000000' // default gas price in wei, 20 gwei in this case
+        from: '0xeF9b4260259317A9094b6378B642cbD331a890cD', // default from address
+        gasPrice: '2000' // default gas price in wei, 20 gwei in this case
     });
     const price = await myContract.methods.balanceOf(address).call();
     return price;
