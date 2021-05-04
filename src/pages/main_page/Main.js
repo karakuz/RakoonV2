@@ -27,6 +27,7 @@ import StoreComments from '../store/StoreComments';
 import Privacy from '../user_page/Privacy';
 import Orders from '../user_page/Orders';
 import StoreOrders from '../store/StoreOrders';
+import Wallet from '../user_page/Wallet';
 
 
 const Main = () => {
@@ -57,9 +58,10 @@ const Main = () => {
         <ProtectedStoreRoute path="/store/comments" exact component={StoreComments} />
         <ProtectedStoreRoute path="/store/orders" exact component={StoreOrders} />
         <Route path="/store/products/:item_id" component={StoreItemEdit} />
-        <ProtectedRoute path="/profile" exact component={Profile}/>
-        <ProtectedRoute path="/profile/privacy" component={Privacy}/>
-        <ProtectedRoute path="/profile/orders" component={Orders}/>
+        <ProtectedRoute path="/profile" exact component={Profile} />
+        <ProtectedRoute path="/profile/privacy" component={Privacy} />
+        <ProtectedRoute path="/profile/orders" component={Orders} />
+        <ProtectedRoute path="/profile/wallet" component={Wallet} />
       </Switch>
     </>
   )

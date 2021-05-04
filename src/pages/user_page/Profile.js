@@ -3,6 +3,7 @@ import React from 'react';
 import Account from './Account';
 import Orders from './Orders';
 import Privacy from './Privacy';
+import Wallet from './Wallet';
 import ProfileNav from './ProfileNav';
 
 const Profile = () => {
@@ -10,8 +11,8 @@ const Profile = () => {
 
   return (
     <div style={{ margin: '2rem', justifyContent: 'center' }}>
-      <ProfileNav/>
-      <Account sessionID={sessionID}/>
+      <ProfileNav />
+      <Account sessionID={sessionID} />
     </div>
   )
 }

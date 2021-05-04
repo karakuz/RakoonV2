@@ -7,11 +7,12 @@ const ProfileNav = () => {
 
   return (
     <>
-     <nav>
-        <span onClick={()=> history.push('/profile')}>Account</span>
-        <span onClick={()=> history.push('/profile/privacy')}>Privacy</span>
-        <span onClick={()=> history.push('/profile/orders')}>Orders</span>
-      </nav> 
+      <nav>
+        <span onClick={() => history.push('/profile')}>Account</span>
+        <span onClick={() => history.push('/profile/privacy')}>Privacy</span>
+        <span onClick={() => history.push('/profile/orders')}>Orders</span>
+        <span onClick={() => history.push('/profile/wallet')}>Wallet</span>
+      </nav>
     </>
   )
 }
