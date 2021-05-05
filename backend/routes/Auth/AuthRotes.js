@@ -101,7 +101,7 @@ router.post("/store_register", async (req, res) => {
 
     let activate = await bcrypt.hash(req.body.name, 10);
     activate = activate.replace(/\//g, "");
-    const wallet = createWallet();
+    const wallet = await createWallet();
     const newUser = await User.create({
       e_mail: req.body.username,
       password: hashedPassword,

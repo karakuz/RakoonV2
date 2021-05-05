@@ -53,24 +53,45 @@ router.post("/payment/transferFaucet", async (req, res) => {
 router.post("/payment/transfer", async (req, res) => {
     const sessionID = req.body.sessionID;
     const sessionuser = await jwt.verify(sessionID, 'shhhhh');
-    const price = req.body.price;
-    const productid = req.body.productid;
-    const product = await Product.findOne({ where: { item_id: productid } });
-    const store = await Store.findOne({ where: { store_id: product.store_id } });
-    const store_owner = await User.findOne({ where: { user_id: store.owner_id } });
+
+    const products = req.body.products;
+
+    var price = products.reduce((a, v) => a = a + v.price, 0);
     const user = await User.findOne({ where: { user_id: sessionuser.user_id } });
-    const user_balance = await balanceOf(user.wallet_address);
+    console.log(price);
+    let user_balance = await balanceOf(user.wallet_address);
+    console.log(user_balance);
+    user_balance = user_balance / 1000000000000000000;
     if (user_balance < price) {
         res.send("InsufficientBalance");
     }
+
+
+
     else {
-        await transfer(price, user.wallet_address, user.wallet_private_key, store_owner.wallet_address)
-            .then((res) => {
-                res.send("Success");
-            })
-            .catch((err) => {
-                res.send("Error");
-            });
+
+
+        for (let item of products) {
+            const product = await Product.findOne({ where: { item_id: item.item_id } });
+            const store = await Store.findOne({ where: { store_id: product.store_id } });
+            const store_owner = await User.findOne({ where: { user_id: store.owner_id } });
+
+
+            await transfer(price, user.wallet_address, user.wallet_private_key, store_owner.wallet_address)
+                .then(() => {
+                    ;
+                })
+                .catch((err) => {
+                    console.log(err);
+                    res.send(err);
+                });
+
+        }
+        // User cart silinecek
+        // Order oluşturulacak
+        res.send("Success");
+
+
 
     }
 
@@ -79,9 +100,9 @@ router.post("/payment/transfer", async (req, res) => {
 const transfer = async function (amount, user_wallet_address, user_private_key, store_wallet_address) {
     const web3 = new Web3('https://data-seed-prebsc-1-s1.binance.org:8545');
     web3.eth.defaultAccount = user_wallet_address;
-    await web3.eth.accounts.walled.add(user_private_key);
+    await web3.eth.accounts.wallet.add(user_private_key);
     const contract = new web3.eth.Contract(Token.abi, '0x4114fc29c232a9e18a81af22423f3340d79cabb0', { from: user_wallet_address, gas: 100000 });
-    await contract.methods.transfer(user_wallet_address, web3.utils.toWei(amount, 'ether')).send().then(console.log).catch(console.error);
+    await contract.methods.transfer(store_wallet_address, web3.utils.toWei(String(amount), 'ether')).send().then(console.log).catch(console.error);
 }
 
 

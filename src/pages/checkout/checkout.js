@@ -56,17 +56,17 @@ const Checkout = (props) => {
   
   }; */
   // TO DO 
-  const proceedPayment = async (productid, price) => {
+  const proceedPayment = async () => {
     const res = await Axios({
       method: "POST",
       data: {
         sessionID: sessionID,
-        price: price,
-        productid: productid
+        products: products
       },
       withCredentials: true,
-      url: `http://localhost:4000/cart/products`,
+      url: `http://localhost:4000/payment/transfer`,
     });
+    console.log(res.data);
   }
 
 
@@ -147,7 +147,7 @@ const Checkout = (props) => {
                 <span>${products.reduce((a, v) => a = a + v.price, 0)}</span>
 
               </li>
-              <div style={{ marginTop: '1rem' }}> <Button>Proceed to Payment</Button></div>
+              <div style={{ marginTop: '1rem' }}> <Button onClick={() => proceedPayment()}>Proceed to Payment</Button></div>
             </ul>
           </div>
 
