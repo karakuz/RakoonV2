@@ -3,12 +3,16 @@ import { Card, Form, Button } from 'react-bootstrap';
 import Axios from "axios";
 import ProfileNav from './ProfileNav';
 import Loading from '../cart/loading.gif';
+const jwt = require("jsonwebtoken");
 
-const Wallet = (props) => {
-    const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
+const Wallet = () => {
     const [walletAddress, setWalletAddress] = React.useState("");
     const [walletBalance, setWalletBalance] = React.useState("");
     const [inputToken, setInputToken] = React.useState("");
+
+    const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
+    const user =  jwt.verify(sessionID, 'shhhhh');
+
     useEffect(() => {
         (async () => {
             const res = await Axios({
@@ -59,7 +63,7 @@ const Wallet = (props) => {
               <div id="loading" style={{display: "block"}}>
                 <img src={Loading} alt='Loading...' style={{display: 'block', margin: "0 auto"}}/>
               </div>
-            : 
+            : (user.user_id === 1) ? 
               <>
                 <div id="loading" style={{display: "none"}}>
                   <img src={Loading} alt='Loading...' style={{display: 'block', margin: "0 auto"}}/>
@@ -86,6 +90,15 @@ const Wallet = (props) => {
                   </Card>
                 </div>
               </>
+            : 
+            <div id="cont">
+              <Card>
+                <Card.Body>
+                  <Card.Title>Wallet address: {walletAddress}  </Card.Title>
+                  <Card.Title>Balance: {walletBalance} RKN </Card.Title>
+                </Card.Body>
+              </Card>
+            </div>
           }
       </div>
     )

@@ -5,11 +5,12 @@ import Axios from 'axios';
 import '../css/bootstrap.min.css';
 import Comment from '../../components/product/Comment';
 import AddComment from '../../components/product/AddComment';
+import Loading from '../cart/loading.gif';
 const jwt = require("jsonwebtoken");
 
 const ProductScreen = () => {
   const [product, setProduct] = useState([]);
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState([""]);
   const { id } = useParams();
   let user;
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
@@ -88,6 +89,11 @@ const ProductScreen = () => {
       <div style={{marginBottom: "2rem"}}>
         <h3 style={{textAlign: "center"}}>Comments</h3>
         {
+          (comments[0] === "") ?
+          <div id="loading" style={{display: "block"}}>
+            <img src={Loading} alt='Loading...' style={{display: 'block', margin: "0 auto"}}/>
+          </div>
+          :
           (comments.length === 0) ? <p style={{textAlign: "center"}}>No comments</p> : 
         
           comments.map((comment)=>{

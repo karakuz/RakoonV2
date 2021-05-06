@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Axios from 'axios';
 import Comment from '../../components/product/Comment';
+import StoreNav from './StoreNav';
+import Loading from '../cart/loading.gif';
 const jwt = require("jsonwebtoken");
 
 const StoreComments = () => {
-  const [comments, setComments] = useState([]); 
+  const [comments, setComments] = useState([""]); 
 
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
   const user = jwt.verify(sessionID, 'shhhhh');
@@ -28,8 +30,16 @@ const StoreComments = () => {
 
   return (
     <div style={{marginTop: "1rem"}}>
-      <h3 style={{textAlign: "center"}}>Unverified Comments</h3>
+      <StoreNav user={user}/>
+      <h3 style={{textAlign: "center", marginTop: "2rem"}}>Unverified Comments</h3>
       {
+        (comments[0] === "") ?
+        <>
+          <div id="loading" style={{display: "block"}}>
+            <img src={Loading} alt='Loading...' style={{display: 'block', margin: "0 auto"}}/>
+          </div>
+        </>
+        :
         (comments.length !== 0) ?
         comments.map((comment)=>{
           return(

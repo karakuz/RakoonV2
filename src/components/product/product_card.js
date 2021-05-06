@@ -4,10 +4,13 @@ import { Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 import Axios from 'axios';
 import Stars from './Stars';
+const jwt = require("jsonwebtoken");
 
 const ProductCard = (props) => {
   const addOrDelete = (!props.isRemovable) ? 'Add To Cart' : 'Delete';
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
+  const user = (sessionID !== null) ? jwt.verify(sessionID, 'shhhhh') : null;
+
   const product = {
     id: props.item_id,
     name: props.item_name,
@@ -77,9 +80,14 @@ const ProductCard = (props) => {
       <Stars rate={Math.floor(product.rate)}/>
       <Card.Body>
         <Card.Text as='h5' style={{textAlign: "center"}}>${product.price}</Card.Text>
-        <Button variant="success">
-          <span onClick={(e) => change(e)}>{addOrDelete}</span>
-        </Button>
+        {
+          (user===null || user.role_id === 1) ?
+          <Button variant="success">
+            <span onClick={(e) => change(e)}>{addOrDelete}</span>
+          </Button> 
+          :
+          null
+        }
       </Card.Body>
     </Card>
   )

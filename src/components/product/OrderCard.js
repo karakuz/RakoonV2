@@ -3,7 +3,6 @@ import '../../pages/css/ordercard.css'
 
 const OrderCard = (props) => {
   const [status, setStatus] = React.useState(props.status);
-  console.log(props);
 
   const product = {
     image: props.image,
@@ -14,8 +13,7 @@ const OrderCard = (props) => {
   }
 
   const changeStatus = (e) => {
-    e.target.parentElement.parentElement.parentElement.parentElement.parentElement.lastChild.firstChild.disabled = false;
-    e.target.parentElement.parentElement.parentElement.parentElement.parentElement.lastChild.firstChild.removeAttribute("class");
+    e.target.parentElement.parentElement.parentElement.parentElement.parentElement.children[2].firstChild.removeAttribute("class");
     setStatus(e.target.value);
     const itemName = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.firstChild.innerText.toLowerCase();
 
@@ -31,7 +29,8 @@ const OrderCard = (props) => {
   }
 
   return (
-    <div className="ordercard">
+    <div className="ordercard" style={{position: "relative"}}>
+      {/* <p style={{position: "absolute", margin: "0", right: "15px", bottom: "15px", fontSize: "18px"}}>Order Date: {product.date.split('-')[2] + '/' + product.date.split('-')[1] + '/' + product.date.split('-')[0]}</p> */}
       <a href={"/product/" + product.id}>
         <img src={product.image} alt="product" style={{width: '200px'}}/>
       </a>
@@ -45,7 +44,8 @@ const OrderCard = (props) => {
           <p>Price: {product.price}</p>
           {
             (props.isStore === undefined) ? 
-              <p>Status: {status.charAt(0).toUpperCase() + status.slice(1)}</p> :
+              <p>Status: {status.charAt(0).toUpperCase() + status.slice(1)}</p> 
+              :
               <p>Status: 
                 <select name="status" id="status" style={{marginLeft: "5px"}} 
                 value={status.charAt(0).toUpperCase() + status.slice(1)}

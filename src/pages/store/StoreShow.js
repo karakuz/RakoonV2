@@ -3,10 +3,11 @@ import StoreNav from './StoreNav';
 import Axios from 'axios';
 import ProductCard from '../../components/product/StoreProductCart';
 import { Col, Row, Container } from 'react-bootstrap';
+import Loading from '../cart/loading.gif';
 const jwt = require("jsonwebtoken");
 
 const StoreShow = () => {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState([""]);
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
   const user = jwt.verify(sessionID, 'shhhhh');
  
@@ -28,6 +29,17 @@ const StoreShow = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   
+  if(items[0] === ""){
+    return (
+      <>
+        <StoreNav user={user}/>
+        <div id="loading" style={{display: "block"}}>
+          <img src={Loading} alt='Loading...' style={{display: 'block', margin: "0 auto"}}/>
+        </div>
+      </>
+    )
+  }
+
   if(items.length !== 0){
     return (
       <div style={{margin:"2em"}}>
@@ -53,6 +65,7 @@ const StoreShow = () => {
   else{
     return(
       <div>
+        <StoreNav user={user}/>
         <p style={{textAlign: "center"}}>You have no products in your store</p>
       </div>
     )

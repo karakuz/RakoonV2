@@ -33,11 +33,13 @@ const Orders = () => {
             <Card.Title>You have no orders yet. </Card.Title>
           </Card.Body>
         </Card>
-        : (orders[0]==="" ) ? 
+        : (orders[0] === "" ) ? 
         <div id="loading" style={{display: "block"}}>
           <img src={Loading} alt='Loading...' style={{display: 'block', margin: "0 auto"}}/>
         </div>
-        :<Order orders={orders}/> 
+        : Object.keys(orders).map((date) => {
+          return <Order orders={orders[date]}/>; 
+        })
       }
     </div>
   )

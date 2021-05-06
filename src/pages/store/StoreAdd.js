@@ -15,6 +15,9 @@ const StoreAdd = () => {
   const [category, setCategory] = useState();
   const [categories, setCategories] = useState([]);
 
+  const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
+  const user = jwt.verify(sessionID, 'shhhhh');
+
   const getCategories = async () => {
     const res = await Axios({
       method: "GET",
@@ -80,9 +83,6 @@ const StoreAdd = () => {
     xhr.send(data);
     const imageResponse = JSON.parse(xhr.responseText);
 
-    const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
-    const user = await jwt.verify(sessionID, 'shhhhh');
-
     const imgURL = imageResponse.url;
      
     const item = {
@@ -111,7 +111,7 @@ const StoreAdd = () => {
 
   return (
     <div style={{margin:"2em", display: "flex", flexDirection:"column"}}>
-      <StoreNav/>
+      <StoreNav user={user}/>
       <h3 style={{textAlign: "center"}}>Add Product</h3>
       <div style={{margin:"2em auto", display: "inline-flex", flexDirection:"column", fontSize: "1.3rem", width:"430px", position: "relative"}} id="add">
         <div style={{display: "none", position: 'absolute', overflow: 'auto', width: '550px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='emptyError'>

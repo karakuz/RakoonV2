@@ -13,6 +13,8 @@ const StoreAddSalesManager = () => {
   const [registerName, setRegisterName] = React.useState("");
   const [registerSurname, setRegisterSurname] = React.useState("");
   const PORT = process.env.PORT || 4000;
+  const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
+  const user = jwt.verify(sessionID, 'shhhhh');
 
   const history = useHistory();
   
@@ -43,9 +45,6 @@ const StoreAddSalesManager = () => {
 
     document.querySelector('#submit').disabled = true;
     document.querySelectorAll('input').forEach( input => input.disabled = true );
-
-    const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
-    const user = await jwt.verify(sessionID, 'shhhhh');
 
     const User = {
       email: registerEmail,
@@ -86,7 +85,7 @@ const StoreAddSalesManager = () => {
 
   return (
     <div style={{margin: '2rem'}}>
-      <StoreNav/>
+      <StoreNav user={user}/>
       <div style={{width:'590px', margin:'3rem auto', fontSize:'2em', position: 'relative'}}>
         <div style={{display: 'none', position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', right: "70px", borderRadius: '10px'}} id='exists'>
           <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
