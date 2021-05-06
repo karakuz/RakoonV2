@@ -5,25 +5,17 @@ const Orders = db.sequelize.define('Orders', {
 
     order_id: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        primaryKey: true
     },
 
-    status: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
 
-    receiver_id: {
+
+    customer_id: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
 
-    sender_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-
-    item_id: {
+    seller_id: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
@@ -33,6 +25,18 @@ const Orders = db.sequelize.define('Orders', {
         allowNull: false
     },
 
+    date: {
+        type: DataTypes.DATEONLY,
+        defaultValue: Sequelize.NOW
+    },
+    status: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    item_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
     quantity: {
         type: DataTypes.INTEGER,
         allowNull: false
