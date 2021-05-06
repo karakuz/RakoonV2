@@ -147,7 +147,7 @@ const Checkout = (props) => {
                 <span>${products.reduce((a, v) => a = a + v.price, 0)}</span>
 
               </li>
-              <div style={{ marginTop: '1rem' }}> <Button onClick={() => proceedPayment()}>Proceed to Payment</Button></div>
+              <div style={{ marginTop: '1rem' }}> <Button onClick={() => proceedPayment()}>Complete Payment</Button></div>
             </ul>
           </div>
 
@@ -211,16 +211,6 @@ const Checkout = (props) => {
               <Form.Check type="checkbox" label="Save this information for next time" />
             </Form.Group>
             <hr class="mb-4"></hr>
-
-            <div class="d-block my-3">
-              <Form style={{ width: 'auto' }} >
-                <h4 class="mb-3">Payment</h4>
-                <Form.Group controlId="formGridAddress1">
-                  <Form.Label>Payment Info</Form.Label>
-                  <Form.Control placeholder="Account Number" id="payment" type="payment" />
-                </Form.Group>
-              </Form>
-            </div>
           </div>
         </div>
       </Container>
