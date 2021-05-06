@@ -75,7 +75,6 @@ const Checkout = (props) => {
       withCredentials: true,
       url: `http://localhost:4000/payment/transfer`,
     });
-
     console.log(res.data); // Success // InsufficientBalance // Error
   }
 
