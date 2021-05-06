@@ -57,57 +57,50 @@ router.post("/payment/transferFaucet", async (req, res) => {
 });
 
 router.post("/payment/transfer", async (req, res) => {
-    const sessionID = req.body.sessionID;
-    const sessionuser = await jwt.verify(sessionID, 'shhhhh');
-    const info = req.body.info;
-    const products = req.body.products;
+  const sessionID = req.body.sessionID;
+  const sessionuser = await jwt.verify(sessionID, 'shhhhh');
+  const info = req.body.info;
+  const products = req.body.products;
 
-    var price = products.reduce((a, v) => a = a + v.price, 0);
-    const user = await User.findOne({ where: { user_id: sessionuser.user_id } });
-    console.log(price);
-    let user_balance = await balanceOf(user.wallet_address);
-    console.log(user_balance);
-    user_balance = user_balance / 1000000000000000000;
-    if (user_balance < price) {
-        res.send("InsufficientBalance");
-    }
+  var price = products.reduce((a, v) => a = a + v.price, 0);
+  const user = await User.findOne({ where: { user_id: sessionuser.user_id } });
+  console.log(price);
+  let user_balance = await balanceOf(user.wallet_address);
+  console.log(user_balance);
+  user_balance = user_balance / 1000000000000000000;
+  if (user_balance < price) {
+    res.send("InsufficientBalance");
+  }
+  else {
+    for (let item of products) {
+      const product = await Product.findOne({ where: { item_id: item.item_id } });
+      const store = await Store.findOne({ where: { store_id: product.store_id } });
+      const store_owner = await User.findOne({ where: { user_id: store.owner_id } });
+      const today = new Date();
+      const mm = (today.getMonth() + 1 < 10) ? '0' + String(today.getMonth() + 1) : String(today.getMonth() + 1);
+      const dd = (today.getDate() < 10) ? '0' + String(today.getDate()) : String(today.getDate());
+      const date = `${String(today.getFullYear())}-${mm}-${dd}`;
 
-
-
-    else {
-        for (let item of products) {
-            const product = await Product.findOne({ where: { item_id: item.item_id } });
-            const store = await Store.findOne({ where: { store_id: product.store_id } });
-            const store_owner = await User.findOne({ where: { user_id: store.owner_id } });
-            const today = new Date();
-            const mm = (today.getMonth() + 1 < 10) ? '0' + String(today.getMonth() + 1) : String(today.getMonth() + 1);
-            const dd = (today.getDate() < 10) ? '0' + String(today.getDate()) : String(today.getDate());
-            const date = `${String(today.getFullYear())}-${mm}-${dd}`;
-
-            await db.get(`INSERT INTO orders(date,address,customer_id,seller_id,item_id,status, quantity) VALUES(${date}, 'test address', ${user.user_id}, ${store.store_id}, ${product.item_id},'pending', 1)`);
-            await transfer(price, user.wallet_address, user.wallet_private_key, store_owner.wallet_address)
-                .then(() => {
-                    ;
-                })
-                .catch((err) => {
-                    console.log(err);
-                    res.send(err);
-                });
-
-
-
-
-            const cartProduct = await Cart.findOne({
-                where: {
-                    user_id: user.user_id,
-                    item_id: product.item_id
-                }
-            });
-            await cartProduct.destroy();
-            await sendInvoice(product, user, info);
+      await db.get(`INSERT INTO orders(date,address,customer_id,seller_id,item_id,status, quantity) VALUES(${date}, 'test address', ${user.user_id}, ${store.store_id}, ${product.item_id},'pending', 1)`);
+      await transfer(price, user.wallet_address, user.wallet_private_key, store_owner.wallet_address)
+        .then(() => {
+            ;
+        })
+        .catch((err) => {
+            console.log(err);
+            res.send(err);
+        });
+      const cartProduct = await Cart.findOne({
+        where: {
+            user_id: user.user_id,
+            item_id: product.item_id
         }
-        res.send("Success");
+      });
+      await cartProduct.destroy();
+      await sendInvoice(product, user, info);
     }
+    res.send("Success");
+  }
 
 });
 

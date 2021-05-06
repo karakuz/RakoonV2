@@ -22,6 +22,7 @@ const Checkout = (props) => {
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
   const [products, setProducts] = useState([]);
   const ref = useRef(true);
+  const history = useHistory();
 
   const [registerAddress, setRegisterAdress] = useState("");
   const [registerAddress2, setRegisterAdress2] = useState("");
@@ -75,6 +76,18 @@ const Checkout = (props) => {
       withCredentials: true,
       url: `http://localhost:4000/payment/transfer`,
     });
+
+    document.getElementById('loading').style.display = 'none';
+    if(res.data === "Success"){
+      alert("Payment is completed. An invoice has been sent to your email")
+      history.push("/");
+    }
+    else if(res.data === "InsufficientBalance")
+      alert("You dont have sufficient balance")
+    else
+      alert("An error happenned");
+    document.getElementById('cont').style.display = 'block';
+    
     console.log(res.data); // Success // InsufficientBalance // Error
   }
 
@@ -113,7 +126,7 @@ const Checkout = (props) => {
           Go Back
         </Link>
         <div style={{ display: 'none', position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px' }} id='addressError'>
-          <img src={redX} alt="error" style={{ width: '70px', float: 'left' }} />
+          <img src={redX} alt="error" style={{ width: '70px', float: 'left' }}/>
           <div style={{ flexGrow: '1', marginTop: '3px' }}>
             <span style={{ fontSize: '17px' }}>Please fill out the neccesary </span>
             <div className="progress-bar-error">
@@ -133,9 +146,9 @@ const Checkout = (props) => {
         </div>
 
         <h4 class="mb-5" style={{ textAlign: 'center' }}>Checkout</h4>
-        <Container style={{ display: 'block' }}>
-          <div class="row" >
-            <div class="col-md-4 order-md-2 mb-4">
+        <Container>
+          <div style={{order: '2'}}>
+            <div class="">
               <h4 class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text-muted">Your cart</span>
               </h4>
