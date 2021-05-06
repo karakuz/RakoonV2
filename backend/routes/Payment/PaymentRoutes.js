@@ -83,7 +83,7 @@ router.post("/payment/transfer", async (req, res) => {
             const mm = (today.getMonth() + 1 < 10) ? '0' + String(today.getMonth() + 1) : String(today.getMonth() + 1);
             const dd = (today.getDate() < 10) ? '0' + String(today.getDate()) : String(today.getDate());
             const date = `${String(today.getFullYear())}-${mm}-${dd}`;
-            await sendInvoice(product, user, info);
+
             await db.get(`INSERT INTO orders(date,address,customer_id,seller_id,item_id,status, quantity) VALUES(${date}, 'test address', ${user.user_id}, ${store.store_id}, ${product.item_id},'pending', 1)`);
             await transfer(price, user.wallet_address, user.wallet_private_key, store_owner.wallet_address)
                 .then(() => {
@@ -170,7 +170,7 @@ const sendInvoice = async function (product, user, info) {
         var mailOptions = {
             to: user.e_mail,
             from: 'rakoonecommerceservices@gmail.com',
-            subject: 'Your One time Code',
+            subject: 'Your Invoice',
             text: 'Hello,\n\n' +
                 'You can find your invoice in the attachment \n',
             attachments: [{
