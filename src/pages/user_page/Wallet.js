@@ -32,10 +32,6 @@ const Wallet = (props) => {
         document.getElementById('loading').style.display = 'block';
         
         const token = inputToken;
-        if (token > 10) {
-            alert("Yavaş lan kaç tane alıyon");
-            return;
-        }
         // eslint-disable-next-line no-unused-vars
         const res = await Axios({
             method: "POST",
@@ -65,7 +61,7 @@ const Wallet = (props) => {
               <Form style={{ margin: "3em auto", position: "relative" }}>
                 <Form.Group controlId="formBasicPassword" onChange={e => setInputToken(e.target.value)}>
                   <Form.Label>Send Me RKN</Form.Label>
-                  <Form.Control type="number" />
+                  <Form.Control type="number" max='10'/>
                 </Form.Group>
                 <span style={{ fontSize: '16px', position: 'absolute', right: '0', color: 'red', display: 'none' }} className='InvalidCode'>Code is invalid</span>
 
