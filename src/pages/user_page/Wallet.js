@@ -54,40 +54,39 @@ const Wallet = (props) => {
     return (
       <div style={{ margin: '2rem', justifyContent: 'center' }}>
           <ProfileNav />
-        {
-          (walletAddress==="") ?
-            <div id="loading" style={{display: "block"}}>
-              <img src={Loading} alt='Loading...' style={{display: 'block', margin: "0 auto"}}/>
-            </div>
-          : 
-            <>
-              <div id="loading" style={{display: "none"}}>
+          {
+            (walletAddress==="") ?
+              <div id="loading" style={{display: "block"}}>
                 <img src={Loading} alt='Loading...' style={{display: 'block', margin: "0 auto"}}/>
               </div>
-              <Card>
-                <Card.Body>
-                  <Card.Title>Wallet address: {walletAddress}  </Card.Title>
-                  <Card.Title>Balance: {walletBalance} RKN </Card.Title>
-                  <Form style={{ margin: "3em auto", position: "relative" }}>
-                    <Form.Group controlId="formBasicPassword" onChange={e => setInputToken(e.target.value)}>
-                      <Form.Label>Send Me RKN</Form.Label>
-                      <Form.Control type="number" max='10'/>
-                    </Form.Group>
-                    <span style={{ fontSize: '16px', position: 'absolute', right: '0', color: 'red', display: 'none' }} className='InvalidCode'>Code is invalid</span>
+            : 
+              <>
+                <div id="loading" style={{display: "none"}}>
+                  <img src={Loading} alt='Loading...' style={{display: 'block', margin: "0 auto"}}/>
+                </div>
+                <div id="cont">
+                  <Card>
+                    <Card.Body>
+                      <Card.Title>Wallet address: {walletAddress}  </Card.Title>
+                      <Card.Title>Balance: {walletBalance} RKN </Card.Title>
+                      <Form style={{ margin: "3em auto", position: "relative" }}>
+                        <Form.Group controlId="formBasicPassword" onChange={e => setInputToken(e.target.value)}>
+                          <Form.Label>Send Me RKN</Form.Label>
+                          <Form.Control type="number" max='10'/>
+                        </Form.Group>
+                        <span style={{ fontSize: '16px', position: 'absolute', right: '0', color: 'red', display: 'none' }} className='InvalidCode'>Code is invalid</span>
 
-                    <div style={{ display: "flex" }}>
-                      <Button variant="primary" style={{ margin: "3em auto" }} type="submit" onClick={(e) => submit(e)} >
-                        Send
-                      </Button>
-                    </div>
-                  </Form>
-                </Card.Body>
-              </Card>
-            </>
-        }
-        
-          
-        
+                        <div style={{ display: "flex" }}>
+                          <Button variant="primary" style={{ margin: "3em auto" }} type="submit" onClick={(e) => submit(e)} >
+                            Send
+                          </Button>
+                        </div>
+                      </Form>
+                    </Card.Body>
+                  </Card>
+                </div>
+              </>
+          }
       </div>
     )
 }
