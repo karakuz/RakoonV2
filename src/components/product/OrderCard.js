@@ -56,7 +56,6 @@ const OrderCard = (props) => {
                   <option value="Delivered">Delivered</option>
                 </select>
               </p>
-              
           }
         </div>
       </div>

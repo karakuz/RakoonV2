@@ -6,7 +6,7 @@ import { Button, Col, Container } from 'react-bootstrap';
 import redX from '../css/redX.jpg';
 import Loading from '../cart/loading.gif';
 
-function numeral(number) {
+/* function numeral(number) {
   number = String(number);
   if (number.indexOf('.') !== -1)
     for (let i = number.indexOf('.') - 3; i > 0; i -= 3)
@@ -16,7 +16,7 @@ function numeral(number) {
       number = number.substring(0, i) + ',' + number.substring(i);
   number = number.split('.')[0] + '.' + number.split('.')[1].substring(0, 3);
   return number;
-}
+} */
 
 const Checkout = (props) => {
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
