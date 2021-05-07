@@ -154,7 +154,7 @@ router.post("/getComments/:id", async (req, res) => {
     SELECT name, surname, comment, rate, DATE_FORMAT(date, '%d/%m/%Y') AS date FROM rakoon.ratings 
       JOIN users ON ratings.user_id=users.user_id WHERE item_id=${productID} AND ratings.is_verified=1;
   `);
-  
+
   res.send(comments);
 });
 
@@ -194,7 +194,7 @@ router.post("/getStoreComments", async (req, res) => {
   
   //const rates = await db.get(`SELECT `);
   res.send(unrated);
-});
+}); 
 
 router.put("/verifyComment", async (req, res) => {
   const rating_id = req.body.rating_id;
@@ -212,30 +212,23 @@ router.put("/verifyComment", async (req, res) => {
 
 router.post("/store/orders", async (req, res) => {
   const user = req.body.user;
-  console.log(user);
   
   const orders = await db.get(`
-    SELECT orders.*, 
-      items.item_name, 
-      items.image,
-      items.price FROM (SELECT orders.*,
-        order_items.item_id,
-        order_items.quantity,
-            order_items.status FROM orders 
-            JOIN order_items 
-            ON orders.order_id = order_items.order_id
-        ) AS orders
+      SELECT  orders.*, 
+        items.item_name, 
+        items.image,
+        items.price FROM orders 
       JOIN items 
-      ON items.item_id = orders.item_id 
+      ON items.item_id = orders.item_id
       WHERE seller_id=(
         SELECT store_id FROM sales_managers WHERE user_id = ${user.user_id}
-      )
+      ) ORDER BY date DESC
   `);
 
   const map = new Map();
   for(let order of orders){
-    if(map.get(order.order_id) === undefined) map.set(order.order_id, [order])
-    else map.set(order.order_id, [...map.get(order.order_id), order]);
+    if(map.get(order.date) === undefined) map.set(order.date, [order])
+    else map.set(order.date, [...map.get(order.date), order]);
   }
 
   const obj = {};
@@ -248,9 +241,8 @@ router.post("/store/orders", async (req, res) => {
 
 router.put("/store/updateorder", async (req, res) => {
   const orders = req.body.orders;
-
   for(let order of orders)
-    await db.get(`UPDATE order_items SET status='${order.status}' WHERE item_id=${order.item_id} AND order_id=${order.order_id}`);
+    await db.get(`UPDATE orders SET status='${order.status}' WHERE item_id=${order.item_id} AND order_id=${order.order_id}`);
   res.send("done");
 });
 

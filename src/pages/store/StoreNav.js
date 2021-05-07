@@ -4,8 +4,8 @@ import { useHistory } from 'react-router-dom';
 const StoreNav = (props) => {
   const history = useHistory();
   const user = props.user;
-
-  if(user.user_id === 3){
+    
+  if(user.role_id === 3){
     return (
       <div style={{marginBottom: "1rem"}} id='nav'>
         <span onClick={()=> history.push("/store")}>Store Info</span>

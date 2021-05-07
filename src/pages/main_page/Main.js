@@ -49,7 +49,7 @@ const Main = () => {
         <Route path="/reset/:token" component={Reset} />
         <Route path="/activate/:token" component={Activate} />
         <Route path="/product/:id" component={ProductScreen} />
-        <Route path="/category/:name" component={CategoryPage} />
+        <Route path="/category/:name" component={()=> <CategoryPage numOfItems={numOfItems} setNumOfItems={setNumOfItems}/>} />
         <Route path="/search/:keyword" component={() => (<Search numOfItems={numOfItems} setNumOfItems={setNumOfItems} />)} />
         <ProtectedStoreRoute path="/store" exact component={Store} />
         <ProtectedStoreRoute path="/store/addproduct" exact component={StoreAdd} />

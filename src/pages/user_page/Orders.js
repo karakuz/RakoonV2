@@ -3,9 +3,10 @@ import { Card } from 'react-bootstrap';
 import Axios from "axios";
 import ProfileNav from './ProfileNav';
 import Order from './Order';
+import Loading from '../cart/loading.gif';
 
 const Orders = () => {
-  const [orders, setOrders] = React.useState([]);
+  const [orders, setOrders] = React.useState([""]);
 
   useEffect(() => {
     (async ()=>{
@@ -32,9 +33,13 @@ const Orders = () => {
             <Card.Title>You have no orders yet. </Card.Title>
           </Card.Body>
         </Card>
-        : Object.keys(orders).map((key) => {
-            return <Order orders={orders[key]}/>
-          })
+        : (orders[0] === "" ) ? 
+        <div id="loading" style={{display: "block"}}>
+          <img src={Loading} alt='Loading...' style={{display: 'block', margin: "0 auto"}}/>
+        </div>
+        : Object.keys(orders).map((date) => {
+          return <Order orders={orders[date]}/>; 
+        })
       }
     </div>
   )

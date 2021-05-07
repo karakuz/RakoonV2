@@ -40,6 +40,7 @@ const StoreItemEdit = () => {
       });
       setProduct(res_.data);
     })();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
