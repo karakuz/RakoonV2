@@ -3,7 +3,6 @@ import Axios from 'axios'
 import ProductCard from '../../components/product/product_card';
 import '../css/bootstrap.min.css';
 import { Col, Row, Container } from 'react-bootstrap';
-import Filter from '../../components/product/Filter';
 
 const Body = (props) => {
   const [products, setProducts] = useState([]);
