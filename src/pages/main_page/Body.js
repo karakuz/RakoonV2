@@ -3,9 +3,12 @@ import Axios from 'axios'
 import ProductCard from '../../components/product/product_card';
 import '../css/bootstrap.min.css';
 import { Col, Row, Container } from 'react-bootstrap';
+import Filter from '../../components/product/Filter';
 
 const Body = (props) => {
   const [products, setProducts] = useState([]);
+  const [min, setMin] = React.useState();
+  const [max, setMax] = React.useState();
   
   const getProducts = async () => {
     const res = await Axios({
@@ -20,11 +23,25 @@ const Body = (props) => {
     getProducts();
   }, []);
 
+  const find = () => {
+    console.log(min);
+    console.log(max);
+
+    setProducts(products.filter(product => product.price < max && product.price > min))
+  }
+
   return (
     <div>
       <h3 style={{ textAlign: 'center', margin: '1rem' }}>
         Welcome to Rakoon E-Commerce!
       </h3>
+      {/* <Filter products={products}/> */}
+      <div className="form-group">
+        <label>Price</label>
+        <input id="min" type="number" onChange={(e)=> setMin(parseInt(e.target.value))}/>
+        <input id="max" type="number"  onChange={(e)=> setMax(parseInt(e.target.value))}/>
+        <input type="button" onClick={()=>find()} value="search"/>
+      </div>
       <Container>
         <Row>
           {
