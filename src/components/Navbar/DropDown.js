@@ -4,12 +4,12 @@ import Axios from 'axios'
 
 const DropDown = () => {
   const [categories, setcategories] = useState([]);
-
+  const PORT = process.env.PORT || 4000;
   const getcategories = async () => {
     const res = await Axios({
       method: "GET",
       withCredentials: true,
-      url: `http://localhost:4000/categories`,
+      url: `http://localhost:${PORT}/categories`,
     });
     setcategories(res.data)
   };
@@ -22,7 +22,7 @@ const DropDown = () => {
       {
         categories.map((category) => {
           const url = `/category/${category.category}`
-          return <NavDropdown.Item href={url} style={{fontSize: "20px"}}>{category.category}</NavDropdown.Item>
+          return <NavDropdown.Item href={url} style={{ fontSize: "20px" }}>{category.category}</NavDropdown.Item>
         })
       }
     </NavDropdown>
