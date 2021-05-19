@@ -47,7 +47,15 @@ app.use(cookieParser("secretcode"));
 
 require("./backend/passportConfig")(passport);
 
-app.use('/static', express.static(path.join(__dirname, './build/static')));
+
+if (process.env.NODE_ENV === "production") {
+  app.use('/static', express.static(path.join(__dirname, './build')));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "build", "index.html"));
+  })
+}
+
 
 //----------------------------------------- END OF MIDDLEWARE---------------------------------------------------
 
