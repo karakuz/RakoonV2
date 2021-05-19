@@ -13,7 +13,7 @@ const ForgotRoutes = require("./backend/routes/Forgot/ForgotRoutes");
 const ProductRoutes = require("./backend/routes/Product/ProductRoutes");
 const UserCartRoutes = require("./backend/routes/UserCart/CartRoutes");
 const CategoryRoutes = require("./backend/routes/Menu/CategoryRoutes");
-const ProfileRoutes = require("./backend/routes/Profile/ProfileRoutes");
+const ProfileRoutes = require("./backend/routes/Profile/profileRoutes");
 const SearchRoutes = require("./backend/routes/Search/SearchRoutes");
 const StoreRoutes = require("./backend/routes/Store/StoreRoutes");
 const PaymentRoutes = require("./backend/routes/Payment/PaymentRoutes");
@@ -47,14 +47,15 @@ app.use(cookieParser("secretcode"));
 
 require("./backend/passportConfig")(passport);
 
-
-if (process.env.NODE_ENV === "production") {
-  app.use('/static', express.static(path.join(__dirname, './build')));
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('build'));
 
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "build", "index.html"));
   })
 }
+
+
 
 
 //----------------------------------------- END OF MIDDLEWARE---------------------------------------------------
@@ -70,14 +71,6 @@ app.use(SearchRoutes);
 app.use(StoreRoutes);
 app.use(TwoFARoutes);
 app.use(PaymentRoutes);
-
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('build'));
-
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "build", "index.html"));
-  })
-}
 
 //----------------------------------------- END OF ROUTES---------------------------------------------------
 //Start Server
