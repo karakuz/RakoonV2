@@ -74,20 +74,20 @@ const Checkout = (props) => {
         info: info
       },
       withCredentials: true,
-      url: `http://localhost:4000/payment/transfer`,
+      url: `http://3.67.85.199:4000/payment/transfer`,
     });
 
     document.getElementById('loading').style.display = 'none';
-    if(res.data === "Success"){
+    if (res.data === "Success") {
       alert("Payment is completed. An invoice has been sent to your email")
       history.push("/");
     }
-    else if(res.data === "InsufficientBalance")
+    else if (res.data === "InsufficientBalance")
       alert("You dont have sufficient balance")
     else
       alert("An error happenned");
     document.getElementById('cont').style.display = 'block';
-    
+
     console.log(res.data); // Success // InsufficientBalance // Error
   }
 
@@ -98,7 +98,7 @@ const Checkout = (props) => {
         sessionID: sessionID
       },
       withCredentials: true,
-      url: `http://localhost:4000/cart/products`,
+      url: `http://3.67.85.199:4000/cart/products`,
     });
     setProducts(res.data);
     ref.current = false;
@@ -118,15 +118,15 @@ const Checkout = (props) => {
 
   return (
     <div>
-      <div id="loading" style={{display: "none"}}>
-        <img src={Loading} alt='Loading...' style={{display: 'block', margin: "0 auto"}}/>
+      <div id="loading" style={{ display: "none" }}>
+        <img src={Loading} alt='Loading...' style={{ display: 'block', margin: "0 auto" }} />
       </div>
       <div id="cont">
         <Link className='btn btn-light my-3' to='/cart'>
           Go Back
         </Link>
         <div style={{ display: 'none', position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px' }} id='addressError'>
-          <img src={redX} alt="error" style={{ width: '70px', float: 'left' }}/>
+          <img src={redX} alt="error" style={{ width: '70px', float: 'left' }} />
           <div style={{ flexGrow: '1', marginTop: '3px' }}>
             <span style={{ fontSize: '17px' }}>Please fill out the neccesary </span>
             <div className="progress-bar-error">
@@ -147,7 +147,7 @@ const Checkout = (props) => {
 
         <h4 class="mb-5" style={{ textAlign: 'center' }}>Checkout</h4>
         <Container>
-          <div style={{order: '2'}}>
+          <div style={{ order: '2' }}>
             <div class="">
               <h4 class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text-muted">Your cart</span>
@@ -171,7 +171,7 @@ const Checkout = (props) => {
                   </div>
                   <span>${products.reduce((a, v) => a = a + v.price, 0)}</span>
                 </li>
-                <div style={{ marginTop: '1rem' }}> 
+                <div style={{ marginTop: '1rem' }}>
                   <Button onClick={() => proceedPayment()}>Complete Payment</Button>
                 </div>
               </ul>

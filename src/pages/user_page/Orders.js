@@ -9,37 +9,37 @@ const Orders = () => {
   const [orders, setOrders] = React.useState([""]);
 
   useEffect(() => {
-    (async ()=>{
+    (async () => {
       const res = await Axios({
         method: "POST",
         data: {
           sessionID: null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID')
         },
         withCredentials: true,
-        url: `http://localhost:4000/profile/orders`,
+        url: `http://3.67.85.199:4000/profile/orders`,
       });
       setOrders(res.data);
     })();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div style={{ margin: '2rem', justifyContent: 'center' }}>
-      <ProfileNav/>
+      <ProfileNav />
       {
-        (orders.length === 0) ? 
-        <Card>
-          <Card.Body>
-            <Card.Title>You have no orders yet. </Card.Title>
-          </Card.Body>
-        </Card>
-        : (orders[0] === "" ) ? 
-        <div id="loading" style={{display: "block"}}>
-          <img src={Loading} alt='Loading...' style={{display: 'block', margin: "0 auto"}}/>
-        </div>
-        : Object.keys(orders).map((date) => {
-          return <Order orders={orders[date]}/>; 
-        })
+        (orders.length === 0) ?
+          <Card>
+            <Card.Body>
+              <Card.Title>You have no orders yet. </Card.Title>
+            </Card.Body>
+          </Card>
+          : (orders[0] === "") ?
+            <div id="loading" style={{ display: "block" }}>
+              <img src={Loading} alt='Loading...' style={{ display: 'block', margin: "0 auto" }} />
+            </div>
+            : Object.keys(orders).map((date) => {
+              return <Order orders={orders[date]} />;
+            })
       }
     </div>
   )

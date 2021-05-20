@@ -17,36 +17,36 @@ const Comment = (props) => {
         accept: accept
       },
       withCredentials: true,
-      url: `http://localhost:4000/verifyComment`,
+      url: `http://3.67.85.199:4000/verifyComment`,
     });
-    if(res.data === "verified")
+    if (res.data === "verified")
       alert("Comment has been verified")
-    else 
+    else
       alert("Comment has been rejected")
     const div = e.target.parentElement.parentElement;
     div.parentElement.removeChild(div);
   }
 
   return (
-    <div style={{display: "flex"}}>
-      <div style={{margin: "2rem auto", padding: "1rem", width: "80%", boxShadow: "10px 10px 10px grey"}}>
-        <div style={{display: "flex", justifyContent: "space-between", marginBottom: "1rem"}}>
-          <span style={{maxWidth: "80%", fontSize: "1.3em"}}>{props.comment.comment}</span>
-          <span style={{width: "16%"}}>
-            <Stars rate={Math.floor(props.comment.rate)}/>
+    <div style={{ display: "flex" }}>
+      <div style={{ margin: "2rem auto", padding: "1rem", width: "80%", boxShadow: "10px 10px 10px grey" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem" }}>
+          <span style={{ maxWidth: "80%", fontSize: "1.3em" }}>{props.comment.comment}</span>
+          <span style={{ width: "16%" }}>
+            <Stars rate={Math.floor(props.comment.rate)} />
           </span>
         </div>
-        <div style={{display: "flex", justifyContent: "space-between"}}>
-          <span style={{maxWidth: "80%", fontStyle: "italic"}}>by {`${props.comment.name} ${props.comment.surname}`}</span>
-          <span style={{width: "12.6%"}}>on {props.comment.date}</span>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <span style={{ maxWidth: "80%", fontStyle: "italic" }}>by {`${props.comment.name} ${props.comment.surname}`}</span>
+          <span style={{ width: "12.6%" }}>on {props.comment.date}</span>
         </div>
         {
-          (props.isVerifyPage) ? 
-            <div style={{display: "flex", justifyContent: "flex-end", marginTop: "1rem"}} className="buttonDiv">
-              <button onClick={(e)=> submit(e)} value="1">Accept</button>
-              <button onClick={(e)=> submit(e)} value="0">Reject</button>
+          (props.isVerifyPage) ?
+            <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "1rem" }} className="buttonDiv">
+              <button onClick={(e) => submit(e)} value="1">Accept</button>
+              <button onClick={(e) => submit(e)} value="0">Reject</button>
             </div>
-          : null
+            : null
         }
       </div>
     </div>

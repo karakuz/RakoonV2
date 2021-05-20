@@ -22,55 +22,55 @@ const StoreAdd = () => {
     const res = await Axios({
       method: "GET",
       withCredentials: true,
-      url: `http://localhost:4000/categories`,
+      url: `http://3.67.85.199:4000/categories`,
     });
     setCategories(res.data);
-    if(categories[0]!==undefined) setCategory("");
+    if (categories[0] !== undefined) setCategory("");
   }
 
   useEffect(() => {
     getCategories();
   }, []);
 
-  const submit = async (e) =>{
+  const submit = async (e) => {
     e.preventDefault();
     const queries = ["#name", "#description", "#price", "#category", "#count", "#brand"]
 
-    let emptyInputs=[];
-    for(let id of queries)
-      if(document.querySelector(id).value === "")
+    let emptyInputs = [];
+    for (let id of queries)
+      if (document.querySelector(id).value === "")
         emptyInputs.push(id);
-    
-    if(emptyInputs.length!==0){
-      for(let input of emptyInputs)
+
+    if (emptyInputs.length !== 0) {
+      for (let input of emptyInputs)
         document.querySelector(input).style.border = "3px solid red";
-    
-    document.querySelector('#emptyError').style.display = "flex";
-    setTimeout( () => document.querySelector('#emptyError').style.display = "none", 3000);
-    
-    return;  
-    }
-    const re = new RegExp("[+-]?([0-9]*[.])?[0-9]+");
-    const regRes = re.exec(String(price)) 
-    if(regRes.input !== regRes[0]){
-      document.querySelector('#priceErr').style.display = "flex";
-      setTimeout( () => document.querySelector('#priceErr').style.display = "none", 3000);
+
+      document.querySelector('#emptyError').style.display = "flex";
+      setTimeout(() => document.querySelector('#emptyError').style.display = "none", 3000);
+
       return;
     }
-    
+    const re = new RegExp("[+-]?([0-9]*[.])?[0-9]+");
+    const regRes = re.exec(String(price))
+    if (regRes.input !== regRes[0]) {
+      document.querySelector('#priceErr').style.display = "flex";
+      setTimeout(() => document.querySelector('#priceErr').style.display = "none", 3000);
+      return;
+    }
+
     const url = "https://api.cloudinary.com/v1_1/rakoon/image/upload";
-    
+
     const files = document.querySelector("[type=file]").files;
-    if(files.length>1){
+    if (files.length > 1) {
       document.querySelector('#selectOnlyOneErr').style.display = "flex";
-      setTimeout( () => document.querySelector('#selectOnlyOneErr').style.display = "none", 3000);
+      setTimeout(() => document.querySelector('#selectOnlyOneErr').style.display = "none", 3000);
       return;
     }
     const file = (files.length === 1) ? document.querySelector("[type=file]").files[0] : null;
-    
-    if(file === null) {
+
+    if (file === null) {
       document.querySelector('#selectImgErr').style.display = "flex";
-      setTimeout( () => document.querySelector('#selectImgErr').style.display = "none", 3000);
+      setTimeout(() => document.querySelector('#selectImgErr').style.display = "none", 3000);
       return;
     };
 
@@ -84,10 +84,10 @@ const StoreAdd = () => {
     const imageResponse = JSON.parse(xhr.responseText);
 
     const imgURL = imageResponse.url;
-     
+
     const item = {
       user_id: user.user_id,
-      name : itemName,
+      name: itemName,
       description: description,
       price: price,
       brand: brand,
@@ -98,53 +98,53 @@ const StoreAdd = () => {
 
     const res = await Axios({
       method: "POST",
-      data:{
+      data: {
         item: item
       },
       withCredentials: true,
-      url: `http://localhost:4000/addProduct`,
+      url: `http://3.67.85.199:4000/addProduct`,
     });
 
-    if(res.data === "done")
-     alert("Product is added")
+    if (res.data === "done")
+      alert("Product is added")
   }
 
   return (
-    <div style={{margin:"2em", display: "flex", flexDirection:"column"}}>
-      <StoreNav user={user}/>
-      <h3 style={{textAlign: "center"}}>Add Product</h3>
-      <div style={{margin:"2em auto", display: "inline-flex", flexDirection:"column", fontSize: "1.3rem", width:"430px", position: "relative"}} id="add">
-        <div style={{display: "none", position: 'absolute', overflow: 'auto', width: '550px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='emptyError'>
-          <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
-          <div style={{flexGrow: '1', marginTop: '8px'}}>
-            <span style={{fontSize: '20px'}}>One of the following inputs can not be empty</span>
+    <div style={{ margin: "2em", display: "flex", flexDirection: "column" }}>
+      <StoreNav user={user} />
+      <h3 style={{ textAlign: "center" }}>Add Product</h3>
+      <div style={{ margin: "2em auto", display: "inline-flex", flexDirection: "column", fontSize: "1.3rem", width: "430px", position: "relative" }} id="add">
+        <div style={{ display: "none", position: 'absolute', overflow: 'auto', width: '550px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px' }} id='emptyError'>
+          <img src={redX} alt="error" style={{ width: '70px', float: 'left' }} />
+          <div style={{ flexGrow: '1', marginTop: '8px' }}>
+            <span style={{ fontSize: '20px' }}>One of the following inputs can not be empty</span>
             <div className="progress-bar-error">
               <span className="progress-bar-inner"></span>
             </div>
           </div>
         </div>
-        <div style={{display: "none", position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='selectOnlyOneErr'>
-          <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
-          <div style={{flexGrow: '1', marginTop: '8px'}}>
-            <span style={{fontSize: '20px'}}>Select only one image</span>
+        <div style={{ display: "none", position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px' }} id='selectOnlyOneErr'>
+          <img src={redX} alt="error" style={{ width: '70px', float: 'left' }} />
+          <div style={{ flexGrow: '1', marginTop: '8px' }}>
+            <span style={{ fontSize: '20px' }}>Select only one image</span>
             <div className="progress-bar-error">
               <span className="progress-bar-inner"></span>
             </div>
           </div>
         </div>
-        <div style={{display: "none", position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='selectImgErr'>
-          <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
-          <div style={{flexGrow: '1', marginTop: '8px'}}>
-            <span style={{fontSize: '20px'}}>Select an image</span>
+        <div style={{ display: "none", position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px' }} id='selectImgErr'>
+          <img src={redX} alt="error" style={{ width: '70px', float: 'left' }} />
+          <div style={{ flexGrow: '1', marginTop: '8px' }}>
+            <span style={{ fontSize: '20px' }}>Select an image</span>
             <div className="progress-bar-error">
               <span className="progress-bar-inner"></span>
             </div>
           </div>
         </div>
-        <div style={{display: "none", position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px'}} id='priceErr'>
-          <img src={redX} alt="error" style={{width: '70px', float: 'left'}}/>
-          <div style={{flexGrow: '1', marginTop: '8px'}}>
-            <span style={{fontSize: '20px'}}>Enter valid price</span>
+        <div style={{ display: "none", position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px' }} id='priceErr'>
+          <img src={redX} alt="error" style={{ width: '70px', float: 'left' }} />
+          <div style={{ flexGrow: '1', marginTop: '8px' }}>
+            <span style={{ fontSize: '20px' }}>Enter valid price</span>
             <div className="progress-bar-error">
               <span className="progress-bar-inner"></span>
             </div>
@@ -153,27 +153,27 @@ const StoreAdd = () => {
 
         <div>
           <label>Name:</label>
-          <input type="text" onChange={(e)=> setItemName(e.target.value)} id="name"/>
+          <input type="text" onChange={(e) => setItemName(e.target.value)} id="name" />
         </div>
         <div>
           <label>Description:</label>
-          <textarea rows="5" cols="23" onChange={(e)=> setDescription(e.target.value)} id="description"></textarea>
+          <textarea rows="5" cols="23" onChange={(e) => setDescription(e.target.value)} id="description"></textarea>
         </div>
         <div>
           <label>Price:</label>
-          <input type="text" onChange={(e)=> setPrice(e.target.value)} id="price"/>
+          <input type="text" onChange={(e) => setPrice(e.target.value)} id="price" />
         </div>
-        <div style={{position: "relative"}}>
+        <div style={{ position: "relative" }}>
           <label>Image:</label>
-          <input name="file" type="file" style={{position: "absolute", right: "0"}}/>
+          <input name="file" type="file" style={{ position: "absolute", right: "0" }} />
           {/* <input type="file" style={{position: "absolute", right: "0"}}/> */}
         </div>
         <div>
           <label>Category</label>
-          <select name="categories" id="category" onChange={(e)=> setCategory(e.target.value)}>
+          <select name="categories" id="category" onChange={(e) => setCategory(e.target.value)}>
             {<option value="" selected></option>}
             {
-              categories.map( category => {
+              categories.map(category => {
                 const categoryName = category.category;
                 return <option value={category.category}>{categoryName[0] + categoryName.slice(1)}</option>
               })
@@ -182,17 +182,17 @@ const StoreAdd = () => {
         </div>
         <div>
           <label>Count</label>
-          <input type="number" min="1" onChange={(e)=> setCount(e.target.value)} id="count"/>
+          <input type="number" min="1" onChange={(e) => setCount(e.target.value)} id="count" />
         </div>
         <div>
           <label>Brand</label>
-          <input type="text" onChange={(e)=> setBrand(e.target.value)} id="brand"/>
+          <input type="text" onChange={(e) => setBrand(e.target.value)} id="brand" />
         </div>
-        <div style={{display: "flex", marginTop:"1rem"}}>
-          <input type="submit" value="Add Item" style={{margin: "0 auto", width: "initial", background: "black", color: "white", padding: "0.5rem", borderRadius: "7px"}} 
-            onClick={(e)=> submit(e)}/>
+        <div style={{ display: "flex", marginTop: "1rem" }}>
+          <input type="submit" value="Add Item" style={{ margin: "0 auto", width: "initial", background: "black", color: "white", padding: "0.5rem", borderRadius: "7px" }}
+            onClick={(e) => submit(e)} />
         </div>
-      </div>  
+      </div>
     </div>
   )
 }

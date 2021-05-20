@@ -14,34 +14,34 @@ const ProductScreen = () => {
   const { id } = useParams();
   let user;
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
-  if(sessionID !== null) user = jwt.verify(sessionID, 'shhhhh');
-  
+  if (sessionID !== null) user = jwt.verify(sessionID, 'shhhhh');
+
   const getProducts = async () => {
     const res = await Axios({
       method: "GET",
       withCredentials: true,
-      url: `http://localhost:4000/product/${id}`,
+      url: `http://3.67.85.199:4000/product/${id}`,
     });
     setProduct(res.data);
   };
-  
+
   const getComments = async () => {
     const res = await Axios({
       method: "POST",
       withCredentials: true,
-      url: `http://localhost:4000/getComments/${id}`,
+      url: `http://3.67.85.199:4000/getComments/${id}`,
     });
     setComments(res.data);
   }
 
   useEffect(() => {
     getProducts();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     getComments();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product])
 
   return (
@@ -86,27 +86,27 @@ const ProductScreen = () => {
           </Card>
         </Col>
       </Row>
-      <div style={{marginBottom: "2rem"}}>
-        <h3 style={{textAlign: "center"}}>Comments</h3>
+      <div style={{ marginBottom: "2rem" }}>
+        <h3 style={{ textAlign: "center" }}>Comments</h3>
         {
           (comments[0] === "") ?
-          <div id="loading" style={{display: "block"}}>
-            <img src={Loading} alt='Loading...' style={{display: 'block', margin: "0 auto"}}/>
-          </div>
-          :
-          (comments.length === 0) ? <p style={{textAlign: "center"}}>No comments</p> : 
-        
-          comments.map((comment)=>{
-            return <Comment comment={comment}/>
-          })
-          
-        } 
+            <div id="loading" style={{ display: "block" }}>
+              <img src={Loading} alt='Loading...' style={{ display: 'block', margin: "0 auto" }} />
+            </div>
+            :
+            (comments.length === 0) ? <p style={{ textAlign: "center" }}>No comments</p> :
+
+              comments.map((comment) => {
+                return <Comment comment={comment} />
+              })
+
+        }
       </div>
       {(user && user.role_id === 1) ?
-      <div  style={{marginBottom: "5rem"}}>
-        <h3 style={{textAlign: "center"}}>Add Comment</h3>
-        <AddComment productID={id} user={user}/>
-      </div> : null}
+        <div style={{ marginBottom: "5rem" }}>
+          <h3 style={{ textAlign: "center" }}>Add Comment</h3>
+          <AddComment productID={id} user={user} />
+        </div> : null}
     </div>
   )
 }

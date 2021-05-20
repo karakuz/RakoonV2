@@ -1,13 +1,13 @@
 import React from 'react'
 import OrderCard from '../../components/product/OrderCard'
-import Axios from "axios";  
+import Axios from "axios";
 
 function numeral(number) {
   number = String(number);
   if (number.indexOf('.') === -1)
     return parseInt(number);
   else
-    return parseFloat(number.split('.')[0]+'.'+number.split('.')[1].slice(0,3));
+    return parseFloat(number.split('.')[0] + '.' + number.split('.')[1].slice(0, 3));
 }
 
 const Order = (props) => {
@@ -16,7 +16,7 @@ const Order = (props) => {
   let total = 0;
   //console.log(orders);
 
-  for(let order of orders)
+  for (let order of orders)
     total += order.price;
 
   const update = async (e) => {
@@ -27,34 +27,34 @@ const Order = (props) => {
         orders: orders
       },
       withCredentials: true,
-      url: `http://localhost:4000/store/updateorder`,
+      url: `http://3.67.85.199:4000/store/updateorder`,
     });
-    if(res.data === "done") alert("Order status has been changed");
+    if (res.data === "done") alert("Order status has been changed");
   }
 
   return (
     <div>
-      <div style={{ width: "60%", margin: "2rem auto", boxShadow: "0px 0px 25px -10px black", borderRadius: "35px", padding: "1rem 0 3rem", position: "relative"}}>
-        <h3 style={{textAlign: "center"}}>Date: {props.orders[0].date.split('-')[2] + '/' + props.orders[0].date.split('-')[1] + '/' + props.orders[0].date.split('-')[0]}</h3>
+      <div style={{ width: "60%", margin: "2rem auto", boxShadow: "0px 0px 25px -10px black", borderRadius: "35px", padding: "1rem 0 3rem", position: "relative" }}>
+        <h3 style={{ textAlign: "center" }}>Date: {props.orders[0].date.split('-')[2] + '/' + props.orders[0].date.split('-')[1] + '/' + props.orders[0].date.split('-')[0]}</h3>
         {
           props.orders.map(product => {
             return (
-              <OrderCard {...product} isStore={props.isStore} orders={orders} setOrders={setOrders} setDisabled={setDisabled}/>
+              <OrderCard {...product} isStore={props.isStore} orders={orders} setOrders={setOrders} setDisabled={setDisabled} />
             );
           })
         }
         {
-          (props.isStore) ? 
-            <div style={{display: "flex", justifyContent: "center"}}>
+          (props.isStore) ?
+            <div style={{ display: "flex", justifyContent: "center" }}>
               <button onClick={(e) => update(e)}
-                style={{padding: "8px 13px", fontSize: "18px", color: "white", background: "blue", borderRadius: "10px", marginTop: "-15px"}}
-                >
-                  Update
+                style={{ padding: "8px 13px", fontSize: "18px", color: "white", background: "blue", borderRadius: "10px", marginTop: "-15px" }}
+              >
+                Update
               </button>
             </div>
-          : null
+            : null
         }
-        <p style={{fontSize: "18px", margin: "0", position: "absolute", bottom: "25px", right: "15px"}}>Total: {numeral(total)}</p>
+        <p style={{ fontSize: "18px", margin: "0", position: "absolute", bottom: "25px", right: "15px" }}>Total: {numeral(total)}</p>
       </div>
     </div>
   )

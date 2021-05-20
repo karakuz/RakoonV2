@@ -7,7 +7,7 @@ const Privacy = () => {
   const [registerOldPassword, setRegisterOldPassword] = React.useState("");
   const [registerNewPassword, setRegisterNewPassword] = React.useState("");
   const [twofaenable, setTwofaenable] = React.useState("");
-  
+
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
 
   const submit = async (e) => {
@@ -18,7 +18,7 @@ const Privacy = () => {
         return;
       }
 
-      const res = await Axios.put(`http://localhost:4000/profile/2fa/update`, {
+      const res = await Axios.put(`http://3.67.85.199:4000/profile/2fa/update`, {
         twofaenable: twofaenable == "Off" ? 0 : 1,
         sessionID: sessionID
       }).catch(err => console.log(`Error 2fa.js: ${err}`));
@@ -38,7 +38,7 @@ const Privacy = () => {
     }
     else {
       // verify old password and update all
-      const verifyPassword = await Axios.post(`http://localhost:4000/profile/passwordUpdate`, {
+      const verifyPassword = await Axios.post(`http://3.67.85.199:4000/profile/passwordUpdate`, {
         sessionID: sessionID,
         oldPassword: registerOldPassword,
         newPassword: registerNewPassword
@@ -46,23 +46,23 @@ const Privacy = () => {
 
       if (verifyPassword.data) {
         alert("Your password has been changed succesfully");
-        if (twofaenable === 1 || twofaenable === 0) 
+        if (twofaenable === 1 || twofaenable === 0)
           return;
 
-        const res = await Axios.put(`http://localhost:4000/profile/2fa/update`, {
+        const res = await Axios.put(`http://3.67.85.199:4000/profile/2fa/update`, {
           twofaenable: twofaenable === "Off" ? 0 : 1,
           sessionID: sessionID
         }).catch(err => console.log(`Error 2fa.js: ${err}`));
         window.location.reload();
       }
-      else 
+      else
         alert("Your old password is wrong");
     }
   }
 
   return (
     <div style={{ margin: '2rem', justifyContent: 'center' }}>
-      <ProfileNav/>
+      <ProfileNav />
       <Card>
         <Card.Body>
           <Form style={{ margin: "2rem auto" }} onSubmit={e => submit(e)}>

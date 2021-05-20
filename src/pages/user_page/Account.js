@@ -23,7 +23,7 @@ const Account = (props) => {
           sessionID: props.sessionID
         },
         withCredentials: true,
-        url: `http://localhost:4000/profile/user`,
+        url: `http://3.67.85.199:4000/profile/user`,
       });
       userInfo.name = res.data.name;
       userInfo.surname = res.data.surname;
@@ -42,11 +42,11 @@ const Account = (props) => {
   const submit = async (e) => {
     e.preventDefault();
 
-     e.preventDefault();
+    e.preventDefault();
     userInfo.name = registerName;
     userInfo.surname = registerSurname;
     userInfo.email = registerEmail;
-    const res = await Axios.put('http://localhost:4000/profile/update', {
+    const res = await Axios.put('http://3.67.85.199:4000/profile/update', {
       user: userInfo,
       sessionID: props.sessionID
     }).catch(err => console.log(`Error in update.js: ${err}`));
@@ -59,17 +59,17 @@ const Account = (props) => {
       <Card>
         <Card.Body>
           <Form style={{ margin: "2rem auto" }}>
-          <Form.Row>
-                <Form.Group  controlId="formName">
-                  <Form.Label>First Name</Form.Label>
-                  <Form.Control id="name" type="name" onChange={e => setRegisterName(e.target.value)} />
-                </Form.Group>
-                <Form.Group controlId="formName">
-                  <Form.Label>Surname</Form.Label>
-                  <Form.Control id="surname" type="surname" onChange={e => setRegisterSurname(e.target.value)} />
-                </Form.Group>
-              </Form.Row>
-        
+            <Form.Row>
+              <Form.Group controlId="formName">
+                <Form.Label>First Name</Form.Label>
+                <Form.Control id="name" type="name" onChange={e => setRegisterName(e.target.value)} />
+              </Form.Group>
+              <Form.Group controlId="formName">
+                <Form.Label>Surname</Form.Label>
+                <Form.Control id="surname" type="surname" onChange={e => setRegisterSurname(e.target.value)} />
+              </Form.Group>
+            </Form.Row>
+
             <Form.Group controlId="formEmail">
               <Form.Label> E-Mail Address: </Form.Label>
               <Form.Control id="email" type="email" onChange={e => setRegisterEmail(e.target.value)} />

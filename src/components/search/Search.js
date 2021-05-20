@@ -8,31 +8,31 @@ import '../../pages/css/body.css';
 
 const Search = (props) => {
   const [products, setProducts] = useState([]);
-  const {keyword} = useParams();
+  const { keyword } = useParams();
 
   const getProducts = async () => {
     const res = await Axios({
       method: "POST",
       withCredentials: true,
-      url: `http://localhost:4000/search/${keyword}`,
+      url: `http://3.67.85.199:4000/search/${keyword}`,
     });
     setProducts(res.data);
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     getProducts();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
-  
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div>
       <Container>
         <Row>
           {
-            products.map((product)=>{
-              return( 
+            products.map((product) => {
+              return (
                 <Col sm={12} md={6} lg={4} xl={3}>
-                  <ProductCard key={product.item_id} {...product} isRemovable={false} numOfItems={props.numOfItems} setNumOfItems={props.setNumOfItems}/>;
+                  <ProductCard key={product.item_id} {...product} isRemovable={false} numOfItems={props.numOfItems} setNumOfItems={props.setNumOfItems} />;
                 </Col>
               );
             })

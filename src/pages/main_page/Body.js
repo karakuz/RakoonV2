@@ -8,12 +8,12 @@ const Body = (props) => {
   const [products, setProducts] = useState([]);
   const [min, setMin] = React.useState();
   const [max, setMax] = React.useState();
-  
+
   const getProducts = async () => {
     const res = await Axios({
       method: "GET",
       withCredentials: true,
-      url: `http://localhost:4000/products`,
+      url: `http://3.67.85.199:4000/products`,
     });
     setProducts(res.data);
   };
@@ -37,9 +37,9 @@ const Body = (props) => {
       {/* <Filter products={products}/> */}
       <div className="form-group">
         <label>Price</label>
-        <input id="min" type="number" onChange={(e)=> setMin(parseInt(e.target.value))}/>
-        <input id="max" type="number"  onChange={(e)=> setMax(parseInt(e.target.value))}/>
-        <input type="button" onClick={()=>find()} value="search"/>
+        <input id="min" type="number" onChange={(e) => setMin(parseInt(e.target.value))} />
+        <input id="max" type="number" onChange={(e) => setMax(parseInt(e.target.value))} />
+        <input type="button" onClick={() => find()} value="search" />
       </div>
       <Container>
         <Row>

@@ -11,7 +11,7 @@ const Reset = () => {
   const history = useHistory();
   const PORT = process.env.PORT || 4000;
 
-  var url = `http://localhost:${PORT}/reset/${token}`
+  var url = `http://3.67.85.199:4000/reset/${token}`
   const submit = async (e) => {
     e.preventDefault();
     const res = await Axios.post(url, {
