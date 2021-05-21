@@ -29,9 +29,10 @@ const ProductScreen = () => {
     const res = await Axios({
       method: "POST",
       withCredentials: true,
-      url: `http://3.67.85.199:4000/getComments/${id}`,
+      url: `http://localhost:4000/getComments/${id}`,
     });
     setComments(res.data);
+    console.log(res.data);
   }
 
   useEffect(() => {
