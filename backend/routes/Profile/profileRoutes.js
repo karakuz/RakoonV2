@@ -67,6 +67,15 @@ router.post("/profile/passwordUpdate", async (req, res) => {
   })
 });
 
+router.post("/profile/role", async (req, res) => {
+  const sessionID = req.body.sessionID;
+  const sessionuser = await jwt.verify(sessionID, 'shhhhh');
+  var user = await User.findOne(({ where: { user_id: sessionuser.user_id } }));
+
+  res.send(user.role_id);
+
+});
+
 router.post("/profile/orders", async (req, res) => {
   const user = await jwt.verify(req.body.sessionID, 'shhhhh');
   const user_id = user.user_id;
