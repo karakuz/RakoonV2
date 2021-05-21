@@ -10,7 +10,8 @@ const ProductCard = (props) => {
   const addOrDelete = (!props.isRemovable) ? 'Add To Cart' : 'Delete';
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
   const user = (sessionID !== null) ? jwt.verify(sessionID, 'shhhhh') : null;
-
+  //console.log(props);
+  
   const product = {
     id: props.item_id,
     name: props.item_name,
