@@ -69,7 +69,6 @@ const Wallet = () => {
                 <img src={Loading} alt='Loading...' style={{ display: 'block', margin: "0 auto" }} />
               </div>
             : (user.role_id === 1) ?
-              <>
                 <div id="loading" style={{display: "none"}}>
                   <img src={Loading} alt='Loading...' style={{display: 'block', margin: "0 auto"}}/>
                 </div>
@@ -94,6 +93,7 @@ const Wallet = () => {
                   </Card.Body>
                 </Card>
               </div>
+              
             </>
             :
             <div id="cont">
