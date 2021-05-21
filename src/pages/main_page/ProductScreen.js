@@ -32,6 +32,7 @@ const ProductScreen = () => {
       url: `http://3.67.85.199:4000/getComments/${id}`,
     });
     setComments(res.data);
+    console.log(res.data);
   }
 
   useEffect(() => {
