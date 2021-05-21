@@ -11,7 +11,7 @@ const TwoFactorAuth = () => {
     const [registerCode, setRegisterCode] = useState("");
     const PORT = process.env.PORT || 4000;
 
-    var url = `http://localhost:${PORT}/2fa/verifySecret/${token}`
+    var url = `http://3.67.85.199:4000/2fa/verifySecret/${token}`
     const submit = async (e) => {
         e.preventDefault();
         const input = registerCode;
@@ -43,18 +43,18 @@ const TwoFactorAuth = () => {
 
     return (
         <Form style={{ margin: "3em auto", position: "relative" }}>
-          <Form.Group controlId="formBasicPassword">
-              <Form.Label>Verification Code</Form.Label>
-              <Form.Control type="number" onChange={e => setRegisterCode(e.target.value)} />
-          </Form.Group>
-          <span style={{ fontSize: '16px', position: 'absolute', right: '0', color: 'red', display: 'none' }} className='InvalidCode'>Code is invalid</span>
-          
-          <div style={{display: "flex"}}>
-            <Button variant="primary" style={{ margin: "3em auto" }} type="submit" onClick={(e) => submit(e)}>
-                Send
+            <Form.Group controlId="formBasicPassword">
+                <Form.Label>Verification Code</Form.Label>
+                <Form.Control type="number" onChange={e => setRegisterCode(e.target.value)} />
+            </Form.Group>
+            <span style={{ fontSize: '16px', position: 'absolute', right: '0', color: 'red', display: 'none' }} className='InvalidCode'>Code is invalid</span>
+
+            <div style={{ display: "flex" }}>
+                <Button variant="primary" style={{ margin: "3em auto" }} type="submit" onClick={(e) => submit(e)}>
+                    Send
             </Button>
-          </div>
-          
+            </div>
+
         </Form>
     )
 }

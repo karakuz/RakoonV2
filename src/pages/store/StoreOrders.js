@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import Axios from "axios";  
+import Axios from "axios";
 import StoreNav from './StoreNav';
 import Order from '../user_page/Order';
 import Loading from '../cart/loading.gif';
@@ -17,29 +17,29 @@ const StoreOrders = () => {
         user: user
       },
       withCredentials: true,
-      url: `http://localhost:4000/store/orders`,
+      url: `http://3.67.85.199:4000/store/orders`,
     });
     setOrders(res.data);
   }
 
   useEffect(() => {
     getOrders();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
     <div>
-      <StoreNav user={user}/>
+      <StoreNav user={user} />
       {
         (orders[0] === "") ?
-        <div id="loading" style={{display: "block"}}>
-          <img src={Loading} alt='Loading...' style={{display: 'block', margin: "0 auto"}}/>
-        </div>
-        :
-        (orders.length !== 0) ?
-        Object.keys(orders).map((key) => {
-          return <Order orders={orders[key]} isStore={true}/>
-        }) : "No Orders"
+          <div id="loading" style={{ display: "block" }}>
+            <img src={Loading} alt='Loading...' style={{ display: 'block', margin: "0 auto" }} />
+          </div>
+          :
+          (orders.length !== 0) ?
+            Object.keys(orders).map((key) => {
+              return <Order orders={orders[key]} isStore={true} />
+            }) : "No Orders"
       }
     </div>
   )

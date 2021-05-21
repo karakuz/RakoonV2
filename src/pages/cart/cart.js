@@ -31,7 +31,7 @@ const Cart = (props) => {
         sessionID: sessionID
       },
       withCredentials: true,
-      url: `http://localhost:4000/cart/products`,
+      url: `http://3.67.85.199:4000/cart/products`,
     });
     setProducts(res.data);
     console.log(res.data);
@@ -54,7 +54,7 @@ const Cart = (props) => {
     return (
       <div >
         <Link className='btn btn-light my-3' to='/'>
-        Go Back
+          Go Back
       </Link>
         <h4 class="mb-5" style={{ textAlign: 'center' }}>My Cart</h4>
         <Container style={{ display: 'block' }}>

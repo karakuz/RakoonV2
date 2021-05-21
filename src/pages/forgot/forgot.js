@@ -11,7 +11,7 @@ const Forgot = () => {
 
   const submit = async (e) => {
     e.preventDefault();
-    if(registerUsername===''){
+    if (registerUsername === '') {
       alert('Enter your email!');
       return;
     }
@@ -21,14 +21,14 @@ const Forgot = () => {
         email: registerUsername,
       },
       withCredentials: true,
-      url: `http://localhost:${PORT}/forgot`,
+      url: `http://3.67.85.199:4000/forgot`,
     }).catch((err) => console.log(`err: ${err}`));
 
-    if(res !==undefined && res.data==="sent"){
+    if (res !== undefined && res.data === "sent") {
       alert(`Email is sent to ${registerUsername}`);
       history.push('/');
     }
-    if(res === undefined || res.data === "NoUser"){
+    if (res === undefined || res.data === "NoUser") {
       alert("There is no user with that email");
       setRegisterUsername('');
       return;
@@ -36,17 +36,17 @@ const Forgot = () => {
   };
 
   return (
-    <div style={{fontSize: '25px'}}>
-      <Form style={{margin: '0 auto'}}>
+    <div style={{ fontSize: '25px' }}>
+      <Form style={{ margin: '0 auto' }}>
         <Form controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control type="email" placeholder="Enter email" onChange={(e) => setRegisterUsername(e.target.value)} />
           <Form.Text className="text-muted">
-              We'll never share your email with anyone else.
+            We'll never share your email with anyone else.
           </Form.Text>
         </Form>
-      <Button variant="primary" type="submit" onClick={(e)=>submit(e)}>
-        Reset
+        <Button variant="primary" type="submit" onClick={(e) => submit(e)}>
+          Reset
       </Button>
       </Form>
     </div>

@@ -10,8 +10,8 @@ const StoreShow = () => {
   const [items, setItems] = useState([""]);
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
   const user = jwt.verify(sessionID, 'shhhhh');
- 
-  const getItems = async () =>{
+
+  const getItems = async () => {
     const res = await Axios({
       method: "POST",
       data: {
@@ -19,58 +19,58 @@ const StoreShow = () => {
         role_id: user.role_id
       },
       withCredentials: true,
-      url: `http://localhost:4000/getStoreItems`,
+      url: `http://3.67.85.199:4000/getStoreItems`,
     });
     setItems(res.data);
   }
-  
+
   useEffect(() => {
     getItems();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  
-  if(items[0] === ""){
+
+  if (items[0] === "") {
     return (
       <>
-        <StoreNav user={user}/>
-        <div id="loading" style={{display: "block"}}>
-          <img src={Loading} alt='Loading...' style={{display: 'block', margin: "0 auto"}}/>
+        <StoreNav user={user} />
+        <div id="loading" style={{ display: "block" }}>
+          <img src={Loading} alt='Loading...' style={{ display: 'block', margin: "0 auto" }} />
         </div>
       </>
     )
   }
 
-  if(items.length !== 0){
+  if (items.length !== 0) {
     return (
-      <div style={{margin:"2em"}}>
-        <StoreNav user={user}/>
+      <div style={{ margin: "2em" }}>
+        <StoreNav user={user} />
         <div>
-        <Container>
-          <Row>
-            {
-              items.map( item => {
-                return (
-                  <Col sm={12} md={6} lg={4} xl={3}>
-                    <ProductCard key={item.item_id} id={item.item_id} {...item} role_id={user.role_id}/>
-                  </Col>
-                )
-              })
-            }
-          </Row>
-        </Container>
-        </div>  
+          <Container>
+            <Row>
+              {
+                items.map(item => {
+                  return (
+                    <Col sm={12} md={6} lg={4} xl={3}>
+                      <ProductCard key={item.item_id} id={item.item_id} {...item} role_id={user.role_id} />
+                    </Col>
+                  )
+                })
+              }
+            </Row>
+          </Container>
+        </div>
       </div>
     )
   }
-  else{
-    return(
+  else {
+    return (
       <div>
-        <StoreNav user={user}/>
-        <p style={{textAlign: "center"}}>You have no products in your store</p>
+        <StoreNav user={user} />
+        <p style={{ textAlign: "center" }}>You have no products in your store</p>
       </div>
     )
   }
-  
+
 }
 
 export default StoreShow

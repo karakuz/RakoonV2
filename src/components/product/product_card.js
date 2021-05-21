@@ -24,7 +24,7 @@ const ProductCard = (props) => {
   const change = async (e) => {
     e.preventDefault();
     if (!props.isRemovable) {
-      if(sessionID!==null){
+      if (sessionID !== null) {
         // eslint-disable-next-line no-unused-vars
         const res = await Axios({
           method: "POST",
@@ -33,10 +33,10 @@ const ProductCard = (props) => {
             user: sessionID
           },
           withCredentials: true,
-          url: `http://localhost:4000/cart/product/${product.id}`
+          url: `http://3.67.85.199:4000/cart/product/${product.id}`
         });
       }
-      else{
+      else {
         const prod = {
           item_id: product.id,
           item_name: product.name,
@@ -49,7 +49,7 @@ const ProductCard = (props) => {
       props.setNumOfItems(props.numOfItems + 1);
     }
     else if (props.isRemovable) {
-      if(sessionID!==null){
+      if (sessionID !== null) {
         // eslint-disable-next-line no-unused-vars
         const res = await Axios({
           method: "DELETE",
@@ -61,7 +61,7 @@ const ProductCard = (props) => {
           url: `http://localhost:4000/cart/product/${product.id}`,
         });
       }
-      else{
+      else {
         localStorage.removeItem(product.id);
       }
       props.setNumOfItems((props.numOfItems) - 1);
@@ -78,16 +78,16 @@ const ProductCard = (props) => {
           <strong style={{ display: "block", marginTop: "1rem" }}>{product.name}</strong>
         </Card.Title>
       </Link>
-      <Stars rate={Math.floor(product.rate)}/>
+      <Stars rate={Math.floor(product.rate)} />
       <Card.Body>
-        <Card.Text as='h5' style={{textAlign: "center"}}>${product.price}</Card.Text>
+        <Card.Text as='h5' style={{ textAlign: "center" }}>${product.price}</Card.Text>
         {
-          (user===null || user.role_id === 1) ?
-          <Button variant="success">
-            <span onClick={(e) => change(e)}>{addOrDelete}</span>
-          </Button> 
-          :
-          null
+          (user === null || user.role_id === 1) ?
+            <Button variant="success">
+              <span onClick={(e) => change(e)}>{addOrDelete}</span>
+            </Button>
+            :
+            null
         }
       </Card.Body>
     </Card>

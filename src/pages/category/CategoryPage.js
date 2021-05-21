@@ -14,14 +14,14 @@ const CategoryPage = (props) => {
         const res = await Axios({
             method: "GET",
             withCredentials: true,
-            url: `http://localhost:4000/category/${name}`,
+            url: `http://3.67.85.199:4000/category/${name}`,
         });
         setProducts(res.data)
     };
 
     useEffect(() => {
         getProducts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
