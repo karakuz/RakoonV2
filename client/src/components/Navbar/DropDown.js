@@ -9,7 +9,7 @@ const DropDown = () => {
     const res = await Axios({
       method: "GET",
       withCredentials: true,
-      url: `http://3.67.85.199:4000/categories`,
+      url: `/categories`,
     });
     setcategories(res.data)
   };

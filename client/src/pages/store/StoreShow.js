@@ -19,7 +19,7 @@ const StoreShow = () => {
         role_id: user.role_id
       },
       withCredentials: true,
-      url: `http://3.67.85.199:4000/getStoreItems`,
+      url: `/getStoreItems`,
     });
     setItems(res.data);
   }

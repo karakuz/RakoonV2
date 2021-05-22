@@ -14,7 +14,7 @@ const Search = (props) => {
     const res = await Axios({
       method: "POST",
       withCredentials: true,
-      url: `http://3.67.85.199:4000/search/${keyword}`,
+      url: `/search/${keyword}`,
     });
     setProducts(res.data);
   }

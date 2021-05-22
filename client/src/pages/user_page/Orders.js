@@ -16,7 +16,7 @@ const Orders = () => {
           sessionID: null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID')
         },
         withCredentials: true,
-        url: `http://3.67.85.199:4000/profile/orders`,
+        url: `/profile/orders`,
       });
       setOrders(res.data);
     })();

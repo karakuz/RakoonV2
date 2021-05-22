@@ -9,7 +9,7 @@ const Activate = () => {
   const history = useHistory();
   const PORT = process.env.PORT || 4000;
 
-  var url = `http://3.67.85.199:4000/activate/${token}`
+  var url = `/activate/${token}`
   const submit = async (e) => {
     e.preventDefault();
     // eslint-disable-next-line no-unused-vars

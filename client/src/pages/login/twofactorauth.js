@@ -11,7 +11,7 @@ const TwoFactorAuth = () => {
     const [registerCode, setRegisterCode] = useState("");
     const PORT = process.env.PORT || 4000;
 
-    var url = `http://3.67.85.199:4000/2fa/verifySecret/${token}`
+    var url = `/2fa/verifySecret/${token}`
     const submit = async (e) => {
         e.preventDefault();
         const input = registerCode;

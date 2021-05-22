@@ -23,7 +23,7 @@ const Account = (props) => {
           sessionID: props.sessionID
         },
         withCredentials: true,
-        url: `http://3.67.85.199:4000/profile/user`,
+        url: `/profile/user`,
       });
       userInfo.name = res.data.name;
       userInfo.surname = res.data.surname;
@@ -46,7 +46,7 @@ const Account = (props) => {
     userInfo.name = registerName;
     userInfo.surname = registerSurname;
     userInfo.email = registerEmail;
-    const res = await Axios.put('http://3.67.85.199:4000/profile/update', {
+    const res = await Axios.put('/profile/update', {
       user: userInfo,
       sessionID: props.sessionID
     }).catch(err => console.log(`Error in update.js: ${err}`));

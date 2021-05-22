@@ -20,7 +20,7 @@ const ProductScreen = () => {
     const res = await Axios({
       method: "GET",
       withCredentials: true,
-      url: `http://3.67.85.199:4000/product/${id}`,
+      url: `/product/${id}`,
     });
     setProduct(res.data);
   };
@@ -29,7 +29,7 @@ const ProductScreen = () => {
     const res = await Axios({
       method: "POST",
       withCredentials: true,
-      url: `http://3.67.85.199:4000/getComments/${id}`,
+      url: `/getComments/${id}`,
     });
     setComments(res.data);
     console.log(res.data);

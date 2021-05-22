@@ -19,7 +19,7 @@ const Store = () => {
         role_id: user.role_id
       },
       withCredentials: true,
-      url: `http://3.67.85.199:4000/getStoreInfo`,
+      url: `/getStoreInfo`,
     });
     setStore(res.data);
   }
@@ -32,7 +32,7 @@ const Store = () => {
         role_id: user.role_id
       },
       withCredentials: true,
-      url: `http://3.67.85.199:4000/getSalesManagers`,
+      url: `/getSalesManagers`,
     });
     setSalesManagers(res.data);
   }

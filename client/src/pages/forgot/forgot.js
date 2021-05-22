@@ -21,7 +21,7 @@ const Forgot = () => {
         email: registerUsername,
       },
       withCredentials: true,
-      url: `http://3.67.85.199:4000/forgot`,
+      url: `/forgot`,
     }).catch((err) => console.log(`err: ${err}`));
 
     if (res !== undefined && res.data === "sent") {

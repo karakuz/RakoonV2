@@ -25,7 +25,7 @@ const Login = () => {
       },
       credentials: 'include',
       withCredentials: true,
-      url: `http://3.67.85.199:4000/login`,
+      url: `/login`,
     });
     if (user.data === "notVerified") {
       document.querySelector('.notverified').style.display = 'block';
@@ -46,7 +46,7 @@ const Login = () => {
         },
         credentials: 'include',
         withCredentials: true,
-        url: "http://3.67.85.199:4000/2fa/generateSecret",
+        url: "/2fa/generateSecret",
       });
       history.push(`/two-factor-auth/${req.data.user_id}`);
     }

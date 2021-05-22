@@ -31,7 +31,7 @@ const Cart = (props) => {
         sessionID: sessionID
       },
       withCredentials: true,
-      url: `http://3.67.85.199:4000/cart/products`,
+      url: `/cart/products`,
     });
     setProducts(res.data);
     console.log(res.data);

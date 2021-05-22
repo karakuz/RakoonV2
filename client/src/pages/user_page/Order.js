@@ -27,7 +27,7 @@ const Order = (props) => {
         orders: orders
       },
       withCredentials: true,
-      url: `http://3.67.85.199:4000/store/updateorder`,
+      url: `/store/updateorder`,
     });
     if (res.data === "done") alert("Order status has been changed");
   }

@@ -35,7 +35,7 @@ const AddComment = (props) => {
         }
       },
       withCredentials: true,
-      url: `http://3.67.85.199:4000/addComment`,
+      url: `/addComment`,
     });
     if (res.data === "done") {
       alert("Your comment has been added. Its on approvement process");

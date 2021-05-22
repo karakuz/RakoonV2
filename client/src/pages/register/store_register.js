@@ -64,7 +64,7 @@ const Store_Register = () => {
         storeName: storeName
       },
       withCredentials: true,
-      url: `http://3.67.85.199:4000/store_register`,
+      url: `/store_register`,
     });
     if (res.data.res === "exists") {
       document.querySelector('#exists').style.display = 'flex';

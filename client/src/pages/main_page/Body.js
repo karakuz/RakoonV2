@@ -13,7 +13,7 @@ const Body = (props) => {
     const res = await Axios({
       method: "GET",
       withCredentials: true,
-      url: `http://3.67.85.199:4000/products`,
+      url: `/products`,
     });
     setProducts(res.data);
   };

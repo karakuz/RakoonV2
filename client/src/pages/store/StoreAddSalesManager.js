@@ -62,7 +62,7 @@ const StoreAddSalesManager = () => {
       },
       credentials: 'include',
       withCredentials: true,
-      url: `http://3.67.85.199:4000/addSalesManager`,
+      url: `/addSalesManager`,
     });
 
     if (res.data.res === "exists") {

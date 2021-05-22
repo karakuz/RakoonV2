@@ -18,7 +18,7 @@ const Privacy = () => {
         return;
       }
 
-      const res = await Axios.put(`http://3.67.85.199:4000/profile/2fa/update`, {
+      const res = await Axios.put(`/profile/2fa/update`, {
         twofaenable: twofaenable == "Off" ? 0 : 1,
         sessionID: sessionID
       }).catch(err => console.log(`Error 2fa.js: ${err}`));
@@ -38,7 +38,7 @@ const Privacy = () => {
     }
     else {
       // verify old password and update all
-      const verifyPassword = await Axios.post(`http://3.67.85.199:4000/profile/passwordUpdate`, {
+      const verifyPassword = await Axios.post(`/profile/passwordUpdate`, {
         sessionID: sessionID,
         oldPassword: registerOldPassword,
         newPassword: registerNewPassword
@@ -49,7 +49,7 @@ const Privacy = () => {
         if (twofaenable === 1 || twofaenable === 0)
           return;
 
-        const res = await Axios.put(`http://3.67.85.199:4000/profile/2fa/update`, {
+        const res = await Axios.put(`/profile/2fa/update`, {
           twofaenable: twofaenable === "Off" ? 0 : 1,
           sessionID: sessionID
         }).catch(err => console.log(`Error 2fa.js: ${err}`));

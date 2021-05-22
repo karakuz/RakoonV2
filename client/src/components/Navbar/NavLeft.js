@@ -18,7 +18,7 @@ const NavLeft = (props) => {
         sessionID: sessionID
       },
       withCredentials: true,
-      url: `http://3.67.85.199:4000/getCartItems`,
+      url: `/getCartItems`,
     });
     const products = res.data;
     if (typeof products != typeof '') props.setNumOfItems(products.length)

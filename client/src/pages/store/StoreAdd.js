@@ -22,7 +22,7 @@ const StoreAdd = () => {
     const res = await Axios({
       method: "GET",
       withCredentials: true,
-      url: `http://3.67.85.199:4000/categories`,
+      url: `/categories`,
     });
     setCategories(res.data);
     if (categories[0] !== undefined) setCategory("");
@@ -102,7 +102,7 @@ const StoreAdd = () => {
         item: item
       },
       withCredentials: true,
-      url: `http://3.67.85.199:4000/addProduct`,
+      url: `/addProduct`,
     });
 
     if (res.data === "done")

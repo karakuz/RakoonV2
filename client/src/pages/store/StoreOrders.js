@@ -17,7 +17,7 @@ const StoreOrders = () => {
         user: user
       },
       withCredentials: true,
-      url: `http://3.67.85.199:4000/store/orders`,
+      url: `/store/orders`,
     });
     setOrders(res.data);
   }

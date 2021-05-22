@@ -11,7 +11,7 @@ const ProductCard = (props) => {
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
   const user = (sessionID !== null) ? jwt.verify(sessionID, 'shhhhh') : null;
   //console.log(props);
-  
+
   const product = {
     id: props.item_id,
     name: props.item_name,
@@ -33,7 +33,7 @@ const ProductCard = (props) => {
             user: sessionID
           },
           withCredentials: true,
-          url: `http://3.67.85.199:4000/cart/product/${product.id}`
+          url: `/cart/product/${product.id}`
         });
       }
       else {
@@ -58,7 +58,7 @@ const ProductCard = (props) => {
             user: sessionID
           },
           withCredentials: true,
-          url: `http://localhost:4000/cart/product/${product.id}`,
+          url: `/cart/product/${product.id}`,
         });
       }
       else {

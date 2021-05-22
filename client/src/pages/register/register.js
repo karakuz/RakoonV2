@@ -57,7 +57,7 @@ const Register = () => {
       },
       credentials: 'include',
       withCredentials: true,
-      url: `http://3.67.85.199:4000/register`,
+      url: `/register`,
     });
 
 
@@ -81,7 +81,7 @@ const Register = () => {
               user: { user_id: res.data.user_id }
             },
             withCredentials: true,
-            url: `http://localhost:4000/cart/product/${productID}`
+            url: `/cart/product/${productID}`
           }).then(res => console.log(res)).then(() => localStorage.clear());
         });
       }

@@ -74,7 +74,7 @@ const Checkout = (props) => {
         info: info
       },
       withCredentials: true,
-      url: `http://3.67.85.199:4000/payment/transfer`,
+      url: `/payment/transfer`,
     });
 
     document.getElementById('loading').style.display = 'none';
@@ -98,7 +98,7 @@ const Checkout = (props) => {
         sessionID: sessionID
       },
       withCredentials: true,
-      url: `http://3.67.85.199:4000/cart/products`,
+      url: `/cart/products`,
     });
     setProducts(res.data);
     ref.current = false;

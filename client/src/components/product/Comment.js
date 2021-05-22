@@ -17,7 +17,7 @@ const Comment = (props) => {
         accept: accept
       },
       withCredentials: true,
-      url: `http://3.67.85.199:4000/verifyComment`,
+      url: `/verifyComment`,
     });
     if (res.data === "verified")
       alert("Comment has been verified")

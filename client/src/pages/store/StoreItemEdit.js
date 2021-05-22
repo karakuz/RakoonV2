@@ -29,14 +29,14 @@ const StoreItemEdit = () => {
       const res = await Axios({
         method: "GET",
         withCredentials: true,
-        url: `http://3.67.85.199:4000/categories`,
+        url: `/categories`,
       });
       setCategories(res.data);
 
       const res_ = await Axios({
         method: "GET",
         withCredentials: true,
-        url: `http://3.67.85.199:4000/product/${item_id}`,
+        url: `/product/${item_id}`,
       });
       setProduct(res_.data);
     })();
@@ -129,7 +129,7 @@ const StoreItemEdit = () => {
         item: item
       },
       withCredentials: true,
-      url: `http://3.67.85.199:4000/editProduct`,
+      url: `/editProduct`,
     });
     if (res.data === "done") {
       alert("Updated")

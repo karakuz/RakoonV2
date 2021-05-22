@@ -21,7 +21,7 @@ const Wallet = () => {
           sessionID: sessionID
         },
         withCredentials: true,
-        url: `http://3.67.85.199:4000/payment/walletbalance`,
+        url: `/payment/walletbalance`,
       });
       setWalletAddress(res.data.address);
       setWalletBalance(res.data.balance);
@@ -48,7 +48,7 @@ const Wallet = () => {
       },
       credentials: 'include',
       withCredentials: true,
-      url: `http://3.67.85.199:4000/payment/transferFaucet`
+      url: `/payment/transferFaucet`
     });
     document.getElementById('loading').style.display = 'none';
     alert(`${token}RKN is added to your account`);
@@ -69,20 +69,20 @@ const Wallet = () => {
                 <img src={Loading} alt='Loading...' style={{ display: 'block', margin: "0 auto" }} />
               </div>
             : (user.role_id === 1) ?
-                <div id="loading" style={{display: "none"}}>
-                  <img src={Loading} alt='Loading...' style={{display: 'block', margin: "0 auto"}}/>
-                </div>
-                <div id="cont">
-                  <Card>
-                    <Card.Body>
-                      <Card.Title>Wallet address: {walletAddress}  </Card.Title>
-                      <Card.Title>Balance: {walletBalance} RKN </Card.Title>
-                      <Form style={{ margin: "3em auto", position: "relative" }}>
-                        <Form.Group controlId="formBasicPassword" onChange={e => setInputToken(e.target.value)}>
-                          <Form.Label>Send Me RKN</Form.Label>
-                          <Form.Control type="number" max='10'/>
-                        </Form.Group>
-                        <span style={{ fontSize: '16px', position: 'absolute', right: '0', color: 'red', display: 'none' }} className='InvalidCode'>Code is invalid</span>
+              <div id="loading" style={{ display: "none" }}>
+                <img src={Loading} alt='Loading...' style={{ display: 'block', margin: "0 auto" }} />
+              </div>
+              <div id="cont">
+                <Card>
+                  <Card.Body>
+                    <Card.Title>Wallet address: {walletAddress}  </Card.Title>
+                    <Card.Title>Balance: {walletBalance} RKN </Card.Title>
+                    <Form style={{ margin: "3em auto", position: "relative" }}>
+                      <Form.Group controlId="formBasicPassword" onChange={e => setInputToken(e.target.value)}>
+                        <Form.Label>Send Me RKN</Form.Label>
+                        <Form.Control type="number" max='10' />
+                      </Form.Group>
+                      <span style={{ fontSize: '16px', position: 'absolute', right: '0', color: 'red', display: 'none' }} className='InvalidCode'>Code is invalid</span>
 
                       <div style={{ display: "flex" }}>
                         <Button variant="primary" style={{ margin: "3em auto" }} type="submit" onClick={(e) => submit(e)} >
@@ -93,7 +93,7 @@ const Wallet = () => {
                   </Card.Body>
                 </Card>
               </div>
-              
+
             </>
             :
             <div id="cont">
