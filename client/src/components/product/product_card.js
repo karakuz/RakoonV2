@@ -58,7 +58,7 @@ const ProductCard = (props) => {
             user: sessionID
           },
           withCredentials: true,
-          url: `/cart/product/${product.id}`,
+          url: `cart/product/${product.id}`,
         });
       }
       else {
