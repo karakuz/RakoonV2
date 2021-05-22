@@ -22,7 +22,7 @@ const NavRight = () => {
     const res = await Axios({
       method: "POST",
       data: {
-        sessionID: sessionIDs
+        sessionID: sessionID
       },
       withCredentials: true,
       url: `http://localhost:4000/profile/role`,
@@ -73,7 +73,7 @@ const NavRight = () => {
   else if (user != null && (user.role_id === 3 || user.role_id === 2)) {
     return (
       <Nav style={{position: "relative"}}>
-        <span style={{position: "absolute", right: "140px", top: "0.00001px", fontSize: "63%"}}>{role.role_id}</span>
+        <span style={{position: "absolute", right: "140px", top: "0.00001px", fontSize: "63%"}}>{role}</span>
         <Nav.Link href="/store">{storeName}</Nav.Link>
         <Nav.Link href="/profile">Profile</Nav.Link>
         <Nav.Link onClick={() => logout()}>Logout</Nav.Link>
