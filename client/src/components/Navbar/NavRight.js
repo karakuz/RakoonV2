@@ -25,7 +25,7 @@ const NavRight = () => {
         sessionID: sessionID
       },
       withCredentials: true,
-      url: `profile/role`,
+      url: `/profile/role`,
     });
     const role_ = res.data;
     if (role_ === 1) {
