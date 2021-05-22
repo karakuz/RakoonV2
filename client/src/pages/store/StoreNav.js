@@ -20,6 +20,7 @@ const StoreNav = (props) => {
       <div style={{marginBottom: "1rem"}} id='nav'>
         <span onClick={()=> history.push("/store")}>Store Info</span>
         <span onClick={()=> history.push("/store/products")}>Products</span>
+        <span onClick={()=> history.push("/store/campaigns")}>Campaigns</span>
         <span onClick={()=> history.push("/store/orders")} style={{border: "none"}}>Orders</span>
       </div>
     )

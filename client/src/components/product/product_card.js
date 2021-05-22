@@ -15,6 +15,7 @@ const ProductCard = (props) => {
   const product = {
     id: props.item_id,
     name: props.item_name,
+    store: props.store_name,
     text: props.description,
     img: props.image,
     price: props.price,
@@ -76,6 +77,7 @@ const ProductCard = (props) => {
       <Link to={`/product/${product.id}`}>
         <Card.Title as='div'>
           <strong style={{ display: "block", marginTop: "1rem" }}>{product.name}</strong>
+          <span style={{float: "right", color: "black"}}>{product.store}</span>
         </Card.Title>
       </Link>
       <Stars rate={Math.floor(product.rate)} />

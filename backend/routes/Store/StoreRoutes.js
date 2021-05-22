@@ -246,4 +246,33 @@ router.put("/store/updateorder", async (req, res) => {
   res.send("done");
 });
 
+router.get("/getCampaigns", async (req, res) => {
+  const user_id = req.body.user_id;
+  const role_id = req.body.role_id;
+
+  const campaigns =(role_id === 3) ?
+    //store owner
+    await db.get(`
+    SELECT * FROM(
+      SELECT campaign_items.*, J.user_id FROM
+        (SELECT campaign_id, user_id FROM campaigns WHERE store_id=(
+          SELECT store_id FROM store WHERE owner_id=${user_id}
+        )) AS J
+      JOIN campaign_items ON J.campaign_id = campaign_items.campaign_id) AS campaigns
+    JOIN items WHERE items.item_id = campaigns.item_id
+      `) : 
+    //sales manager
+    await db.get(`
+    SELECT * FROM(
+      SELECT campaign_items.*, J.user_id FROM
+        (SELECT campaign_id, user_id FROM campaigns WHERE store_id=(
+          SELECT store_id FROM sales_managers WHERE user_id=${user_id}
+        )) AS J
+      JOIN campaign_items ON J.campaign_id = campaign_items.campaign_id) AS campaigns
+      JOIN items WHERE items.item_id = campaigns.item_id
+    `); 
+  
+  res.send(campaigns);
+});
+
 module.exports = router;

@@ -28,6 +28,7 @@ import Privacy from '../user_page/Privacy';
 import Orders from '../user_page/Orders';
 import StoreOrders from '../store/StoreOrders';
 import Wallet from '../user_page/Wallet';
+import StoreCampaigns from '../store/StoreCampaigns';
 
 
 const Main = () => {
@@ -55,6 +56,7 @@ const Main = () => {
         <ProtectedStoreRoute path="/store/addproduct" exact component={StoreAdd} />
         <ProtectedStoreRoute path="/store/products" exact component={StoreShow} />
         <ProtectedStoreRoute path="/store/addsalesmanager" exact component={StoreAddSalesManager} />
+        <ProtectedStoreRoute path="/store/campaigns" exact component={StoreCampaigns} />
         <ProtectedStoreRoute path="/store/comments" exact component={StoreComments} />
         <ProtectedStoreRoute path="/store/orders" exact component={StoreOrders} />
         <Route path="/store/products/:item_id" component={StoreItemEdit} />
