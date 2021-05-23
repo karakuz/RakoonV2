@@ -291,18 +291,17 @@ router.post("/getCampaigns", async (req, res) => {
   res.send(obj);
 });
 
+function decimal(num){
+  const str = String(num);
+  if(str.includes === ".") return parseFloat(str.split('.')[0] + '.' + str.split('.')[1].substring(0,2));
+  return parseFloat(str);
+}
+
 router.post("/store/deployCampaignByCategory", async (req, res) => {
   const user_id = req.body.user_id;
   const item_ids = req.body.item_ids;
   const date = req.body.date;
-  const discount = parseFloat('0.' + req.body.discount.substring(1, req.body.discount.length));
-
-
-  //SELECT store_id FROM sales_managers WHERE user_id=${user_id}
-  console.log(date);
-  console.log(typeof date);
-  console.log(discount);
-  console.log(typeof discount);
+  const discount = parseFloat('0.' + req.body.discount);
 
   await db.get(`
     INSERT INTO campaigns(store_id, user_id, by_date, discount) 
@@ -311,15 +310,13 @@ router.post("/store/deployCampaignByCategory", async (req, res) => {
 
   for(let item_id of item_ids){
     const old_price = await db.get(`SELECT price FROM items WHERE item_id=${item_id}`);
-    console.log(old_price);
-    console.log(old_price[0].price);
 
     await db.get(`
       INSERT INTO campaign_items(item_id, campaign_id, old_price, new_price) VALUES(
         (SELECT item_id FROM items WHERE item_id=${item_id}), 
         (SELECT campaign_id FROM campaigns ORDER BY campaign_id DESC LIMIT 1),
         ${old_price[0].price},
-        ${old_price[0].price * (1-discount)}
+        ${decimal(old_price[0].price * (1-discount))}
       )
     `);
   }
@@ -327,5 +324,66 @@ router.post("/store/deployCampaignByCategory", async (req, res) => {
   res.send("done");
 });
 
+router.post("/store/deployCampaignByProduct", async (req, res) => {
+  const user_id = req.body.user_id;
+  const product = req.body.product;
+  const date = req.body.date;
+  const discount = parseFloat('0.' + req.body.discount);
+
+  await db.get(`
+    INSERT INTO campaigns(store_id, user_id, by_date, discount) 
+    VALUES((SELECT store_id FROM sales_managers WHERE user_id=${user_id}), ${user_id}, '${date}', ${discount});
+  `);
+
+  const item_id = await db.get(`SELECT item_id FROM items WHERE item_name='${product}'`);
+  const old_price = await db.get(`SELECT price FROM items WHERE item_id=${item_id[0].item_id}`);
+
+  await db.get(`
+    INSERT INTO campaign_items(item_id, campaign_id, old_price, new_price) VALUES(
+      (SELECT item_id FROM items WHERE item_id=${item_id[0].item_id}), 
+      (SELECT campaign_id FROM campaigns ORDER BY campaign_id DESC LIMIT 1),
+      ${old_price[0].price},
+      ${decimal(old_price[0].price * (1-discount))}
+    )
+  `);
+
+  res.send("done");
+});
+
+
+router.post("/store/deployCampaignByPrice", async (req, res) => {
+  const user_id = req.body.user_id;
+  const date = req.body.date;
+  const discount = parseFloat('0.' + req.body.discount);
+  const minPrice = parseFloat(req.body.minPrice);
+  const maxPrice = parseFloat(req.body.maxPrice);
+  
+  await db.get(`
+    INSERT INTO campaigns(store_id, user_id, by_date, discount) 
+    VALUES((SELECT store_id FROM sales_managers WHERE user_id=${user_id}), ${user_id}, '${date}', ${discount});
+  `);
+
+  const item_ids = await db.get(`
+    SELECT item_id FROM rakoon.items WHERE price > ${minPrice} AND price < ${maxPrice} AND store_id=(
+      SELECT store_id FROM sales_managers WHERE user_id=${user_id}
+    )
+  `);
+
+  for(let item_id of item_ids){
+    const old_price = await db.get(`SELECT price FROM items WHERE item_id=${item_id.item_id}`);
+
+    await db.get(`
+      INSERT INTO campaign_items(item_id, campaign_id, old_price, new_price) VALUES(
+        (SELECT item_id FROM items WHERE item_id=${item_id.item_id}), 
+        (SELECT campaign_id FROM campaigns ORDER BY campaign_id DESC LIMIT 1),
+        ${old_price[0].price},
+        ${decimal(old_price[0].price * (1-discount))}
+      )
+    `);
+  }
+  
+
+  res.send("done");
+});
 
 module.exports = router;
