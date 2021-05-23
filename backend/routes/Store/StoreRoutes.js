@@ -256,13 +256,14 @@ router.post("/getCampaigns", async (req, res) => {
   const campaigns =(role_id === 3) ?
     //store owner
     await db.get(`
-      SELECT * FROM(
-        SELECT campaign_items.*, J.user_id FROM
-          (SELECT campaign_id, user_id FROM campaigns WHERE store_id=(
-            SELECT store_id FROM store WHERE owner_id=${user_id}
-          )) AS J
-        JOIN campaign_items ON J.campaign_id = campaign_items.campaign_id) AS campaigns
-      JOIN items WHERE items.item_id = campaigns.item_id
+      SELECT campaigns.*, items.*, users.name, users.surname FROM(
+          SELECT campaign_items.*, J.by_date, J.user_id, J.discount FROM
+            (SELECT campaign_id, discount, by_date, user_id FROM campaigns WHERE store_id=(
+              SELECT store_id FROM store WHERE owner_id=${user_id}
+            )) AS J
+          JOIN campaign_items ON J.campaign_id = campaign_items.campaign_id) AS campaigns
+        JOIN items ON items.item_id = campaigns.item_id
+      JOIN users ON users.user_id = campaigns.user_id
     `) : 
     //sales manager
     await db.get(`
