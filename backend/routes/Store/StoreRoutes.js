@@ -387,4 +387,18 @@ router.post("/store/deployCampaignByPrice", async (req, res) => {
   res.send("done");
 });
 
+router.post("/store/getSales", async (req, res) => {
+  const user_id = req.body.user_id;
+
+  const sales = await db.get(`
+    SELECT orders.* FROM
+      (SELECT store_id FROM sales_managers WHERE user_id=${user_id})
+      AS sales_managers
+    JOIN orders ON orders.seller_id = sales_managers.store_id
+  `);
+  console.log(sales);
+
+  res.send("done");
+});
+
 module.exports = router;

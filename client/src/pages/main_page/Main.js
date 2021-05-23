@@ -29,6 +29,7 @@ import Orders from '../user_page/Orders';
 import StoreOrders from '../store/StoreOrders';
 import Wallet from '../user_page/Wallet';
 import StoreCampaigns from '../store/StoreCampaigns';
+import StoreSales from '../store/StoreSales';
 
 
 const Main = () => {
@@ -59,6 +60,7 @@ const Main = () => {
         <ProtectedStoreRoute path="/store/campaigns" exact component={StoreCampaigns} />
         <ProtectedStoreRoute path="/store/comments" exact component={StoreComments} />
         <ProtectedStoreRoute path="/store/orders" exact component={StoreOrders} />
+        <ProtectedStoreRoute path="/store/sales" exact component={StoreSales} />
         <Route path="/store/products/:item_id" component={StoreItemEdit} />
         <ProtectedRoute path="/profile" exact component={Profile} />
         <ProtectedRoute path="/profile/privacy" component={Privacy} />

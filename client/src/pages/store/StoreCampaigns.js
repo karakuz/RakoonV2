@@ -177,81 +177,85 @@ const StoreCampaings = () => {
           </div>
         }
       </div>
-      <h3 style={{textAlign: "center"}}>Deploy Campaign</h3>
-      <div style={{border: "1px solid red", width: "80%", margin: "40px auto", padding: "20px"}}>
-        
-        <h5>By Category</h5>
-        <div style={{display: "flex", justifyContent: "space-between", margin: "1.5rem 0 0 1rem"}}>
-          <div style={{width: "350px"}}>
-            <label style={{margin: "auto 0.8rem 0 0", fontSize: "16px", width: "75px"}}>Category</label>
-            <select style={{width: "120px"}} onChange={e => setCategory(e.target.value)}>
-              {<option value="" selected></option>}
-              {
-                categories.map( category => {
-                  return <option value={category}>{category}</option>
-                })
-              }
-            </select>
+      {(user.role_id === 2) ? 
+        <>
+          <h3 style={{textAlign: "center"}}>Deploy Campaign</h3>
+          <div style={{border: "1px solid red", width: "80%", margin: "40px auto", padding: "20px"}}>
+            
+            <h5>By Category</h5>
+            <div style={{display: "flex", justifyContent: "space-between", margin: "1.5rem 0 0 1rem"}}>
+              <div style={{width: "350px"}}>
+                <label style={{margin: "auto 0.8rem 0 0", fontSize: "16px", width: "75px"}}>Category</label>
+                <select style={{width: "120px"}} onChange={e => setCategory(e.target.value)}>
+                  {<option value="" selected></option>}
+                  {
+                    categories.map( category => {
+                      return <option value={category}>{category}</option>
+                    })
+                  }
+                </select>
+              </div>
+              <div style={{position: "relative"}}>
+                <label style={{margin: "auto 0.8rem 0 0", fontSize: "16px"}}>Discount</label>
+                <span style={{position: "absolute", fontSize: "1rem", top: "2px", right: "52px"}}>%</span>
+                <input type="number" value={byCategoryDiscount} style={{width: "70px", marginLeft: "0", paddingLeft: "16px"}} onChange={e => setByCategoryDiscount(e.target.value)}/>
+              </div>
+              <div>
+                <label style={{margin: "auto 0.8rem 0 0", fontSize: "16px"}}>Date By</label>
+                <input type="date" id="date" onChange={e => setByCategoryDateBy(e.target.value)}/>
+              </div>
+    
+              <input type="submit" value="Deploy" id="category" onClick={(e) => categorySubmit(e)}/>
+            </div>
+            
+            <h5 style={{marginTop: "2rem"}}>By Product</h5>
+            <div style={{display: "flex", justifyContent: "space-between", margin: "1.5rem 0 0 1rem"}}>
+              <div style={{width: "350px"}}>
+                <label style={{margin: "auto 0.8rem 0 0", fontSize: "16px", width: "75px"}}>Product</label>
+                <select style={{width: "200px"}} onChange={e => setProduct(e.target.value)}>
+                  {<option value="" selected></option>}
+                  {
+                    items.map( product => {
+                      return <option value={product.item_name}>{product.item_name}</option>
+                    })
+                  }
+                </select>
+              </div>
+              <div style={{position: "relative"}}>
+                <label style={{margin: "auto 0.8rem 0 0", fontSize: "16px"}}>Discount</label>
+                <span style={{position: "absolute", fontSize: "1rem", top: "2px", right: "52px"}}>%</span>
+                <input type="number" value={byProductDiscount} style={{width: "70px", marginLeft: "0", paddingLeft: "16px"}} onChange={ e => setByProductDiscount(e.target.value)}/>
+              </div>
+              <div>
+                <label style={{margin: "auto 0.8rem 0 0", fontSize: "16px"}}>Date By</label>
+                <input type="date" id="date" onChange={ e => setByProductDateBy(e.target.value)}/>
+              </div>
+    
+              <input type="submit" value="Deploy" id="product" onClick={(e) => productSubmit(e)}/>
+            </div>
+    
+            <h5 style={{marginTop: "2rem"}}>By Price</h5>
+            <div style={{display: "flex", justifyContent: "space-between", margin: "1.5rem 0 0 1rem"}}>
+              <div style={{width: "350px"}}>
+                <label style={{margin: "auto 0.8rem 0 0", fontSize: "16px"}}>Price Between</label>
+                <input type="number" style={{width: "80px", marginRight: "0.8rem"}} onChange={ e => setPriceBetween1(parseFloat(e.target.value))}/>
+                <span style={{margin: "auto 0.8rem 0 0", fontSize: "16px"}}>and</span>
+                <input type="number" style={{width: "80px"}} onChange={ e => setPriceBetween2(parseFloat(e.target.value))}/>
+              </div> 
+              <div style={{position: "relative"}}>    
+                <label style={{margin: "auto 0.8rem 0 0", fontSize: "16px"}}>Discount</label>
+                <span style={{position: "absolute", fontSize: "1rem", top: "2px", right: "52px"}}>%</span>
+                <input type="number" value={byPriceDiscount} style={{width: "70px", marginLeft: "0", paddingLeft: "16px"}} onChange={ e => setByPriceDiscount(e.target.value)}/>
+              </div>
+              <div>
+                <label style={{margin: "auto 0.8rem 0 0", fontSize: "16px"}}>Date By</label>
+                <input type="date" id="date" onChange={ e => setByPriceDateBy(e.target.value)}/>
+              </div>
+              <input type="submit" value="Deploy" id="price" onClick={(e) => priceSubmit(e)}/>
+            </div>
           </div>
-          <div style={{position: "relative"}}>
-            <label style={{margin: "auto 0.8rem 0 0", fontSize: "16px"}}>Discount</label>
-            <span style={{position: "absolute", fontSize: "1rem", top: "2px", right: "52px"}}>%</span>
-            <input type="number" value={byCategoryDiscount} style={{width: "70px", marginLeft: "0", paddingLeft: "16px"}} onChange={e => setByCategoryDiscount(e.target.value)}/>
-          </div>
-          <div>
-            <label style={{margin: "auto 0.8rem 0 0", fontSize: "16px"}}>Date By</label>
-            <input type="date" id="date" onChange={e => setByCategoryDateBy(e.target.value)}/>
-          </div>
-
-          <input type="submit" value="Deploy" id="category" onClick={(e) => categorySubmit(e)}/>
-        </div>
-        
-        <h5 style={{marginTop: "2rem"}}>By Product</h5>
-        <div style={{display: "flex", justifyContent: "space-between", margin: "1.5rem 0 0 1rem"}}>
-          <div style={{width: "350px"}}>
-            <label style={{margin: "auto 0.8rem 0 0", fontSize: "16px", width: "75px"}}>Product</label>
-            <select style={{width: "200px"}} onChange={e => setProduct(e.target.value)}>
-              {<option value="" selected></option>}
-              {
-                items.map( product => {
-                  return <option value={product.item_name}>{product.item_name}</option>
-                })
-              }
-            </select>
-          </div>
-          <div style={{position: "relative"}}>
-            <label style={{margin: "auto 0.8rem 0 0", fontSize: "16px"}}>Discount</label>
-            <span style={{position: "absolute", fontSize: "1rem", top: "2px", right: "52px"}}>%</span>
-            <input type="number" value={byProductDiscount} style={{width: "70px", marginLeft: "0", paddingLeft: "16px"}} onChange={ e => setByProductDiscount(e.target.value)}/>
-          </div>
-          <div>
-            <label style={{margin: "auto 0.8rem 0 0", fontSize: "16px"}}>Date By</label>
-            <input type="date" id="date" onChange={ e => setByProductDateBy(e.target.value)}/>
-          </div>
-
-          <input type="submit" value="Deploy" id="product" onClick={(e) => productSubmit(e)}/>
-        </div>
-
-        <h5 style={{marginTop: "2rem"}}>By Price</h5>
-        <div style={{display: "flex", justifyContent: "space-between", margin: "1.5rem 0 0 1rem"}}>
-          <div style={{width: "350px"}}>
-            <label style={{margin: "auto 0.8rem 0 0", fontSize: "16px"}}>Price Between</label>
-            <input type="number" style={{width: "80px", marginRight: "0.8rem"}} onChange={ e => setPriceBetween1(parseFloat(e.target.value))}/>
-            <span style={{margin: "auto 0.8rem 0 0", fontSize: "16px"}}>and</span>
-            <input type="number" style={{width: "80px"}} onChange={ e => setPriceBetween2(parseFloat(e.target.value))}/>
-          </div> 
-          <div style={{position: "relative"}}>    
-            <label style={{margin: "auto 0.8rem 0 0", fontSize: "16px"}}>Discount</label>
-            <span style={{position: "absolute", fontSize: "1rem", top: "2px", right: "52px"}}>%</span>
-            <input type="number" value={byPriceDiscount} style={{width: "70px", marginLeft: "0", paddingLeft: "16px"}} onChange={ e => setByPriceDiscount(e.target.value)}/>
-          </div>
-          <div>
-            <label style={{margin: "auto 0.8rem 0 0", fontSize: "16px"}}>Date By</label>
-            <input type="date" id="date" onChange={ e => setByPriceDateBy(e.target.value)}/>
-          </div>
-          <input type="submit" value="Deploy" id="price" onClick={(e) => priceSubmit(e)}/>
-        </div>
-      </div>
+        </>
+      : null}
     </div>
   )
 }
