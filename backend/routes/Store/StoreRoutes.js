@@ -246,33 +246,86 @@ router.put("/store/updateorder", async (req, res) => {
   res.send("done");
 });
 
-router.get("/getCampaigns", async (req, res) => {
+router.post("/getCampaigns", async (req, res) => {
   const user_id = req.body.user_id;
   const role_id = req.body.role_id;
+
+  console.log(req.body);
+  console.log("in /getCampaigns");
 
   const campaigns =(role_id === 3) ?
     //store owner
     await db.get(`
-    SELECT * FROM(
-      SELECT campaign_items.*, J.user_id FROM
-        (SELECT campaign_id, user_id FROM campaigns WHERE store_id=(
-          SELECT store_id FROM store WHERE owner_id=${user_id}
-        )) AS J
-      JOIN campaign_items ON J.campaign_id = campaign_items.campaign_id) AS campaigns
-    JOIN items WHERE items.item_id = campaigns.item_id
-      `) : 
+      SELECT * FROM(
+        SELECT campaign_items.*, J.user_id FROM
+          (SELECT campaign_id, user_id FROM campaigns WHERE store_id=(
+            SELECT store_id FROM store WHERE owner_id=${user_id}
+          )) AS J
+        JOIN campaign_items ON J.campaign_id = campaign_items.campaign_id) AS campaigns
+      JOIN items WHERE items.item_id = campaigns.item_id
+    `) : 
     //sales manager
     await db.get(`
-    SELECT * FROM(
-      SELECT campaign_items.*, J.user_id FROM
-        (SELECT campaign_id, user_id FROM campaigns WHERE store_id=(
-          SELECT store_id FROM sales_managers WHERE user_id=${user_id}
-        )) AS J
-      JOIN campaign_items ON J.campaign_id = campaign_items.campaign_id) AS campaigns
-      JOIN items WHERE items.item_id = campaigns.item_id
+      SELECT campaigns.*, items.*, users.name, users.surname FROM(
+          SELECT campaign_items.*, J.by_date, J.user_id, J.discount FROM
+            (SELECT campaign_id, discount, by_date, user_id FROM campaigns WHERE store_id=(
+              SELECT store_id FROM sales_managers WHERE user_id=${user_id}
+            )) AS J
+          JOIN campaign_items ON J.campaign_id = campaign_items.campaign_id) AS campaigns
+        JOIN items ON items.item_id = campaigns.item_id
+      JOIN users ON users.user_id = campaigns.user_id
     `); 
   
-  res.send(campaigns);
+  let map = new Map();
+  for(let item of campaigns){
+    if(map.get(item.campaign_id) === undefined) map.set(item.campaign_id, [item])
+    else map.set(item.campaign_id, [...map.get(item.campaign_id), item])
+  }
+
+  let obj = {};
+
+  Array.from(map.keys()).forEach( campaign_id => {
+    obj[campaign_id] = map.get(campaign_id)
+  })
+
+  res.send(obj);
 });
+
+router.post("/store/deployCampaignByCategory", async (req, res) => {
+  const user_id = req.body.user_id;
+  const item_ids = req.body.item_ids;
+  const date = req.body.date;
+  const discount = parseFloat('0.' + req.body.discount.substring(1, req.body.discount.length));
+
+
+  //SELECT store_id FROM sales_managers WHERE user_id=${user_id}
+  console.log(date);
+  console.log(typeof date);
+  console.log(discount);
+  console.log(typeof discount);
+
+  await db.get(`
+    INSERT INTO campaigns(store_id, user_id, by_date, discount) 
+    VALUES((SELECT store_id FROM sales_managers WHERE user_id=${user_id}), ${user_id}, '${date}', ${discount});
+  `);
+
+  for(let item_id of item_ids){
+    const old_price = await db.get(`SELECT price FROM items WHERE item_id=${item_id}`);
+    console.log(old_price);
+    console.log(old_price[0].price);
+
+    await db.get(`
+      INSERT INTO campaign_items(item_id, campaign_id, old_price, new_price) VALUES(
+        (SELECT item_id FROM items WHERE item_id=${item_id}), 
+        (SELECT campaign_id FROM campaigns ORDER BY campaign_id DESC LIMIT 1),
+        ${old_price[0].price},
+        ${old_price[0].price * (1-discount)}
+      )
+    `);
+  }
+
+  res.send("done");
+});
+
 
 module.exports = router;
