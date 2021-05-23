@@ -72,7 +72,7 @@ router.post("/profile/role", async (req, res) => {
   const sessionuser = await jwt.verify(sessionID, 'shhhhh');
   var user = await User.findOne(({ where: { user_id: sessionuser.user_id } }));
 
-  res.send(user.role_id);
+  res.send(String(user.role_id));
 
 });
 
@@ -80,7 +80,7 @@ router.post("/profile/orders", async (req, res) => {
   const user = await jwt.verify(req.body.sessionID, 'shhhhh');
   const user_id = user.user_id;
   console.log("User id: " + user_id);
- 
+
   const orders = await db.get(`
       SELECT orders.*,
         items.item_name,
@@ -99,14 +99,14 @@ router.post("/profile/orders", async (req, res) => {
   //delivered
 
   const map = new Map();
-  for(let order of orders){
-    if(map.get(order.date) === undefined) map.set(order.date, [order])
+  for (let order of orders) {
+    if (map.get(order.date) === undefined) map.set(order.date, [order])
     else map.set(order.date, [...map.get(order.date), order]);
   }
 
   const obj = {};
   const it = map.keys();
-  for(let next = it.next(); next.value !== undefined; next = it.next())
+  for (let next = it.next(); next.value !== undefined; next = it.next())
     obj[next.value] = map.get(next.value)
 
   res.send(obj);
