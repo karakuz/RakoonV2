@@ -37,8 +37,8 @@ const NavRight = () => {
     if (user != null && (user.role_id === 3 || user.role_id === 2))
       getStoreName();
 
-    if(user !== null){
-      if (user.role_id === 1) 
+    if (user !== null) {
+      if (user.role_id === 1)
         setUserRole("Customer");
       else if (user.role_id === 2)
         setUserRole("Store Manager");
