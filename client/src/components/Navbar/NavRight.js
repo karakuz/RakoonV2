@@ -18,24 +18,6 @@ const NavRight = () => {
     sessionStorage.removeItem('sessionID')
     history.push('/');
   }
-  const getUserRole = async () => {
-    const res = await Axios({
-      method: "POST",
-      data: {
-        sessionID: sessionID
-      },
-      withCredentials: true,
-      url: `/profile/role`,
-    });
-    const role_ = res.data;
-    if (role_ === 1) {
-      setUserRole("Customer");
-    } else if (role_ === 2) {
-      setUserRole("Store Manager");
-    } else if (role_ === 3) {
-      setUserRole("Sales Manager");
-    }
-  }
 
   const getStoreName = async () => {
     const res = await Axios({
@@ -54,13 +36,18 @@ const NavRight = () => {
   useEffect(() => {
     if (user != null && (user.role_id === 3 || user.role_id === 2))
       getStoreName();
+
+    if (user !== null) {
+      if (user.role_id === 1)
+        setUserRole("Customer");
+      else if (user.role_id === 2)
+        setUserRole("Store Manager");
+      else if (user.role_id === 3)
+        setUserRole("Sales Manager");
+    } else setUserRole("");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  useEffect(() => {
-    getUserRole();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
 
   if (sessionID === null) {
