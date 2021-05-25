@@ -20,6 +20,9 @@ self.addEventListener("fetch", (event) => {
             .then(() => {
                 return fetch(event.request)
                     .catch(() => caches.match("offline.html"));
+
+
+
             })
     )
 });
