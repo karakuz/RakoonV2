@@ -5,7 +5,7 @@ const Star = (props) => {
     return (
       <>
         <input type="radio" name="rate" value={props.num} />
-        <label for={"star" + props.num} title="text" ></label>
+        <label htmlFor={"star" + props.num} title="text" ></label>
       </>
     )
   } else if (props.addComment === undefined) {
