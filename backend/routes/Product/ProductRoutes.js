@@ -37,9 +37,12 @@ router.get("/products", async (req, res) => {
 })
 
 router.get("/getRecommendation/:id", async (req, res) => {
-
-  let similar_products = await db.get(`SELECT *, 0 as rate FROM items JOIN store ON store.store_id = items.store_id ORDER BY RAND() LIMIT 4`);
+  
+  var product = await Product.findOne({ where: { item_id: req.params.id } });
+  console.log(product);
+  let similar_products = await db.get(`SELECT * FROM items WHERE items.category = '${product.category}' ORDER BY RAND() LIMIT 4`);
   let map = new Map();
+  console.log(similar_products);
   for(let product of similar_products)
     map.set(product.item_id, {...product});
 

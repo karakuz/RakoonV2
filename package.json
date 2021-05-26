@@ -46,7 +46,7 @@
     "web3": "^1.3.5"
   },
   "scripts": {
-    "start": "concurrently --kill-others-on-fail \"node server.js\" \"npm run start --prefix client\"",
+    "start": "concurrently --kill-others-on-fail \"nodemon server.js\" \"npm run start --prefix client\"",
     "test": "mocha --timeout 10000",
     "eject": "react-scripts eject",
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
