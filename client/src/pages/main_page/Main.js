@@ -50,7 +50,7 @@ const Main = () => {
         <Route path="/forgot" component={Forgot} />
         <Route path="/reset/:token" component={Reset} />
         <Route path="/activate/:token" component={Activate} />
-        <Route path="/product/:id" component={ProductScreen} />
+        <Route path="/product/:id" component={() => (<ProductScreen numOfItems={numOfItems} setNumOfItems={setNumOfItems} />)} />
         <Route path="/category/:name" component={()=> <CategoryPage numOfItems={numOfItems} setNumOfItems={setNumOfItems}/>} />
         <Route path="/search/:keyword" component={() => (<Search numOfItems={numOfItems} setNumOfItems={setNumOfItems} />)} />
         <ProtectedStoreRoute path="/store" exact component={Store} />

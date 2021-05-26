@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Col, Image, ListGroup, Row } from 'react-bootstrap'
+import { Button, Card, Carousel, CarouselItem, Col, Container, Image, ListGroup, Row } from 'react-bootstrap'
 import { Link, useParams } from 'react-router-dom'
 import Axios from 'axios';
 import '../css/bootstrap.min.css';
 import Comment from '../../components/product/Comment';
 import AddComment from '../../components/product/AddComment';
 import Loading from '../cart/loading.gif';
+import ProductCard from '../../components/product/product_card';
 const jwt = require("jsonwebtoken");
 
-const ProductScreen = () => {
+const ProductScreen = (props) => {
+  const [recommendedProducts, setRecommendedProducts] = useState([]);
   const [product, setProduct] = useState([]);
   const [comments, setComments] = useState([""]);
   const { id } = useParams();
@@ -24,6 +26,20 @@ const ProductScreen = () => {
     });
     setProduct(res.data);
   };
+
+  const getRecommendedProducts = async () => {
+    const res = await Axios({
+      method: "GET",
+      withCredentials: true,
+      url: `/getRecommendation/${id}`,
+    });
+    setRecommendedProducts(res.data);
+  };
+
+  useEffect(() => {
+
+    getRecommendedProducts();
+  }, []);
 
   const getComments = async () => {
     const res = await Axios({
@@ -108,6 +124,33 @@ const ProductScreen = () => {
           <h3 style={{ textAlign: "center" }}>Add Comment</h3>
           <AddComment productID={id} user={user} />
         </div> : null}
+      <div>
+
+        <div style={{ margin: "5rem" }}>
+          <Row className="justify-content-md-center">
+            <Col md="auto"><h3>You might also like </h3></Col>
+          </Row>
+          <Row className="justify-content-md-center">
+            <Col md="auto"><Button className='btn btn-light my-3' onClick={getRecommendedProducts}>Refreash</Button></Col></Row>
+          <Container>
+            <Row>
+              {
+                recommendedProducts.map((product) => {
+                  return (
+
+                    <Col sm={12} md={6} lg={4} xl={3}>
+                      <ProductCard key={product.item_id} id={product.item_id} {...product}
+                        numOfItems={props.numOfItems} setNumOfItems={props.setNumOfItems} />
+                    </Col>
+
+
+                  );
+                })
+              }
+            </Row>
+          </Container>
+        </div>
+      </div>
     </div>
   )
 }

@@ -36,6 +36,37 @@ router.get("/products", async (req, res) => {
   res.send(Array.from(map.values()));
 })
 
+router.get("/getRecommendation/:id", async (req, res) => {
+
+  let similar_products = await db.get(`SELECT *, 0 as rate FROM items JOIN store ON store.store_id = items.store_id ORDER BY RAND() LIMIT 4`);
+  let map = new Map();
+  for(let product of similar_products)
+    map.set(product.item_id, {...product});
+
+  res.send(Array.from(map.values()));
+})
+
+/*
+router.get("/getRecommendation/:id", async (req, res) => {
+  const id = req.params.keyword;
+    var product = await Product.findAll({
+        where: {
+            [Op.or]: {
+                item_name: {
+                    [Op.substring]: keyword
+                },
+            }
+        }
+    });
+    if (product === null || product === undefined) {
+        res.sendStatus(404);
+    }
+
+    else {
+        res.send(product);
+    }
+})*/
+
 router.post("/addComment", async (req, res) => {
   const data = req.body.data;
 
