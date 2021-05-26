@@ -49,7 +49,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(cookieParser("secretcode"));
 
-require("./backend/passportConfig")(passport);
+
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
