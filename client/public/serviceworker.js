@@ -14,17 +14,14 @@ self.addEventListener("install", (event) => {
     )
 });
 
-self.addEventListener("fetch", (event) => {
+self.addEventListener('fetch', function (event) {
+    console.log(event.request.url);
+
     event.respondWith(
-        caches.match(event.request)
-            .then(() => {
-                return fetch(event.request)
-                    .catch(() => caches.match("index.html"));
-
-
-
-            })
-    )
+        caches.match(event.request).then(function (response) {
+            return response || fetch(event.request);
+        })
+    );
 });
 
 
