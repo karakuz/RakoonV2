@@ -9,7 +9,7 @@ self.addEventListener("install", (event) => {
             .then((cache) => {
                 console.log("Opened Cache");
 
-                return cache.addAll(["index.html", "offline.html"]);
+                return cache.addAll(["index.html"]);
             })
     )
 });
@@ -19,7 +19,7 @@ self.addEventListener("fetch", (event) => {
         caches.match(event.request)
             .then(() => {
                 return fetch(event.request)
-                    .catch(() => caches.match("offline.html"));
+                    .catch(() => caches.match("index.html"));
 
 
 
