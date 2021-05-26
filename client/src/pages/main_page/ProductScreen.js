@@ -160,7 +160,7 @@ const ProductScreen = (props) => {
             <Col md="auto"><h3>You might also like </h3></Col>
           </Row>
           <Row className="justify-content-md-center">
-            <Col md="auto"><Button className='btn btn-light my-3' onClick={getRecommendedProducts}>Refreash</Button></Col></Row>
+            <Col md="auto"><Button className='btn btn-light my-3' onClick={getRecommendedProducts}>Refresh</Button></Col></Row>
           <Container>
             <Row>
               {
