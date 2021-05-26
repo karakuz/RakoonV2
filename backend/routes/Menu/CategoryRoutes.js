@@ -10,7 +10,7 @@ router.get("/categories", async (req, res) => {
         attributes: ["category"],
         group: "category"
     });
-
+    console.log(categories);
     res.send(categories);
 });
 

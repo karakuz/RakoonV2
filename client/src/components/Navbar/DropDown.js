@@ -11,7 +11,8 @@ const DropDown = () => {
       withCredentials: true,
       url: `/categories`,
     });
-    setcategories(res.data)
+    setcategories(res.data);
+
   };
   useEffect(() => {
     getcategories();
@@ -22,7 +23,7 @@ const DropDown = () => {
       {
         categories.map((category) => {
           const url = `/category/${category.category}`
-          return <NavDropdown.Item href={url} style={{ fontSize: "20px" }}>{category.category}</NavDropdown.Item>
+          return <NavDropdown.Item href={url} style={{ fontSize: "20px" }} key={category.category}>{category.category} </NavDropdown.Item>
         })
       }
     </NavDropdown>

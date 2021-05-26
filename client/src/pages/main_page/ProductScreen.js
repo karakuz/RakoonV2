@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Card, Carousel, CarouselItem, Col, Container, Image, ListGroup, Row } from 'react-bootstrap'
+import { Button, Card, Col, Container, Image, ListGroup, Row} from 'react-bootstrap'
 import { Link, useParams } from 'react-router-dom'
 import Axios from 'axios';
 import '../css/bootstrap.min.css';
@@ -50,6 +50,32 @@ const ProductScreen = (props) => {
     setComments(res.data);
     console.log(res.data);
   }
+  /*const change = async (e) => {
+    e.preventDefault();
+      if (sessionID !== null) {
+        // eslint-disable-next-line no-unused-vars
+        const res = await Axios({
+          method: "POST",
+          data: {
+            item: product,
+            user: sessionID
+          },
+          withCredentials: true,
+          url: `/cart/product/${product.id}`
+        });
+      }
+      else {
+        const prod = {
+          item_id: product.id,
+          item_name: product.name,
+          description: product.text,
+          image: product.img,
+          price: product.price
+        }
+        localStorage.setItem(product.id, JSON.stringify(prod));
+      }
+      props.setNumOfItems(props.numOfItems + 1);
+  }*/
 
   useEffect(() => {
     getProducts();
@@ -93,11 +119,14 @@ const ProductScreen = (props) => {
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
-                {/* <Button className='btn-block'
+                { <Button className='btn-block'
                 type='button'
                 disabled={product.countInStock == 0} >
+                {/*
+                <span onClick={(e) => change(e)}>Add To Cart</span>
+              */}
               Add To Cart
-              </Button> */}
+              </Button> }
               </ListGroup.Item>
             </ListGroup>
           </Card>

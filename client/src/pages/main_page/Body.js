@@ -46,7 +46,7 @@ const Body = (props) => {
           {
             products.map((product) => {
               return (
-                <Col sm={12} md={6} lg={4} xl={3}>
+                <Col sm={12} md={6} lg={4} xl={3} key={product.item_id}>
                   <ProductCard key={product.item_id} id={product.item_id} {...product}
                     numOfItems={props.numOfItems} setNumOfItems={props.setNumOfItems} />
                 </Col>
