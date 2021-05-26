@@ -13,7 +13,7 @@ const Body = (props) => {
     const res = await Axios({
       method: "GET",
       withCredentials: true,
-      url: `products`,
+      url: `/products`,
     });
     setProducts(res.data);
   };
