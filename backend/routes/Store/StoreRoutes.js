@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs');
 const nodemailer = require("nodemailer");
 const User = require("../../models/user");
 const webpush = require("web-push");
+const Notification = require("../../models/notification_name");
 const VerifyMail = function (user, token) {
   var smtpTransport = nodemailer.createTransport({
     service: 'Gmail',
@@ -423,21 +424,31 @@ router.post("/store/getSales", async (req, res) => {
       GROUP BY category
   `);
   console.log("line 398:");
-  console.log({sales: sales, category: category});
+  console.log({ sales: sales, category: category });
 
-  res.send({sales: sales, category: category});
+  res.send({ sales: sales, category: category });
 });
 
 router.post("/store/sendNotification", async (req, res) => {
   const publicvapidkey = "BDBeRvuYwbqaz2_m4-3Mai3FFyyCZwQ8u2X12AKPg_KBGzf6_Lh40g4r-0vGdYlI4qYozJJ10VcWJB8p4lel9Ro";
   const privatevapidkey = "ISIut9dFbHDC7B6RiCU9NB5jujq_AuY6nkNTTixQgtQ";
   webpush.setVapidDetails('mailto:rakoonecommerceservices@gmail.com', publicvapidkey, privatevapidkey);
-
+  const body = await Notification.findOne({ where: { idnotification_name: 1 } });
   const subscribtion = req.body;
+  console.log(body.notification_body);
 
-  const payload = JSON.stringify({ title: "Rakoon E-Commerce" });
+  const payload = JSON.stringify({ title: "Rakoon E-Commerce", body: body.notification_body });
 
   webpush.sendNotification(subscribtion, payload).catch((err) => console.log(err));
 });
+
+router.post("/store/setNotification", async (req, res) => {
+  const message = req.body.message;
+  await Notification.update({ notification_body: message }, {
+    where: {
+      idnotification_name: 1
+    }
+  });
+})
 
 module.exports = router;

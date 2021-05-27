@@ -30,7 +30,7 @@ self.addEventListener("fetch", (event) => {
 self.addEventListener("push", e => {
     const data = e.data.json();
     self.registration.showNotification(data.title, {
-        body: "Discount on the electronics up to %40",
+        body: data.body,
         icon: " ./logo192.png"
     })
 })
