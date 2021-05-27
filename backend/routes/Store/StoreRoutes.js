@@ -84,7 +84,7 @@ router.post("/addProduct", async (req, res) => {
 
 router.put("/editProduct", async (req, res) => {
   const item = req.body.item;
-  await db.get(`UPDATE rakoon.items SET 
+  await db.get(`UPDATE rakoon.items SET
     item_name = '${item.name}',
     price = ${parseFloat(item.price)},
     description = '${item.description}',
@@ -135,13 +135,13 @@ router.post("/getSalesManagers", async (req, res) => {
 
   const salesManagers = (req.body.role_id === 3) ? await db.get(`
     SELECT name, surname FROM users JOIN (
-      SELECT user_id FROM rakoon.sales_managers 
+      SELECT user_id FROM rakoon.sales_managers
         WHERE store_id = (SELECT store_id FROM store WHERE owner_id=${user_id})
       ) sales_managers ON users.user_id=sales_managers.user_id`
   ) :
     await db.get(`
     SELECT name, surname FROM users JOIN (
-      SELECT user_id FROM rakoon.sales_managers 
+      SELECT user_id FROM rakoon.sales_managers
         WHERE store_id = (SELECT store_id FROM sales_managers WHERE user_id=${user_id})
       ) sales_managers ON users.user_id=sales_managers.user_id`);
 
@@ -152,7 +152,7 @@ router.post("/getComments/:id", async (req, res) => {
   const productID = req.params.id;
 
   const comments = await db.get(`
-    SELECT name, surname, comment, rate, users.user_id, DATE_FORMAT(date, '%d/%m/%Y') AS date FROM rakoon.ratings 
+    SELECT name, surname, comment, rate, users.user_id, DATE_FORMAT(date, '%d/%m/%Y') AS date FROM rakoon.ratings
       JOIN users ON ratings.user_id=users.user_id WHERE item_id=${productID} AND ratings.is_verified=1;
   `);
 
@@ -164,7 +164,7 @@ router.post("/getStoreComments", async (req, res) => {
 
   const unrated = await db.get(`
   SELECT * FROM
-    (SELECT 
+    (SELECT
       ratings.rating_id,
         ratings.user_id,
         ratings.comment,
@@ -179,7 +179,7 @@ router.post("/getStoreComments", async (req, res) => {
       FROM ratings
       JOIN items ON ratings.item_id = items.item_id
       JOIN users ON users.user_id = ratings.user_id) AS J
-    WHERE J.store_id = (SELECT store_id FROM rakoon.store WHERE owner_id=${user_id}) 
+    WHERE J.store_id = (SELECT store_id FROM rakoon.store WHERE owner_id=${user_id})
     AND J.is_verified = 0
   `);
 
@@ -188,7 +188,7 @@ router.post("/getStoreComments", async (req, res) => {
     console.log(comment);
     if(map.get(comment.item_id) !== undefined)
       map.set(comment.item_id, [...map.get(comment.item_id),comment]);
-    else 
+    else
       map.set(comment.item_id, [comment]);
     }
   console.log(map) */
@@ -215,11 +215,11 @@ router.post("/store/orders", async (req, res) => {
   const user = req.body.user;
 
   const orders = await db.get(`
-      SELECT  orders.*, 
-        items.item_name, 
+      SELECT  orders.*,
+        items.item_name,
         items.image,
-        items.price FROM orders 
-      JOIN items 
+        items.price FROM orders
+      JOIN items
       ON items.item_id = orders.item_id
       WHERE seller_id=(
         SELECT store_id FROM sales_managers WHERE user_id = ${user.user_id}
@@ -306,7 +306,7 @@ router.post("/store/deployCampaignByCategory", async (req, res) => {
   const discount = parseFloat('0.' + req.body.discount);
 
   await db.get(`
-    INSERT INTO campaigns(store_id, user_id, by_date, discount) 
+    INSERT INTO campaigns(store_id, user_id, by_date, discount)
     VALUES((SELECT store_id FROM sales_managers WHERE user_id=${user_id}), ${user_id}, '${date}', ${discount});
   `);
 
@@ -315,7 +315,7 @@ router.post("/store/deployCampaignByCategory", async (req, res) => {
 
     await db.get(`
       INSERT INTO campaign_items(item_id, campaign_id, old_price, new_price) VALUES(
-        (SELECT item_id FROM items WHERE item_id=${item_id}), 
+        (SELECT item_id FROM items WHERE item_id=${item_id}),
         (SELECT campaign_id FROM campaigns ORDER BY campaign_id DESC LIMIT 1),
         ${old_price[0].price},
         ${decimal(old_price[0].price * (1 - discount))}
@@ -333,7 +333,7 @@ router.post("/store/deployCampaignByProduct", async (req, res) => {
   const discount = parseFloat('0.' + req.body.discount);
 
   await db.get(`
-    INSERT INTO campaigns(store_id, user_id, by_date, discount) 
+    INSERT INTO campaigns(store_id, user_id, by_date, discount)
     VALUES((SELECT store_id FROM sales_managers WHERE user_id=${user_id}), ${user_id}, '${date}', ${discount});
   `);
 
@@ -342,7 +342,7 @@ router.post("/store/deployCampaignByProduct", async (req, res) => {
 
   await db.get(`
     INSERT INTO campaign_items(item_id, campaign_id, old_price, new_price) VALUES(
-      (SELECT item_id FROM items WHERE item_id=${item_id[0].item_id}), 
+      (SELECT item_id FROM items WHERE item_id=${item_id[0].item_id}),
       (SELECT campaign_id FROM campaigns ORDER BY campaign_id DESC LIMIT 1),
       ${old_price[0].price},
       ${decimal(old_price[0].price * (1 - discount))}
@@ -361,7 +361,7 @@ router.post("/store/deployCampaignByPrice", async (req, res) => {
   const maxPrice = parseFloat(req.body.maxPrice);
 
   await db.get(`
-    INSERT INTO campaigns(store_id, user_id, by_date, discount) 
+    INSERT INTO campaigns(store_id, user_id, by_date, discount)
     VALUES((SELECT store_id FROM sales_managers WHERE user_id=${user_id}), ${user_id}, '${date}', ${discount});
   `);
 
@@ -376,14 +376,13 @@ router.post("/store/deployCampaignByPrice", async (req, res) => {
 
     await db.get(`
       INSERT INTO campaign_items(item_id, campaign_id, old_price, new_price) VALUES(
-        (SELECT item_id FROM items WHERE item_id=${item_id.item_id}), 
+        (SELECT item_id FROM items WHERE item_id=${item_id.item_id}),
         (SELECT campaign_id FROM campaigns ORDER BY campaign_id DESC LIMIT 1),
         ${old_price[0].price},
         ${decimal(old_price[0].price * (1 - discount))}
       )
     `);
   }
-
 
   res.send("done");
 });
@@ -392,14 +391,31 @@ router.post("/store/getSales", async (req, res) => {
   const user_id = req.body.user_id;
 
   const sales = await db.get(`
-    SELECT orders.* FROM
-      (SELECT store_id FROM sales_managers WHERE user_id=${user_id})
-      AS sales_managers
-    JOIN orders ON orders.seller_id = sales_managers.store_id
+    SELECT
+    COUNT(orders.order_id) as products,
+    DATE_FORMAT(orders.date, "%d-%m-%Y") as name
+      FROM (SELECT store_id FROM sales_managers WHERE user_id=${user_id})
+        AS sales_managers
+      JOIN orders ON orders.seller_id = sales_managers.store_id
+      WHERE status = 'delivered'
+      GROUP BY date
   `);
-  console.log(sales);
 
-  res.send("done");
+  const category = await db.get(`
+    SELECT
+    COUNT(category) as products,
+    category as name
+      FROM (SELECT store_id FROM sales_managers WHERE user_id=${user_id})
+        AS sales_managers
+      JOIN orders ON orders.seller_id = sales_managers.store_id
+      JOIN items ON items.item_id = orders.item_id
+      WHERE status = 'delivered'
+      GROUP BY category
+  `);
+  console.log("line 398:");
+  console.log({ sales: sales, category: category });
+
+  res.send({ sales: sales, category: category });
 });
 
 router.post("/store/sendNotification", async (req, res) => {

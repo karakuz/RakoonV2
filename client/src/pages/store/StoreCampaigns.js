@@ -36,7 +36,6 @@ const StoreCampaings = () => {
       url: `${url}/getCampaigns`,
     });
     setCampaigns(res.data);
-    console.log(res.data);
   }
 
   const getItems = async () => {
