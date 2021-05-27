@@ -382,7 +382,6 @@ router.post("/store/deployCampaignByPrice", async (req, res) => {
       )
     `);
   }
-  
 
   res.send("done");
 });
@@ -391,14 +390,31 @@ router.post("/store/getSales", async (req, res) => {
   const user_id = req.body.user_id;
 
   const sales = await db.get(`
-    SELECT orders.* FROM
-      (SELECT store_id FROM sales_managers WHERE user_id=${user_id})
-      AS sales_managers
-    JOIN orders ON orders.seller_id = sales_managers.store_id
+    SELECT 
+    COUNT(orders.order_id) as products, 
+    DATE_FORMAT(orders.date, "%d-%m-%Y") as name
+      FROM (SELECT store_id FROM sales_managers WHERE user_id=${user_id})
+        AS sales_managers
+      JOIN orders ON orders.seller_id = sales_managers.store_id
+      WHERE status = 'delivered'
+      GROUP BY date
   `);
-  console.log(sales);
 
-  res.send("done");
+  const category = await db.get(`
+    SELECT 
+    COUNT(category) as products,
+    category as name
+      FROM (SELECT store_id FROM sales_managers WHERE user_id=${user_id})
+        AS sales_managers
+      JOIN orders ON orders.seller_id = sales_managers.store_id
+      JOIN items ON items.item_id = orders.item_id
+      WHERE status = 'delivered'
+      GROUP BY category
+  `);
+  console.log("line 398:");
+  console.log({sales: sales, category: category});
+
+  res.send({sales: sales, category: category});
 });
 
 module.exports = router;
