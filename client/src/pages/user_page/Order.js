@@ -14,7 +14,7 @@ const Order = (props) => {
   const [orders, setOrders] = React.useState(props.orders);
   const [disabled, setDisabled] = React.useState(false);
   let total = 0;
-  //console.log(orders);
+  console.log(orders);
   var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   for (let order of orders)
     total += order.price;

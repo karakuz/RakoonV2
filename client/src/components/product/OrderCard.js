@@ -8,6 +8,7 @@ const OrderCard = (props, u) => {
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
   const user =  jwt.verify(sessionID, 'shhhhh');
   const product = {
+    address: props.address,
     image: props.image,
     name: props.item_name,
     price: props.price,
@@ -48,7 +49,7 @@ const OrderCard = (props, u) => {
           <p>Product Name: {product.name}</p>
           <p>Invoice Number: {product.id+"758375960"}</p>
           <p>Quantitiy: 1</p>
-          <p>Address: {user.address}</p>
+          <p>Address: {product.address}</p>
           <p>Price: {product.price}</p>
           {
             (props.isStore === undefined) ? 

@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 const db = require('../../config/database');
 
-router.put("/profile/update", async (req, res) => {
+router.put("/profile/update", async (req, res) => { // User update
   const sessionID = req.body.sessionID;
   console.log(sessionID);
   const user = await jwt.verify(sessionID, 'shhhhh');
@@ -18,7 +18,7 @@ router.put("/profile/update", async (req, res) => {
   res.send(true);
 });
 
-router.post("/profile/user", async (req, res) => {
+router.post("/profile/user", async (req, res) => { // Get user info 
   const sessionID = req.body.sessionID;
   console.log(sessionID);
   const user = await jwt.verify(sessionID, 'shhhhh');
@@ -67,7 +67,7 @@ router.post("/profile/passwordUpdate", async (req, res) => {
   })
 });
 
-router.post("/profile/role", async (req, res) => {
+router.post("/profile/role", async (req, res) => { // Get role info
   const sessionID = req.body.sessionID;
   const sessionuser = await jwt.verify(sessionID, 'shhhhh');
   var user = await User.findOne(({ where: { user_id: sessionuser.user_id } }));
@@ -75,6 +75,7 @@ router.post("/profile/role", async (req, res) => {
   res.send(String(user.role_id));
 
 });
+
 
 router.post("/profile/orders", async (req, res) => {
   const user = await jwt.verify(req.body.sessionID, 'shhhhh');
@@ -90,8 +91,8 @@ router.post("/profile/orders", async (req, res) => {
       WHERE customer_id = ${user_id}
       ORDER BY date DESC
   `);
-  /* console.log("orders:");
-  console.log(orders); */
+  console.log("orders:");
+  console.log(orders); 
 
   //pending
   //preparing
