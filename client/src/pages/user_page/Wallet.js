@@ -64,11 +64,11 @@ const Wallet = () => {
             <img src={Loading} alt='Loading...' style={{ display: 'block', margin: "0 auto" }} />
           </div>
           : (user.user_id === 1) ?
-            <>
               <div id="loading" style={{ display: "none" }}>
                 <img src={Loading} alt='Loading...' style={{ display: 'block', margin: "0 auto" }} />
               </div>
             : (user.role_id === 1) ?
+            <>
               <div id="loading" style={{ display: "none" }}>
                 <img src={Loading} alt='Loading...' style={{ display: 'block', margin: "0 auto" }} />
               </div>
