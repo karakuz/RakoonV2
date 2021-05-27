@@ -10,6 +10,8 @@ const StoreSales = () => {
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
   const user = jwt.verify(sessionID, 'shhhhh');
   var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
+  console.log(url);
+
   const getSales = async () => {
     const res = await Axios({
       method: "POST",

@@ -13,6 +13,7 @@ const ProductScreen = (props) => {
   const [recommendedProducts, setRecommendedProducts] = useState([]);
   const [product, setProduct] = useState([]);
   const [comments, setComments] = useState([""]);
+  const [userIDs, setUserIDs] = useState([]);
   const { id } = useParams();
   let user;
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
@@ -47,8 +48,8 @@ const ProductScreen = (props) => {
       withCredentials: true,
       url: `${url}/getComments/${id}`,
     });
-    setComments(res.data);
-    console.log(res.data);
+    setComments(res.data.comments);
+    setUserIDs(res.data.userIDs)
   }
   /*const change = async (e) => {
     e.preventDefault();
@@ -148,7 +149,7 @@ const ProductScreen = (props) => {
 
         }
       </div>
-      {(user && user.role_id === 1) ?
+      {(user && user.role_id === 1 && userIDs.includes(user.user_id)) ?
         <div style={{ marginBottom: "5rem" }}>
           <h3 style={{ textAlign: "center" }}>Add Comment</h3>
           <AddComment productID={id} user={user} />
