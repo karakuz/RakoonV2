@@ -155,7 +155,18 @@ router.post("/getComments/:id", async (req, res) => {
       JOIN users ON ratings.user_id=users.user_id WHERE item_id=${productID} AND ratings.is_verified=1;
   `);
 
-  res.send(comments);
+  const orderID = await db.get(`
+    SELECT customer_id FROM orders
+    WHERE seller_id = (SELECT store_id FROM items WHERE item_id=${productID})
+    GROUP BY customer_id
+  `);
+
+  let orderIDs=[];
+  for(let obj of orderID)
+    if(!orderIDs.includes(obj.customer_id))
+      orderIDs.push(obj.customer_id);
+
+  res.send({comments: comments, userIDs: orderIDs});
 });
 
 router.post("/getStoreComments", async (req, res) => {

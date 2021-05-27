@@ -5,7 +5,7 @@ import Axios from 'axios'
 const DropDown = () => {
   const [categories, setcategories] = useState([]);
   const PORT = process.env.PORT || 4000;
-  var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
+  var url = (process.env.NODE_ENV === "production") ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   const getcategories = async () => {
     const res = await Axios({
       method: "GET",
@@ -13,6 +13,7 @@ const DropDown = () => {
       url: `${url}/categories`,
     });
     console.log(url);
+    console.log(`${url}/categories`);
     console.log(res.data);
     setcategories(res.data);
 
