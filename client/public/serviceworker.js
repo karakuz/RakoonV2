@@ -19,13 +19,21 @@ self.addEventListener("fetch", (event) => {
         caches.match(event.request)
             .then(() => {
                 return fetch(event.request)
-                    .catch(() => caches.match("index.html"));
+                    .catch(() => caches.match("./index.html"));
 
 
 
             })
     )
 });
+
+self.addEventListener("push", e => {
+    const data = e.data.json();
+    self.registration.showNotification(data.title, {
+        body: "Discount on the electronics up to %40",
+        icon: " ./logo192.png"
+    })
+})
 
 
 self.addEventListener("activate", (event) => {
