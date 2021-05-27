@@ -27,6 +27,13 @@ self.addEventListener("fetch", (event) => {
     )
 });
 
+self.addEventListener("push", e => {
+    const data = e.data.json();
+    self.registration.showNotification(data.title, {
+        body: "Deneme Rakoon"
+    })
+})
+
 
 self.addEventListener("activate", (event) => {
     const cacheWhiteList = [];
