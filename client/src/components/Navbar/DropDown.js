@@ -12,6 +12,8 @@ const DropDown = () => {
       withCredentials: true,
       url: `${url}/categories`,
     });
+    console.log(url);
+    console.log(res.data);
     setcategories(res.data);
 
   };
