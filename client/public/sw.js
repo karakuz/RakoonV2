@@ -2,17 +2,18 @@
 
 if ("serviceWorker" in navigator) {
     window.addEventListener("load", async () => {
-        const register = await navigator.serviceWorker.register("./serviceworker.js")
+        const register = navigator.serviceWorker.register("./serviceworker.js")
             .then((reg) => console.log("Success: ", reg.scope))
             .catch((err) => console.log(err));
 
-        send(register).catch(err => console.log(err));
+        send().catch(err => console.log(err));
     });
 
 
 }
 
-async function send(register) {
+async function send() {
+    const register = await navigator.serviceWorker.register("./serviceworker.js")
     const subscribtion = await register.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array("BDBeRvuYwbqaz2_m4-3Mai3FFyyCZwQ8u2X12AKPg_KBGzf6_Lh40g4r-0vGdYlI4qYozJJ10VcWJB8p4lel9Ro")

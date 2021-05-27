@@ -408,7 +408,7 @@ router.post("/store/sendNotification", async (req, res) => {
 
   const subscribtion = req.body;
 
-  const payload = JSON.stringify({ title: "deneme" });
+  const payload = JSON.stringify({ title: "Rakoon E-Commerce" });
 
   webpush.sendNotification(subscribtion, payload).catch((err) => console.log(err));
 });
