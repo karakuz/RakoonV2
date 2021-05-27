@@ -7,7 +7,7 @@ import Loading from '../cart/loading.gif';
 
 const Orders = () => {
   const [orders, setOrders] = React.useState([""]);
-
+  var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   useEffect(() => {
     (async () => {
       const res = await Axios({
@@ -16,7 +16,7 @@ const Orders = () => {
           sessionID: null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID')
         },
         withCredentials: true,
-        url: `/profile/orders`,
+        url: `${url}/profile/orders`,
       });
       setOrders(res.data);
     })();

@@ -13,7 +13,7 @@ const StoreProductCart = (props) => {
     price: props.price
   };
 
-  
+
   return (
     <Card className='my-3 p-3 rounded' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
       <Link to={`/product/${product.id}`}>
@@ -27,10 +27,10 @@ const StoreProductCart = (props) => {
       <Card.Body>
         <Card.Text as='h5'>${product.price}</Card.Text>
         {
-          (props.role_id === 3) ? 
-          <Button variant="success">
-            <span onClick={() => history.push(`/store/products/${product.id}`)}>Edit</span>
-          </Button> : null
+          (props.role_id === 3) ?
+            <Button variant="success">
+              <span onClick={() => history.push(`/store/products/${product.id}`)}>Edit</span>
+            </Button> : null
         }
       </Card.Body>
     </Card>

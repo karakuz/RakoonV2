@@ -9,12 +9,12 @@ const CategoryPage = (props) => {
     const [products, setProducts] = useState([]);
     //const ref = useRef(false);
     const { name } = useParams();
-
+    var URL = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
     const getProducts = async () => {
         const res = await Axios({
             method: "GET",
             withCredentials: true,
-            url: `/category/${name}`,
+            url: `${URL}/category/${name}`,
         });
         setProducts(res.data)
     };

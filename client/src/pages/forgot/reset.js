@@ -10,8 +10,8 @@ const Reset = () => {
   const [registerPassword, setRegisterPassword] = useState("");
   const history = useHistory();
   const PORT = process.env.PORT || 4000;
-
-  var url = `/reset/${token}`
+  var URL = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
+  var url = `${URL}/reset/${token}`
   const submit = async (e) => {
     e.preventDefault();
     const res = await Axios.post(url, {

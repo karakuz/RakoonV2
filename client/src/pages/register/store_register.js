@@ -18,7 +18,7 @@ const Store_Register = () => {
   const [storeName, setStoreName] = useState("");
   const PORT = process.env.PORT || 4000;
   const history = useHistory();
-
+  var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   const submit = async (e) => {
     e.preventDefault();
 
@@ -64,7 +64,7 @@ const Store_Register = () => {
         storeName: storeName
       },
       withCredentials: true,
-      url: `/store_register`,
+      url: `${url}/store_register`,
     });
     if (res.data.res === "exists") {
       document.querySelector('#exists').style.display = 'flex';

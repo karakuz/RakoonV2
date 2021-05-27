@@ -17,12 +17,12 @@ const StoreAdd = () => {
 
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
   const user = jwt.verify(sessionID, 'shhhhh');
-
+  var URL = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   const getCategories = async () => {
     const res = await Axios({
       method: "GET",
       withCredentials: true,
-      url: `/categories`,
+      url: `${URL}/categories`,
     });
     setCategories(res.data);
     if (categories[0] !== undefined) setCategory("");
@@ -102,7 +102,7 @@ const StoreAdd = () => {
         item: item
       },
       withCredentials: true,
-      url: `/addProduct`,
+      url: `${URL}/addProduct`,
     });
 
     if (res.data === "done")

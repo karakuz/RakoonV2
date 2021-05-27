@@ -10,7 +10,7 @@ const Store = () => {
   const [salesManagers, setSalesManagers] = useState([""]);
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
   const user = jwt.verify(sessionID, 'shhhhh');
-
+  var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   const getStoreInfo = async () => {
     const res = await Axios({
       method: "POST",
@@ -19,7 +19,7 @@ const Store = () => {
         role_id: user.role_id
       },
       withCredentials: true,
-      url: `/getStoreInfo`,
+      url: `${url}/getStoreInfo`,
     });
     setStore(res.data);
   }
@@ -32,7 +32,7 @@ const Store = () => {
         role_id: user.role_id
       },
       withCredentials: true,
-      url: `/getSalesManagers`,
+      url: `${url}/getSalesManagers`,
     });
     setSalesManagers(res.data);
   }

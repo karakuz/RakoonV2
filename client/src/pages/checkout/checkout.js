@@ -23,7 +23,7 @@ const Checkout = (props) => {
   const [products, setProducts] = useState([]);
   const ref = useRef(true);
   const history = useHistory();
-
+  var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   const [registerAddress, setRegisterAdress] = useState("");
   const [registerAddress2, setRegisterAdress2] = useState("");
   const [registerCity, setRegisterCity] = useState("");
@@ -74,7 +74,7 @@ const Checkout = (props) => {
         info: info
       },
       withCredentials: true,
-      url: `/payment/transfer`,
+      url: `${url}/payment/transfer`,
     });
 
     document.getElementById('loading').style.display = 'none';
@@ -98,7 +98,7 @@ const Checkout = (props) => {
         sessionID: sessionID
       },
       withCredentials: true,
-      url: `/cart/products`,
+      url: `${url}/cart/products`,
     });
     setProducts(res.data);
     ref.current = false;

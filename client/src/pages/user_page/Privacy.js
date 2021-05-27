@@ -9,7 +9,7 @@ const Privacy = () => {
   const [twofaenable, setTwofaenable] = React.useState("");
 
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
-
+  var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   const submit = async (e) => {
     e.preventDefault();
     if (registerOldPassword === "" && registerNewPassword === "") {
@@ -18,7 +18,7 @@ const Privacy = () => {
         return;
       }
 
-      const res = await Axios.put(`/profile/2fa/update`, {
+      const res = await Axios.put(`${url}/profile/2fa/update`, {
         twofaenable: twofaenable == "Off" ? 0 : 1,
         sessionID: sessionID
       }).catch(err => console.log(`Error 2fa.js: ${err}`));
@@ -38,7 +38,7 @@ const Privacy = () => {
     }
     else {
       // verify old password and update all
-      const verifyPassword = await Axios.post(`/profile/passwordUpdate`, {
+      const verifyPassword = await Axios.post(`${url}/profile/passwordUpdate`, {
         sessionID: sessionID,
         oldPassword: registerOldPassword,
         newPassword: registerNewPassword
@@ -49,7 +49,7 @@ const Privacy = () => {
         if (twofaenable === 1 || twofaenable === 0)
           return;
 
-        const res = await Axios.put(`/profile/2fa/update`, {
+        const res = await Axios.put(`${url}/profile/2fa/update`, {
           twofaenable: twofaenable === "Off" ? 0 : 1,
           sessionID: sessionID
         }).catch(err => console.log(`Error 2fa.js: ${err}`));

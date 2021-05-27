@@ -11,7 +11,7 @@ const ProductCard = (props) => {
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
   const user = (sessionID !== null) ? jwt.verify(sessionID, 'shhhhh') : null;
   //console.log(props);
-
+  var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   const product = {
     id: props.item_id,
     name: props.item_name,
@@ -34,7 +34,7 @@ const ProductCard = (props) => {
             user: sessionID
           },
           withCredentials: true,
-          url: `/cart/product/${product.id}`
+          url: `${url}/cart/product/${product.id}`
         });
       }
       else {
@@ -59,7 +59,7 @@ const ProductCard = (props) => {
             user: sessionID
           },
           withCredentials: true,
-          url: `cart/product/${product.id}`,
+          url: `${url}/cart/product/${product.id}`,
         });
       }
       else {
@@ -77,7 +77,7 @@ const ProductCard = (props) => {
       <Link to={`/product/${product.id}`}>
         <Card.Title as='div'>
           <strong style={{ display: "block", marginTop: "1rem" }}>{product.name}</strong>
-          <span style={{float: "right", color: "black"}}>{product.store}</span>
+          <span style={{ float: "right", color: "black" }}>{product.store}</span>
         </Card.Title>
       </Link>
       <Stars rate={Math.floor(product.rate)} />

@@ -10,8 +10,8 @@ const TwoFactorAuth = () => {
     const history = useHistory();
     const [registerCode, setRegisterCode] = useState("");
     const PORT = process.env.PORT || 4000;
-
-    var url = `/2fa/verifySecret/${token}`
+    var URL = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
+    var url = `${URL}/2fa/verifySecret/${token}`;
     const submit = async (e) => {
         e.preventDefault();
         const input = registerCode;

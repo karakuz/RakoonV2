@@ -9,7 +9,7 @@ const Comment = (props) => {
     e.preventDefault();
     const rating_id = props.comment.rating_id;
     const accept = parseInt(e.target.value);
-
+    var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
     const res = await Axios({
       method: "PUT",
       data: {
@@ -17,7 +17,7 @@ const Comment = (props) => {
         accept: accept
       },
       withCredentials: true,
-      url: `/verifyComment`,
+      url: `${url}/verifyComment`,
     });
     if (res.data === "verified")
       alert("Comment has been verified")

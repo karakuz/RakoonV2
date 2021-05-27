@@ -15,7 +15,7 @@ const StoreAddSalesManager = () => {
   const PORT = process.env.PORT || 4000;
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
   const user = jwt.verify(sessionID, 'shhhhh');
-
+  var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   const history = useHistory();
 
   const submit = async (e) => {
@@ -62,7 +62,7 @@ const StoreAddSalesManager = () => {
       },
       credentials: 'include',
       withCredentials: true,
-      url: `/addSalesManager`,
+      url: `${url}/addSalesManager`,
     });
 
     if (res.data.res === "exists") {

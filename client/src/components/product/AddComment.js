@@ -6,7 +6,7 @@ const AddComment = (props) => {
   const [comment, setComment] = React.useState("");
   const [rate, setRate] = React.useState(0);
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
-
+  var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   const submit = async (e) => {
     e.preventDefault();
     if (comment.length === 0) {
@@ -35,7 +35,7 @@ const AddComment = (props) => {
         }
       },
       withCredentials: true,
-      url: `/addComment`,
+      url: `${url}/addComment`,
     });
     if (res.data === "done") {
       alert("Your comment has been added. Its on approvement process");

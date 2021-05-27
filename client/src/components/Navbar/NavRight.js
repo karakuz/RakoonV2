@@ -12,7 +12,7 @@ const NavRight = () => {
   let user = null;
   if (sessionID != null) user = jwt.verify(sessionID, 'shhhhh');
   //console.log(user);
-
+  var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   const logout = () => {
     localStorage.removeItem('sessionID');
     sessionStorage.removeItem('sessionID')
@@ -27,7 +27,7 @@ const NavRight = () => {
         role_id: user.role_id
       },
       withCredentials: true,
-      url: `/getStoreName`,
+      url: `${url}/getStoreName`,
     });
     const storeName_ = res.data[0].store_name;
     setStoreName(storeName_);

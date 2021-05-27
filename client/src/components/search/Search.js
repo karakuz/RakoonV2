@@ -9,12 +9,12 @@ import '../../pages/css/body.css';
 const Search = (props) => {
   const [products, setProducts] = useState([]);
   const { keyword } = useParams();
-
+  var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   const getProducts = async () => {
     const res = await Axios({
       method: "POST",
       withCredentials: true,
-      url: `/search/${keyword}`,
+      url: `${url}/search/${keyword}`,
     });
     setProducts(res.data);
   }

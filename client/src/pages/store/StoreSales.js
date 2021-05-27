@@ -8,7 +8,7 @@ const StoreSales = () => {
 
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
   const user = jwt.verify(sessionID, 'shhhhh');
-
+  var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   const getSales = async () => {
     console.log("In getSales");
     const res = await Axios({
@@ -17,7 +17,7 @@ const StoreSales = () => {
         user_id: user.user_id
       },
       withCredentials: true,
-      url: `http://localhost:4000/store/getSales`,
+      url: `${url}/store/getSales`,
     });
     setSales(res.data);
   }

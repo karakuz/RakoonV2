@@ -23,7 +23,7 @@ const Cart = (props) => {
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
   const [products, setProducts] = useState([]);
   const ref = useRef(true);
-
+  var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   const getProducts = async () => {
     const res = await Axios({
       method: "POST",
@@ -31,7 +31,7 @@ const Cart = (props) => {
         sessionID: sessionID
       },
       withCredentials: true,
-      url: `/cart/products`,
+      url: `${url}/cart/products`,
     });
     setProducts(res.data);
     console.log(res.data);

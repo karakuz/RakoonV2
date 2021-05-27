@@ -8,7 +8,7 @@ const Forgot = () => {
   const [registerUsername, setRegisterUsername] = useState("");
   const history = useHistory();
   const PORT = process.env.PORT || 4000;
-
+  var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   const submit = async (e) => {
     e.preventDefault();
     if (registerUsername === '') {
@@ -21,7 +21,7 @@ const Forgot = () => {
         email: registerUsername,
       },
       withCredentials: true,
-      url: `/forgot`,
+      url: `${url}/forgot`,
     }).catch((err) => console.log(`err: ${err}`));
 
     if (res !== undefined && res.data === "sent") {

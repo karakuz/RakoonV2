@@ -12,7 +12,7 @@ const Wallet = () => {
 
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
   const user = jwt.verify(sessionID, 'shhhhh');
-
+  var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   useEffect(() => {
     (async () => {
       const res = await Axios({
@@ -21,7 +21,7 @@ const Wallet = () => {
           sessionID: sessionID
         },
         withCredentials: true,
-        url: `/payment/walletbalance`,
+        url: `${url}/payment/walletbalance`,
       });
       setWalletAddress(res.data.address);
       setWalletBalance(res.data.balance);
@@ -48,7 +48,7 @@ const Wallet = () => {
       },
       credentials: 'include',
       withCredentials: true,
-      url: `/payment/transferFaucet`
+      url: `${url}/payment/transferFaucet`
     });
     document.getElementById('loading').style.display = 'none';
     alert(`${token}RKN is added to your account`);

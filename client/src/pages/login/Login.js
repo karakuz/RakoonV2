@@ -11,7 +11,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   let history = useHistory();
   const PORT = process.env.PORT || 4000;
-
+  var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   const Submit = async (e) => {
     e.preventDefault();
     const rememberMe = document.querySelector('#rememberMe').checked;
@@ -25,7 +25,7 @@ const Login = () => {
       },
       credentials: 'include',
       withCredentials: true,
-      url: `/login`,
+      url: `${url}/login`,
     });
     if (user.data === "notVerified") {
       document.querySelector('.notverified').style.display = 'block';
@@ -46,7 +46,7 @@ const Login = () => {
         },
         credentials: 'include',
         withCredentials: true,
-        url: "/2fa/generateSecret",
+        url: `${url}/2fa/generateSecret`,
       });
       history.push(`/two-factor-auth/${req.data.user_id}`);
     }

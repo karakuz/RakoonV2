@@ -8,8 +8,8 @@ const Activate = () => {
   const { token } = useParams();
   const history = useHistory();
   const PORT = process.env.PORT || 4000;
-
-  var url = `/activate/${token}`
+  var URL = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
+  var url = `${URL}/activate/${token}`;
   const submit = async (e) => {
     e.preventDefault();
     // eslint-disable-next-line no-unused-vars

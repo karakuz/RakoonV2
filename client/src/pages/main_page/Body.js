@@ -8,12 +8,12 @@ const Body = (props) => {
   const [products, setProducts] = useState([]);
   const [min, setMin] = React.useState();
   const [max, setMax] = React.useState();
-
+  var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   const getProducts = async () => {
     const res = await Axios({
       method: "GET",
       withCredentials: true,
-      url: `/products`,
+      url: `${url}/products`,
     });
     setProducts(res.data);
   };

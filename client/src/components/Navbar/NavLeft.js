@@ -10,6 +10,7 @@ const NavLeft = (props) => {
   let user = null;
   if (sessionID != null) user = jwt.verify(sessionID, 'shhhhh');
   var Cart = 'Cart';
+  var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
 
   const getProducts = async () => {
     const res = await Axios({
@@ -18,7 +19,7 @@ const NavLeft = (props) => {
         sessionID: sessionID
       },
       withCredentials: true,
-      url: `/getCartItems`,
+      url: `${url}/getCartItems`,
     });
     const products = res.data;
     if (typeof products != typeof '') props.setNumOfItems(products.length)

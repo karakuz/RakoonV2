@@ -18,7 +18,7 @@ const Register = () => {
   const PORT = process.env.PORT || 4000;
 
   const history = useHistory();
-
+  var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   const submit = async (e) => {
     e.preventDefault();
 
@@ -57,7 +57,7 @@ const Register = () => {
       },
       credentials: 'include',
       withCredentials: true,
-      url: `/register`,
+      url: `${url}/register`,
     });
 
 
@@ -81,7 +81,7 @@ const Register = () => {
               user: { user_id: res.data.user_id }
             },
             withCredentials: true,
-            url: `/cart/product/${productID}`
+            url: `${url}/cart/product/${productID}`
           }).then(res => console.log(res)).then(() => localStorage.clear());
         });
       }

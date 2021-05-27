@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Card, Col, Container, Image, ListGroup, Row} from 'react-bootstrap'
+import { Button, Card, Col, Container, Image, ListGroup, Row } from 'react-bootstrap'
 import { Link, useParams } from 'react-router-dom'
 import Axios from 'axios';
 import '../css/bootstrap.min.css';
@@ -17,12 +17,12 @@ const ProductScreen = (props) => {
   let user;
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
   if (sessionID !== null) user = jwt.verify(sessionID, 'shhhhh');
-
+  var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   const getProducts = async () => {
     const res = await Axios({
       method: "GET",
       withCredentials: true,
-      url: `/product/${id}`,
+      url: `${url}/product/${id}`,
     });
     setProduct(res.data);
   };
@@ -31,7 +31,7 @@ const ProductScreen = (props) => {
     const res = await Axios({
       method: "GET",
       withCredentials: true,
-      url: `/getRecommendation/${id}`,
+      url: `${url}/getRecommendation/${id}`,
     });
     setRecommendedProducts(res.data);
   };
@@ -45,7 +45,7 @@ const ProductScreen = (props) => {
     const res = await Axios({
       method: "POST",
       withCredentials: true,
-      url: `/getComments/${id}`,
+      url: `${url}/getComments/${id}`,
     });
     setComments(res.data);
     console.log(res.data);
@@ -119,14 +119,14 @@ const ProductScreen = (props) => {
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
-                { <Button className='btn-block'
-                type='button'
-                disabled={product.countInStock == 0} >
-                {/*
+                {<Button className='btn-block'
+                  type='button'
+                  disabled={product.countInStock == 0} >
+                  {/*
                 <span onClick={(e) => change(e)}>Add To Cart</span>
               */}
               Add To Cart
-              </Button> }
+              </Button>}
               </ListGroup.Item>
             </ListGroup>
           </Card>

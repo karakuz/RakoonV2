@@ -9,7 +9,7 @@ const StoreOrders = () => {
   const [orders, setOrders] = React.useState([""]);
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
   const user = jwt.verify(sessionID, 'shhhhh');
-
+  var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   const getOrders = async () => {
     const res = await Axios({
       method: "POST",
@@ -17,7 +17,7 @@ const StoreOrders = () => {
         user: user
       },
       withCredentials: true,
-      url: `/store/orders`,
+      url: `${url}/store/orders`,
     });
     setOrders(res.data);
   }

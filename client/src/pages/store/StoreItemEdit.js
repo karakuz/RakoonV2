@@ -20,7 +20,7 @@ const StoreItemEdit = () => {
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
   const ref = useRef(false);
-
+  var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   const history = useHistory();
   const queries = ["#name", "#description", "#price", "#category", "#count", "#brand"]
 
@@ -29,14 +29,14 @@ const StoreItemEdit = () => {
       const res = await Axios({
         method: "GET",
         withCredentials: true,
-        url: `/categories`,
+        url: `${url}/categories`,
       });
       setCategories(res.data);
 
       const res_ = await Axios({
         method: "GET",
         withCredentials: true,
-        url: `/product/${item_id}`,
+        url: `${url}/product/${item_id}`,
       });
       setProduct(res_.data);
     })();
@@ -129,7 +129,7 @@ const StoreItemEdit = () => {
         item: item
       },
       withCredentials: true,
-      url: `/editProduct`,
+      url: `${url}/editProduct`,
     });
     if (res.data === "done") {
       alert("Updated")
