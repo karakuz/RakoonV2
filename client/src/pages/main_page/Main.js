@@ -30,6 +30,7 @@ import StoreOrders from '../store/StoreOrders';
 import Wallet from '../user_page/Wallet';
 import StoreCampaigns from '../store/StoreCampaigns';
 import StoreSales from '../store/StoreSales';
+import StoreNotification from '../store/StoreNotification';
 
 
 const Main = () => {
@@ -51,7 +52,7 @@ const Main = () => {
         <Route path="/reset/:token" component={Reset} />
         <Route path="/activate/:token" component={Activate} />
         <Route path="/product/:id" component={() => (<ProductScreen numOfItems={numOfItems} setNumOfItems={setNumOfItems} />)} />
-        <Route path="/category/:name" component={()=> <CategoryPage numOfItems={numOfItems} setNumOfItems={setNumOfItems}/>} />
+        <Route path="/category/:name" component={() => <CategoryPage numOfItems={numOfItems} setNumOfItems={setNumOfItems} />} />
         <Route path="/search/:keyword" component={() => (<Search numOfItems={numOfItems} setNumOfItems={setNumOfItems} />)} />
         <ProtectedStoreRoute path="/store" exact component={Store} />
         <ProtectedStoreRoute path="/store/addproduct" exact component={StoreAdd} />
@@ -61,6 +62,7 @@ const Main = () => {
         <ProtectedStoreRoute path="/store/comments" exact component={StoreComments} />
         <ProtectedStoreRoute path="/store/orders" exact component={StoreOrders} />
         <ProtectedStoreRoute path="/store/sales" exact component={StoreSales} />
+        <ProtectedStoreRoute path="/store/notification" exact component={StoreNotification} />
         <Route path="/store/products/:item_id" component={StoreItemEdit} />
         <ProtectedRoute path="/profile" exact component={Profile} />
         <ProtectedRoute path="/profile/privacy" component={Privacy} />
