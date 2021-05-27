@@ -449,6 +449,7 @@ router.post("/store/setNotification", async (req, res) => {
       idnotification_name: 1
     }
   });
+  res.send("");
 })
 
 module.exports = router;
