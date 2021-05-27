@@ -27,7 +27,7 @@ const PORT = process.env.PORT || 4000;
 
 app.use(
   cors({
-    origin: "https://vigorous-jackson-e3683d.netlify.app", // <-- location of the react app were connecting to
+    origin: "http://localhost:3000", // <-- location of the react app were connecting to
     credentials: true,
   })
 );

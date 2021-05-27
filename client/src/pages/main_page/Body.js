@@ -13,7 +13,7 @@ const Body = (props) => {
     const res = await Axios({
       method: "GET",
       withCredentials: true,
-      url: `https://rakoon-v-2-kbmgw.ondigitalocean.app/products`,
+      url: `/products`,
     });
     setProducts(res.data);
   };
