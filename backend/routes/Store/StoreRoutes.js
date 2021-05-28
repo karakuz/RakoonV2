@@ -262,9 +262,7 @@ router.post("/getCampaigns", async (req, res) => {
   const user_id = req.body.user_id;
   const role_id = req.body.role_id;
 
-  console.log(req.body);
-  console.log("in /getCampaigns");
-
+  
   const campaigns = (role_id === 3) ?
     //store owner
     await db.get(`
@@ -288,25 +286,30 @@ router.post("/getCampaigns", async (req, res) => {
         JOIN items ON items.item_id = campaigns.item_id
       JOIN users ON users.user_id = campaigns.user_id
     `);
+  if(campaigns.length !== 0){
+    let map = new Map();
+    for (let item of campaigns) {
+      if (map.get(item.campaign_id) === undefined) map.set(item.campaign_id, [item])
+      else map.set(item.campaign_id, [...map.get(item.campaign_id), item])
+    }
 
-  let map = new Map();
-  for (let item of campaigns) {
-    if (map.get(item.campaign_id) === undefined) map.set(item.campaign_id, [item])
-    else map.set(item.campaign_id, [...map.get(item.campaign_id), item])
+    let obj = {};
+
+    Array.from(map.keys()).forEach(campaign_id => obj[campaign_id] = map.get(campaign_id));
+    res.send(obj);
+  } else {
+    res.send([]);
   }
+  
 
-  let obj = {};
-
-  Array.from(map.keys()).forEach(campaign_id => {
-    obj[campaign_id] = map.get(campaign_id)
-  })
-
-  res.send(obj);
 });
 
 function decimal(num) {
   const str = String(num);
-  if (str.includes === ".") return parseFloat(str.split('.')[0] + '.' + str.split('.')[1].substring(0, 2));
+  console.log("str: " + str);
+
+  if (str.includes('.')) 
+    return parseFloat(str.split('.')[0] + '.' + str.split('.')[1].substring(0, 2));
   return parseFloat(str);
 }
 
@@ -314,7 +317,7 @@ router.post("/store/deployCampaignByCategory", async (req, res) => {
   const user_id = req.body.user_id;
   const item_ids = req.body.item_ids;
   const date = req.body.date;
-  const discount = parseFloat('0.' + req.body.discount);
+  const discount = (req.body.discount >= 10) ? parseFloat('0.' + req.body.discount) : parseFloat('0.0' + req.body.discount);
 
   await db.get(`
     INSERT INTO campaigns(store_id, user_id, by_date, discount)
@@ -323,14 +326,19 @@ router.post("/store/deployCampaignByCategory", async (req, res) => {
 
   for (let item_id of item_ids) {
     const old_price = await db.get(`SELECT price FROM items WHERE item_id=${item_id}`);
+    const new_price = decimal(old_price[0].price * (1 - discount));
 
     await db.get(`
       INSERT INTO campaign_items(item_id, campaign_id, old_price, new_price) VALUES(
         (SELECT item_id FROM items WHERE item_id=${item_id}),
         (SELECT campaign_id FROM campaigns ORDER BY campaign_id DESC LIMIT 1),
         ${old_price[0].price},
-        ${decimal(old_price[0].price * (1 - discount))}
+        ${new_price}
       )
+    `);
+
+    await db.get(`
+        UPDATE items SET price = ${new_price} WHERE item_id = ${item_id}
     `);
   }
 
@@ -350,14 +358,19 @@ router.post("/store/deployCampaignByProduct", async (req, res) => {
 
   const item_id = await db.get(`SELECT item_id FROM items WHERE item_name='${product}'`);
   const old_price = await db.get(`SELECT price FROM items WHERE item_id=${item_id[0].item_id}`);
+  const new_price = decimal(old_price[0].price * (1 - discount));
 
   await db.get(`
     INSERT INTO campaign_items(item_id, campaign_id, old_price, new_price) VALUES(
       (SELECT item_id FROM items WHERE item_id=${item_id[0].item_id}),
       (SELECT campaign_id FROM campaigns ORDER BY campaign_id DESC LIMIT 1),
       ${old_price[0].price},
-      ${decimal(old_price[0].price * (1 - discount))}
+      ${new_price}
     )
+  `);
+
+  await db.get(`
+    UPDATE items SET price = ${new_price} WHERE item_id = ${item_id[0].item_id}
   `);
 
   res.send("done");
@@ -384,6 +397,7 @@ router.post("/store/deployCampaignByPrice", async (req, res) => {
 
   for (let item_id of item_ids) {
     const old_price = await db.get(`SELECT price FROM items WHERE item_id=${item_id.item_id}`);
+    const new_price = decimal(old_price[0].price * (1 - discount));
 
     await db.get(`
       INSERT INTO campaign_items(item_id, campaign_id, old_price, new_price) VALUES(
@@ -392,6 +406,10 @@ router.post("/store/deployCampaignByPrice", async (req, res) => {
         ${old_price[0].price},
         ${decimal(old_price[0].price * (1 - discount))}
       )
+    `);
+
+    await db.get(`
+      UPDATE items SET price = ${new_price} WHERE item_id = ${item_id[0].item_id}
     `);
   }
 
@@ -427,6 +445,27 @@ router.post("/store/getSales", async (req, res) => {
   console.log({ sales: sales, category: category });
 
   res.send({ sales: sales, category: category });
+});
+
+router.post("/store/removeCampaign", async (req, res) => {
+  const campaign_id = req.body.campaign_id;
+
+  const item_ids = await db.get(`SELECT item_id,old_price FROM campaign_items WHERE campaign_id=${campaign_id}`);
+  for(let item of item_ids){
+    const item_id = item.item_id;
+    const old_price = item.old_price;
+
+    await db.get(`UPDATE items SET price=${old_price} WHERE item_id=${item_id}`);
+  }
+
+  await db.get(`
+    DELETE FROM campaign_items WHERE campaign_id=${campaign_id};
+  `);
+  await db.get(`
+    DELETE FROM campaigns WHERE campaign_id=${campaign_id};
+  `);
+
+  res.send("done");
 });
 
 router.post("/store/sendNotification", async (req, res) => {

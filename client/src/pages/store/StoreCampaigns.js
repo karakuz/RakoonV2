@@ -5,16 +5,16 @@ import StoreCampaignProduct from './StoreCampaignProduct';
 const jwt = require("jsonwebtoken");
 
 const StoreCampaings = () => {
-  const [campaigns, setCampaigns] = useState({});
+  const [campaigns, setCampaigns] = useState([]);
   const [categories, setCategories] = useState([]);
   const [items, setItems] = useState([]);
   var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
   const user = jwt.verify(sessionID, 'shhhhh');
 
-  const [byCategoryDiscount, setByCategoryDiscount] = useState("");
-  const [byProductDiscount, setByProductDiscount] = useState("");
-  const [byPriceDiscount, setByPriceDiscount] = useState("");
+  const [byCategoryDiscount, setByCategoryDiscount] = useState(0);
+  const [byProductDiscount, setByProductDiscount] = useState(0);
+  const [byPriceDiscount, setByPriceDiscount] = useState(0);
 
   const [byCategoryDateBy, setByCategoryDateBy] = useState("");
   const [byProductDateBy, setByProductDateBy] = useState("");
@@ -24,6 +24,13 @@ const StoreCampaings = () => {
   const [product, setProduct] = useState("");
   const [priceBetween1, setPriceBetween1] = useState("");
   const [priceBetween2, setPriceBetween2] = useState("");
+
+  var today = new Date();
+  const dd = String(today.getDate()).padStart(2, '0');
+  const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  const yyyy = today.getFullYear();
+
+  today = yyyy + '-' + mm + '-' + dd ;
 
   const getCampaigns = async () => {
     const res = await Axios({
@@ -73,9 +80,12 @@ const StoreCampaings = () => {
   const categorySubmit = async (e) => {
     e.preventDefault();
 
-    if (category === "" || byCategoryDiscount === 0 || byCategoryDateBy === "") {
+    if (category === "" || byCategoryDiscount <= 0 || byCategoryDateBy === "") {
       alert("Fill the appropiate blanks");
       return;
+    }
+    if( Date.parse(today) >= Date.parse(byCategoryDateBy) ){
+      alert("Select a day after today")
     }
 
     let item_ids = [];
@@ -105,11 +115,13 @@ const StoreCampaings = () => {
 
   const productSubmit = async (e) => {
     e.preventDefault();
-    console.log(`product: ${product}\ndiscount: ${byProductDiscount}\ndate by:${byProductDateBy} `);
-
-    if (product === "" || byProductDiscount === 0 || byProductDateBy === "") {
+    if (product === "" || byProductDiscount <= 0 || byProductDateBy === "") {
       alert("Fill the appropiate blanks");
       return;
+    }
+
+    if( Date.parse(today) >= Date.parse(byProductDateBy) ){
+      alert("Select a day after today")
     }
 
     const res = await Axios({
@@ -131,12 +143,17 @@ const StoreCampaings = () => {
 
   const priceSubmit = async (e) => {
     e.preventDefault();
-    console.log(`price between: ${priceBetween1} - ${priceBetween2}\ndiscount: ${byPriceDiscount}\ndate by:${byPriceDateBy} `);
-    console.log(typeof priceBetween1);
 
-    if (priceBetween1 === "" || priceBetween2 === "" || byPriceDateBy === "" || (parseFloat(priceBetween1) - parseFloat(priceBetween2) <= 0)) {
+    if (priceBetween1 === 0 
+      || priceBetween2 === 0 
+      || byPriceDateBy === "" 
+      || (parseFloat(priceBetween1) - parseFloat(priceBetween2) <= 0)) {
       alert("Fill the blanks appropriately");
       return;
+    }
+
+    if( Date.parse(today) >= Date.parse(byPriceDateBy) ){
+      alert("Select a day after today")
     }
 
     const res = await Axios({
@@ -161,11 +178,11 @@ const StoreCampaings = () => {
     <div>
       <StoreNav user={user} />
 
-      <h3 style={{ textAlign: "center" }}>Campaigns</h3>
-      <div style={{ border: "1px solid red", width: "80%", margin: "40px auto", padding: "20px" }}>
+      <h3 style={{ textAlign: "center", marginTop: "2rem" }}>Campaigns</h3>
+      <div style={{ borderRadius: '15px', boxShadow: '0 0 15px grey', width: "80%", margin: "40px auto", padding: "20px" }}>
         {
           (campaigns.length === 0) ?
-            <p>Store does not have any campaign</p>
+            <p style={{ textAlign: "center", fontSize: "1.3rem" }}>Store does not have any campaign</p>
             :
             <div style={{}}>
               {
@@ -179,13 +196,13 @@ const StoreCampaings = () => {
       {(user.role_id === 2) ?
         <>
           <h3 style={{ textAlign: "center" }}>Deploy Campaign</h3>
-          <div style={{ border: "1px solid red", width: "80%", margin: "40px auto", padding: "20px" }}>
+          <div style={{ borderRadius: '15px', boxShadow: '0 0 15px grey', width: "80%", margin: "40px auto", padding: "20px" }}>
 
             <h5>By Category</h5>
             <div style={{ display: "flex", justifyContent: "space-between", margin: "1.5rem 0 0 1rem" }}>
               <div style={{ width: "350px" }}>
                 <label style={{ margin: "auto 0.8rem 0 0", fontSize: "16px", width: "75px" }}>Category</label>
-                <select style={{ width: "120px" }} onChange={e => setCategory(e.target.value)}>
+                <select style={{ width: "120px", padding: '7px' }} onChange={e => setCategory(e.target.value)}>
                   {<option value="" selected></option>}
                   {
                     categories.map(category => {
@@ -196,22 +213,22 @@ const StoreCampaings = () => {
               </div>
               <div style={{ position: "relative" }}>
                 <label style={{ margin: "auto 0.8rem 0 0", fontSize: "16px" }}>Discount</label>
-                <span style={{ position: "absolute", fontSize: "1rem", top: "2px", right: "52px" }}>%</span>
-                <input type="number" value={byCategoryDiscount} style={{ width: "70px", marginLeft: "0", paddingLeft: "16px" }} onChange={e => setByCategoryDiscount(e.target.value)} />
+                <span style={{ position: "absolute", fontSize: "1rem", top: "8px", right: "52px" }}>%</span>
+                <input type="number" value={byCategoryDiscount} style={{ width: "70px", marginLeft: "0", padding: "7px 7px 7px 16px" }} onChange={e => setByCategoryDiscount(parseInt(e.target.value))} />
               </div>
               <div>
                 <label style={{ margin: "auto 0.8rem 0 0", fontSize: "16px" }}>Date By</label>
-                <input type="date" id="date" onChange={e => setByCategoryDateBy(e.target.value)} />
+                <input type="date" id="date" onChange={e => setByCategoryDateBy(e.target.value)} style={{padding: "7px"}}/>
               </div>
 
-              <input type="submit" value="Deploy" id="category" onClick={(e) => categorySubmit(e)} />
+              <input type="submit" value="Deploy" id="category" onClick={(e) => categorySubmit(e)} style={{padding: "7px", color: "white", backgroundColor: "blue", borderRadius: "5px"}}/>
             </div>
 
             <h5 style={{ marginTop: "2rem" }}>By Product</h5>
             <div style={{ display: "flex", justifyContent: "space-between", margin: "1.5rem 0 0 1rem" }}>
               <div style={{ width: "350px" }}>
                 <label style={{ margin: "auto 0.8rem 0 0", fontSize: "16px", width: "75px" }}>Product</label>
-                <select style={{ width: "200px" }} onChange={e => setProduct(e.target.value)}>
+                <select style={{ width: "200px", padding: "7px" }} onChange={e => setProduct(e.target.value)}>
                   {<option value="" selected></option>}
                   {
                     items.map(product => {
@@ -222,35 +239,35 @@ const StoreCampaings = () => {
               </div>
               <div style={{ position: "relative" }}>
                 <label style={{ margin: "auto 0.8rem 0 0", fontSize: "16px" }}>Discount</label>
-                <span style={{ position: "absolute", fontSize: "1rem", top: "2px", right: "52px" }}>%</span>
-                <input type="number" value={byProductDiscount} style={{ width: "70px", marginLeft: "0", paddingLeft: "16px" }} onChange={e => setByProductDiscount(e.target.value)} />
+                <span style={{ position: "absolute", fontSize: "1rem", top: "8px", right: "52px" }}>%</span>
+                <input type="number" value={byProductDiscount} style={{ width: "70px", marginLeft: "0", padding: "7px 7px 7px 16px" }} onChange={e => setByProductDiscount(parseInt(e.target.value))} />
               </div>
               <div>
                 <label style={{ margin: "auto 0.8rem 0 0", fontSize: "16px" }}>Date By</label>
-                <input type="date" id="date" onChange={e => setByProductDateBy(e.target.value)} />
+                <input type="date" id="date" onChange={e => setByProductDateBy(e.target.value)} style={{ padding: "7px" }}/>
               </div>
 
-              <input type="submit" value="Deploy" id="product" onClick={(e) => productSubmit(e)} />
+              <input type="submit" value="Deploy" id="product" onClick={(e) => productSubmit(e)} style={{padding: "7px", color: "white", backgroundColor: "blue", borderRadius: "5px"}}/>
             </div>
 
             <h5 style={{ marginTop: "2rem" }}>By Price</h5>
             <div style={{ display: "flex", justifyContent: "space-between", margin: "1.5rem 0 0 1rem" }}>
               <div style={{ width: "350px" }}>
                 <label style={{ margin: "auto 0.8rem 0 0", fontSize: "16px" }}>Price Between</label>
-                <input type="number" style={{ width: "80px", marginRight: "0.8rem" }} onChange={e => setPriceBetween1(parseFloat(e.target.value))} />
+                <input type="number" style={{ width: "80px", marginRight: "0.8rem", padding: "7px" }} onChange={e => setPriceBetween1(parseFloat(e.target.value))} />
                 <span style={{ margin: "auto 0.8rem 0 0", fontSize: "16px" }}>and</span>
-                <input type="number" style={{ width: "80px" }} onChange={e => setPriceBetween2(parseFloat(e.target.value))} />
+                <input type="number" style={{ width: "80px", padding: "7px" }} onChange={e => setPriceBetween2(parseFloat(e.target.value))} />
               </div>
               <div style={{ position: "relative" }}>
                 <label style={{ margin: "auto 0.8rem 0 0", fontSize: "16px" }}>Discount</label>
-                <span style={{ position: "absolute", fontSize: "1rem", top: "2px", right: "52px" }}>%</span>
-                <input type="number" value={byPriceDiscount} style={{ width: "70px", marginLeft: "0", paddingLeft: "16px" }} onChange={e => setByPriceDiscount(e.target.value)} />
+                <span style={{ position: "absolute", fontSize: "1rem", top: "8px", right: "52px" }}>%</span>
+                <input type="number" value={byPriceDiscount} style={{ width: "70px", marginLeft: "0", padding: "7px 7px 7px 16px" }} onChange={e => setByPriceDiscount(parseInt(e.target.value))} />
               </div>
               <div>
-                <label style={{ margin: "auto 0.8rem 0 0", fontSize: "16px" }}>Date By</label>
-                <input type="date" id="date" onChange={e => setByPriceDateBy(e.target.value)} />
+                <label style={{ margin: "auto 0.8rem 0 0", fontSize: "16px", padding: "7px" }}>Date By</label>
+                <input type="date" id="date" onChange={e => setByPriceDateBy(e.target.value)} style={{ padding: "7px" }}/>
               </div>
-              <input type="submit" value="Deploy" id="price" onClick={(e) => priceSubmit(e)} />
+              <input type="submit" value="Deploy" id="price" onClick={(e) => priceSubmit(e)} style={{padding: "7px", color: "white", backgroundColor: "blue", borderRadius: "5px"}}/>
             </div>
           </div>
         </>

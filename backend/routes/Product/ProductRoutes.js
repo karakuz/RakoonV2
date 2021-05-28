@@ -14,7 +14,19 @@ router.get("/product/:id", async (req, res) => {
 });
 
 router.get("/products", async (req, res) => {
-  let all_products = await db.get(`SELECT *, 0 as rate FROM items JOIN store ON store.store_id = items.store_id ORDER BY item_id`);
+  let all_products = await db.get(`
+  SELECT 
+	  items.*,
+    store.store_name,
+    campaign_items.old_price, 
+    0 as rate FROM items
+  LEFT JOIN store 
+  ON store.store_id = items.store_id 
+  LEFT JOIN campaign_items 
+  ON campaign_items.item_id = items.item_id
+  ORDER BY item_id;
+  `);
+
   let map = new Map();
   for(let product of all_products)
     map.set(product.item_id, {...product});
@@ -31,7 +43,7 @@ router.get("/products", async (req, res) => {
     `);
   
   for(let product of rated_products)
-    map.set(product.item_id, product);
+    map.set(product.item_id, {...product, old_price: map.get(product.item_id).old_price});
   
   res.send(Array.from(map.values()));
 })
