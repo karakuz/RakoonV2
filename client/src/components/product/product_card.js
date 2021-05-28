@@ -10,8 +10,9 @@ const ProductCard = (props) => {
   const addOrDelete = (!props.isRemovable) ? 'Add To Cart' : 'Delete';
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
   const user = (sessionID !== null) ? jwt.verify(sessionID, 'shhhhh') : null;
-  //console.log(props);
   var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
+  
+  //console.log(props);
   const product = {
     id: props.item_id,
     name: props.item_name,
@@ -19,6 +20,7 @@ const ProductCard = (props) => {
     text: props.description,
     img: props.image,
     price: props.price,
+    old_price: props.old_price,
     rate: parseFloat(props.rate)
   };
 
@@ -82,6 +84,11 @@ const ProductCard = (props) => {
       </Link>
       <Stars rate={Math.floor(product.rate)} />
       <Card.Body>
+        {
+          (product.old_price !== null) ?
+            <Card.Text as='h5' style={{ textAlign: "center", textDecoration: "line-through" }}>${product.old_price}</Card.Text>
+          : null
+        }
         <Card.Text as='h5' style={{ textAlign: "center" }}>${product.price}</Card.Text>
         {
           (user === null || user.role_id === 1) ?

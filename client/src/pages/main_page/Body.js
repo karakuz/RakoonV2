@@ -17,6 +17,7 @@ const Body = (props) => {
       url: `${url}/products`,
     });
     setProducts(res.data);
+    console.log(res.data);
   };
 
   useEffect(() => {
