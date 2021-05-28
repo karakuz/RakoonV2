@@ -5,6 +5,7 @@ import Axios from "axios";
 import { Button, Col, Container } from 'react-bootstrap';
 import redX from '../css/redX.jpg';
 import Loading from '../cart/loading.gif';
+import '../css/checkout.css';
 
 /* function numeral(number) {
   number = String(number);
@@ -147,7 +148,7 @@ const Checkout = (props) => {
 
         <h4 class="mb-5" style={{ textAlign: 'center' }}>Checkout</h4>
         <Container>
-          <div style={{ order: '2' }}>
+          <div style={{ order: '2' }} className="proceed">
             <div class="">
               <h4 class="d-flex justify-content-between align-items-center mb-3">
                 <span class="text-muted">Your cart</span>
@@ -172,12 +173,12 @@ const Checkout = (props) => {
                   <span>${products.reduce((a, v) => a = a + v.price, 0)}</span>
                 </li>
                 <div style={{ marginTop: '1rem' }}>
-                  <Button onClick={() => proceedPayment()}>Complete Payment</Button>
+                  <Button onClick={() => proceedPayment()} className="proceedButton">Complete Payment</Button>
                 </div>
               </ul>
             </div>
           </div>
-          <div class="col-md-8 order-md-1">
+          <div class="col-md-8 order-md-1 checkoutForm">
             <Form style={{ width: 'auto' }} >
               <h4 class="mb-4"> Address</h4>
               <Form.Row>

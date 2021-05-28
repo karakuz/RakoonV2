@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
+import '../../pages/css/navSearch.css';
 
 const SearchBar = ({ history }) => {
     const [keyword, setKeyword] = useState('')
@@ -10,16 +11,16 @@ const SearchBar = ({ history }) => {
       }
 
     return (
-        <Form onSubmit={e => submitHandler(e)} inline>
-            <Form.Control
-                type='text'
-                name='q'
-                onChange={(e) => setKeyword(e.target.value)}
-                placeholder='Search Products...'
-                className='mr-sm-2 ml-sm-5'
-            ></Form.Control>
-            <Button style={{ margin: '1rem' }} type='submit' varient='outline-success' className='p-2'>Search</Button>
-        </Form>
+      <Form onSubmit={e => submitHandler(e)} inline className="searchForm">
+        <Form.Control
+          type='text'
+          name='q'
+          onChange={(e) => setKeyword(e.target.value)}
+          placeholder='Search Products...'
+          className='mr-sm-2 ml-sm-5 searchInput'
+        ></Form.Control>
+        <Button style={{ margin: '1rem' }} type='submit' varient='outline-success' className='p-2 searchButton'>Search</Button>
+      </Form>
     )
 }
 

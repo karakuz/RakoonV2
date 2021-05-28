@@ -1,0 +1,14 @@
+@media only screen and (max-width: 700px) {
+  .container{
+    flex-direction: column;
+  }
+  .checkoutForm{
+    order: 1;
+  }
+  .proceed{
+    order: 2;
+  }
+  .proceedButton{
+    display: flex
+  }
+}

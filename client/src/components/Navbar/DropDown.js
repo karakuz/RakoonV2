@@ -12,9 +12,6 @@ const DropDown = () => {
       withCredentials: true,
       url: `${url}/categories`,
     });
-    console.log(url);
-    console.log(`${url}/categories`);
-    console.log(res.data);
     setcategories(res.data);
 
   };
@@ -23,7 +20,7 @@ const DropDown = () => {
   }, []);
 
   return (
-    <NavDropdown title="Categories" id="collasible-nav-dropdown">
+    <NavDropdown title="Categories" id="collasible-nav-dropdown" style={{textAlign: "center", margin: "0"}}>
       {
         categories.map((category) => {
           const url = `/category/${category.category}`

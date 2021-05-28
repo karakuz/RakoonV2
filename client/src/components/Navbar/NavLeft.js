@@ -54,7 +54,7 @@ const NavLeft = (props) => {
   } else {
     return (
       <Nav className="mr-auto">
-        <Nav.Link href="/cart" id="cart">{`${Cart}`}</Nav.Link>
+        <Nav.Link href="/cart" id="cart" style={{textAlign: "center", width: "113px"}}>{`${Cart}`}</Nav.Link>
         <DropDown />
       </Nav>
     )
