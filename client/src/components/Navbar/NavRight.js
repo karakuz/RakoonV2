@@ -42,9 +42,9 @@ const NavRight = () => {
     if (user !== null) {
       if (user.role_id === 1)
         setUserRole("Welcome");
-      else if (user.role_id === 2)
-        setUserRole("Store Manager");
       else if (user.role_id === 3)
+        setUserRole("Store Manager");
+      else if (user.role_id === 2)
         setUserRole("Sales Manager");
     } else setUserRole("");
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -55,13 +55,13 @@ const NavRight = () => {
   if (sessionID === null) {
     return (
       <Nav>
-        <Nav.Link href="/login" style={{ textAlign: "center"}}>Login</Nav.Link>
+        <Nav.Link href="/login" style={{ textAlign: "center" }}>Login</Nav.Link>
       </Nav>
     )
   }
   else if (user != null && (user.role_id === 3 || user.role_id === 2)) {
     return (
-      <Nav style={{ position: "relative", textAlign: "center"}}>
+      <Nav style={{ position: "relative", textAlign: "center" }}>
         <span style={{ position: "absolute", right: "140px", top: "0.00001px", fontSize: "50%" }}>{role}</span>
         <Nav.Link href="/store">{storeName}</Nav.Link>
         <Nav.Link href="/profile">Profile</Nav.Link>
