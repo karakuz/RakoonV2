@@ -95,7 +95,7 @@ const Register = () => {
 
   return (
     <div style={{ marginTop: '2rem' }}>
-      <div className="form_container" style={{ width: '590px', margin: '0 auto', fontSize: '2em', position: 'relative' }}>
+      <div className="form_container" style={{ fontSize: '2em', position: 'relative' }}>
         <div style={{ display: 'none', position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px' }} id='exists'>
           <img src={redX} alt="error" style={{ width: '70px', float: 'left' }} />
           <div style={{ flexGrow: '1', marginTop: '3px' }}>
@@ -153,34 +153,43 @@ const Register = () => {
           </Nav>
         </div>
         <Form style={{ margin: "0 auto", width: "500px" }}>
-          <Form.Group controlId="formBasicEmail" style={{ position: "relative" }}>
-            <Form.Label>Email:</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" onChange={(e) => setRegisterUsername(e.target.value)} style={{ width: "332px", border: '1px solid grey' }} />
-            <span style={{ color: "darkgrey", fontSize: "14px", position: "absolute", bottom: "-15px", right: "-2px" }}>
+          <Form.Group controlId="formBasicEmail" style={{ position: "relative" }} className="emailDiv">
+            <Form.Label className="emailLabel">Email:</Form.Label>
+            <Form.Control type="email" placeholder="Enter email" className="email" onChange={(e) => setRegisterUsername(e.target.value)} style={{ width: "332px", border: '1px solid grey' }} />
+            <span style={{  }} className="spanNote">
               We'll never share your email with anyone else.
             </span>
           </Form.Group>
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control type="password" placeholder="Password" onChange={(e) => setRegisterPassword(e.target.value)} style={{ width: "332px", border: '1px solid grey' }} />
+          <Form.Group controlId="formBasicPassword" className="passwordDiv">
+            <Form.Label className="passwordLabel">Password</Form.Label>
+            <Form.Control type="password" placeholder="Password" className="password" onChange={(e) => setRegisterPassword(e.target.value)} style={{ width: "332px", border: '1px solid grey' }} />
           </Form.Group>
-          <Form.Group controlId="formBasicPassword2">
-            <Form.Label>Password(*)</Form.Label>
-            <Form.Control type="password" placeholder="Password" style={{ width: "332px", border: '1px solid grey' }} />
+          <Form.Group controlId="formBasicPassword2" className="passwordDiv">
+            <Form.Label className="passwordLabel">Password(*)</Form.Label>
+            <Form.Control type="password" placeholder="Password" style={{ width: "332px", border: '1px solid grey' }} className="password"/>
           </Form.Group>
-          <Row style={{ width: "430px", marginLeft: "auto", display: "flex", justifyContent: "space-between", position: 'relative' }}>
+          <div style={{ display: "flex", justifyContent: "space-between", position: 'relative' }} className="nameInputs">
             <Col>
-              <Form.Control placeholder="First name" onChange={(e) => setRegisterName(e.target.value)} style={{ border: '1px solid grey' }} id="firstName" />
+              <Form.Control 
+                placeholder="First name" 
+                onChange={(e) => setRegisterName(e.target.value)} 
+                style={{ border: '1px solid grey' }} id="firstName" 
+              />
             </Col>
             <Col>
-              <Form.Control placeholder="Last name" onChange={(e) => setRegisterSurname(e.target.value)} style={{ border: '1px solid grey' }} id="lastName" />
+              <Form.Control 
+              placeholder="Last name" 
+              onChange={(e) => setRegisterSurname(e.target.value)} 
+              style={{ border: '1px solid grey' }} 
+              id="lastName" 
+              />
             </Col>
             <Nav style={{ fontSize: '16px', position: "absolute", right: '0px', bottom: '-40px', textDecoration: 'underline' }}>
               <Nav.Link href='/store_register'>
                 Want to open a store?
               </Nav.Link>
             </Nav>
-          </Row>
+          </div>
           <div>
             <Button variant="primary" type="submit" onClick={(e) => submit(e)} style={{ marginTop: "20px" }} id='submit'>
               Submit

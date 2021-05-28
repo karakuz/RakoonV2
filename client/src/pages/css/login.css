@@ -52,6 +52,19 @@ form>div{
   align-items: center;
 }
 
+.spanNote{
+  color: darkgrey; 
+  font-size: 14px; 
+  position: absolute; 
+  bottom: -15px; 
+  right: -2px;
+}
+
+.nameInputs{
+  width: 430px;
+  margin-left: auto
+}
+
 @media only screen and (max-width: 1500px) {
   .form_container{
     width: 45%
@@ -89,7 +102,7 @@ form>div{
   }
 }
 
-@media only screen and (max-width: 520px) {
+@media only screen and (max-width: 560px) {
   .emailDiv, .passwordDiv{
     display: flex;
     flex-direction: column;
@@ -100,5 +113,16 @@ form>div{
   .email,.password{
     margin: 0 auto;
     width: 360px
+  }
+  .nameInputs{
+    width: 332px;
+    margin: 2rem auto
+  }
+  .nameInputs > div {
+    padding: 0
+  }
+  .spanNote{
+    bottom: -22px;
+    right: 79px
   }
 }
