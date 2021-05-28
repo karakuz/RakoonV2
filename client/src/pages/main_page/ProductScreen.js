@@ -3,6 +3,7 @@ import { Button, Card, Col, Container, Image, ListGroup, Row } from 'react-boots
 import { Link, useParams } from 'react-router-dom'
 import Axios from 'axios';
 import '../css/bootstrap.min.css';
+import '../css/productCard.css';
 import Comment from '../../components/product/Comment';
 import AddComment from '../../components/product/AddComment';
 import Loading from '../cart/loading.gif';
@@ -156,12 +157,17 @@ const ProductScreen = (props) => {
         </div> : null}
       <div>
 
-        <div style={{ margin: "5rem" }}>
+        <div className="recommendedDiv">
           <Row className="justify-content-md-center">
-            <Col md="auto"><h3>You might also like </h3></Col>
+            <Col md="auto">
+              <h3 className="recommendedH3">You might also like </h3>
+            </Col>
           </Row>
           <Row className="justify-content-md-center">
-            <Col md="auto"><Button className='btn btn-light my-3' onClick={getRecommendedProducts}>Refresh</Button></Col></Row>
+            <Col md="auto">
+              <Button className='btn btn-light my-3 refButton' onClick={getRecommendedProducts}>Refresh</Button>
+            </Col>
+          </Row>
           <Container>
             <Row>
               {
