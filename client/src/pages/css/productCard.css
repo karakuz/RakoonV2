@@ -1,0 +1,23 @@
+.recommendedDiv{
+  margin: 5rem
+}
+
+@media only screen and (max-width: 850px) {
+  .recommendedDiv{
+    margin: 2rem
+  }
+  .recommendedH3{
+    font-size: 20px;
+    text-align: center;
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+  }
+
+  .refButton{
+    display: flex
+  }
+}

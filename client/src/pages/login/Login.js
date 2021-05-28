@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom';
+import Nav from "react-bootstrap/Nav";
 import '../css/login.css'
 import Axios from "axios"
-import Nav from "react-bootstrap/Nav";
+
 
 var jwt = require('jsonwebtoken');
 
@@ -68,7 +69,7 @@ const Login = () => {
   }
   return (
     <div style={{ marginTop: '2rem' }}>
-      <div className="form_container" style={{ width: '590px', margin: '0 auto', fontSize: '2em' }}>
+      <div className="form_container" style={{ fontSize: '2em' }}>
         <div style={{ marginBottom: '1em', width: '100%', borderBottom: '1px solid grey' }}>
           <Nav style={{ display: 'flex', width: '100%' }}>
             <Nav.Link style={{ borderRight: '1px solid grey', flex: '1', textAlign: 'center' }} href="/login">LOGIN</Nav.Link>
@@ -76,20 +77,24 @@ const Login = () => {
           </Nav>
         </div>
         <form onSubmit={Submit}>
-          <div>
-            <label>E-mail:</label>
+          <div className="emailDiv">
+            <label style={{ marginBottom: "0"}} className="emailLabel">E-mail:</label>
             <input
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
+              className="email"
+              style={{fontSize: "25px"}}
             />
           </div>
-          <div style={{ position: "relative" }}>
-            <label>Password:</label>
+          <div style={{ position: "relative" }} className="passwordDiv">
+            <label style={{ marginBottom: "0"}} className="passwordLabel">Password:</label>
             <input
               type="password"
               value={password}
               onChange={e => setPassword(e.target.value)}
+              className="password"
+              style={{fontSize: "25px"}}
             />
             <span style={{ fontSize: '16px', position: 'absolute', right: '0', bottom: '-25px', color: 'red', display: 'none' }} className='error'>Email or Password is wrong!</span>
             <span style={{ fontSize: '16px', position: 'absolute', right: '0', bottom: '-25px', color: 'red', display: 'none' }} className='notverified'>User is not verified</span>
@@ -97,7 +102,7 @@ const Login = () => {
             <span style={{ fontSize: '16px', position: 'absolute', right: '0', bottom: '-55px', color: 'red', cursor: 'pointer' }} onClick={() => redirect()}>Forgot Password?</span>
           </div>
           <div>
-            <div style={{ margin: '1rem auto 0' }}>
+            <div style={{ margin: '2rem auto 0' }}>
               <label for="rememberMe" style={{ fontSize: '17px', marginRight: '8px' }}>Remember Me</label>
               <input type="checkbox" id="rememberMe" name="rememberMe" style={{ transform: 'scale(1.3)' }} />
             </div>
