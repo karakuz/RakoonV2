@@ -24,11 +24,11 @@ const Body = (props) => {
   }, []);
 
   const find = () => {
-    if(max!== null && min != null)
+    if (max !== null && min != null)
       setProducts(products.filter(product => product.price < max && product.price > min))
   }
 
-  const [orderState,setOrderState] = useState("NameAsc");
+  const [orderState, setOrderState] = useState("NameAsc");
 
   const sortAsc = sortBy => (a, b) => {
     if (a[sortBy] > b[sortBy]) {
@@ -39,7 +39,7 @@ const Body = (props) => {
     return 0;
   }
 
-  
+
   const sortDesc = sortBy => (a, b) => {
     if (a[sortBy] < b[sortBy]) {
       return 1;
@@ -51,9 +51,9 @@ const Body = (props) => {
 
   const order = () => {
     console.log(orderState);
-    if(orderState == "NameAsc")
+    if (orderState == "NameAsc")
       products.sort(sortAsc('item_name'));
-    else if( orderState == "NameDesc") 
+    else if (orderState == "NameDesc")
       products.sort(sortDesc('item_name'));
     else if (orderState == "PriceAsc")
       products.sort(sortAsc('price'));
@@ -67,35 +67,37 @@ const Body = (props) => {
         Welcome to Rakoon E-Commerce!
       </h3>
       {/* <Filter products={products}/> */}
-      
+
       <div className="container p-5">
-        <select 
+        <select
           className="custom-select"
           value={orderState}
-          onChange = {(e)=> {
+          onChange={(e) => {
             const selectedOrder = e.target.value;
             setOrderState(selectedOrder);
             order();
           }}
-          >
-            <option value = "NameAsc">Order by Name A-Z</option>
-            <option value = "NameDesc">Order by Name Z-A</option>
-            <option value = "PriceAsc">Order by Price(Ascending)</option>
-            <option value = "PriceDesc">Order by Price(Descending)</option>
-          </select>
+        >
+          <option value="NameAsc">Order by Name Z-A</option>
+          <option value="NameDesc">Order by Name A-Z</option>
+          <option value="PriceAsc">Order by Price(Descending)</option>
+          <option value="PriceDesc">Order by Price(Ascending)</option>
+        </select>
       </div>
 
       <div className="container p-1">
-      <div className="form-group">
-        <label>Price</label>
-        <input id="min" type="number" onChange={(e) => setMin(parseInt(e.target.value))} />
-        <input id="max" type="number" onChange={(e) => setMax(parseInt(e.target.value))} />
-        <input type="button" onClick={() => find()} value="Filter" />
-      </div>
-      </div>
-      
+        <div className="form-group">
+          <label>Price</label>
+          <br></br>
+          <input id="min" type="number" onChange={(e) => setMin(parseInt(e.target.value))} />
+          <input id="max" type="number" onChange={(e) => setMax(parseInt(e.target.value))} />
 
-      
+          <input type="button" onClick={() => find()} value="Filter" />
+        </div>
+      </div>
+
+
+
       <Container>
         <Row>
           {
