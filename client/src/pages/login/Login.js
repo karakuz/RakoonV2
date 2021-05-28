@@ -84,7 +84,7 @@ const Login = () => {
               value={email}
               onChange={e => setEmail(e.target.value)}
               className="email"
-              style={{fontSize: "25px"}}
+              style={{fontSize: "25px", width: "fit-content"}}
             />
           </div>
           <div style={{ position: "relative" }} className="passwordDiv">
@@ -94,7 +94,7 @@ const Login = () => {
               value={password}
               onChange={e => setPassword(e.target.value)}
               className="password"
-              style={{fontSize: "25px"}}
+              style={{fontSize: "25px", width: "fit-content"}}
             />
             <span style={{ fontSize: '16px', position: 'absolute', right: '0', bottom: '-25px', color: 'red', display: 'none' }} className='error'>Email or Password is wrong!</span>
             <span style={{ fontSize: '16px', position: 'absolute', right: '0', bottom: '-25px', color: 'red', display: 'none' }} className='notverified'>User is not verified</span>

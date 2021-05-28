@@ -152,7 +152,7 @@ const Register = () => {
             <Nav.Link eventKey={2} href="/register" style={{ flex: '1', textAlign: 'center' }}>SIGN UP</Nav.Link>
           </Nav>
         </div>
-        <Form style={{ margin: "0 auto", width: "500px" }}>
+        <Form style={{ margin: "0 auto" }} className="form">
           <Form.Group controlId="formBasicEmail" style={{ position: "relative" }} className="emailDiv">
             <Form.Label className="emailLabel">Email:</Form.Label>
             <Form.Control type="email" placeholder="Enter email" className="email" onChange={(e) => setRegisterUsername(e.target.value)} style={{ width: "332px", border: '1px solid grey' }} />
