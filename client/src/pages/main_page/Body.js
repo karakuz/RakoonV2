@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Axios from 'axios'
 import ProductCard from '../../components/product/product_card';
 import '../css/bootstrap.min.css';
-import { Col, Row, Container } from 'react-bootstrap';
+import { Col, Row, Container, Form } from 'react-bootstrap';
 
 
 const Body = (props) => {
@@ -68,6 +68,26 @@ const Body = (props) => {
         Welcome to Rakoon E-Commerce!
       </h3>
       {/* <Filter products={products}/> */}
+   
+      <div class="row">
+        <div class="col">
+          <Form.Control as="select" defaultValue="Select">
+            <option>Price</option>
+            <option>0-$50</option>
+            <option>$50-$200</option>
+            <option>$200-$500</option>
+            <option>+$500</option>
+          </Form.Control>
+          </div>
+    
+          <div class="col">
+          <Form.Control as="select" defaultValue="Select">
+            <option>Store</option>
+            <option>A</option>
+            <option>B</option>
+          </Form.Control>
+          </div>
+          </div>
 
       <div className="container p-5">
         <select
@@ -96,9 +116,6 @@ const Body = (props) => {
           <input type="button" onClick={() => find()} value="Filter" />
         </div>
       </div>
-
-
-
       <Container>
         <Row>
           {
