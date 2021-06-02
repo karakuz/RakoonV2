@@ -25,7 +25,6 @@ const Wallet = () => {
       });
       setWalletAddress(res.data.address);
       setWalletBalance(res.data.balance);
-      console.log(res.data);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -33,8 +32,8 @@ const Wallet = () => {
   const submit = async (e) => {
     e.preventDefault();
     const token = inputToken;
-    if (token > 10)
-      alert("Max token you can get once is 10");
+    if (token > 50)
+      alert("Max token you can get once is 50");
 
     document.getElementById('cont').style.display = 'none';
     document.getElementById('loading').style.display = 'block';

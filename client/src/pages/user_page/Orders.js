@@ -19,6 +19,7 @@ const Orders = () => {
         url: `${url}/profile/orders`,
       });
       setOrders(res.data);
+      console.log(res.data);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -27,7 +28,7 @@ const Orders = () => {
     <div style={{ margin: '2rem', justifyContent: 'center' }}>
       <ProfileNav />
       {
-        (orders.length === 0) ?
+        (Object.keys(orders).length === 0) ?
           <Card>
             <Card.Body>
               <Card.Title>You have no orders yet. </Card.Title>

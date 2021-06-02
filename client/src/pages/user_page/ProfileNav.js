@@ -8,7 +8,6 @@ const ProfileNav = () => {
   const user =  jwt.verify(sessionID, 'shhhhh');
 
   const history = useHistory();
-  console.log(user);
   return (
     (user.role_id === 1) ?
     <>

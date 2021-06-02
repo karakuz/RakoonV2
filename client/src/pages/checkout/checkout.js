@@ -87,7 +87,6 @@ const Checkout = (props) => {
       alert("You dont have sufficient balance")
     else
       alert("An error happenned");
-    document.getElementById('cont').style.display = 'block';
 
     console.log(res.data); // Success // InsufficientBalance // Error
   }

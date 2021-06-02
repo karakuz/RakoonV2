@@ -7,12 +7,11 @@ import Stars from './Stars';
 const jwt = require("jsonwebtoken");
 
 const ProductCard = (props) => {
-  const addOrDelete = (!props.isRemovable) ? 'Add To Cart' : 'Delete';
+  const [addOrDelete, setAddOrDelete] = React.useState((!props.isRemovable) ? 'Add To Cart' : 'Delete');
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
   const user = (sessionID !== null) ? jwt.verify(sessionID, 'shhhhh') : null;
   var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   
-  //console.log(props);
   const product = {
     id: props.item_id,
     name: props.item_name,
@@ -26,6 +25,11 @@ const ProductCard = (props) => {
 
   const change = async (e) => {
     e.preventDefault();
+
+    /* console.log("CLICKED!!!!!!");
+    console.log(props.isRemovable);
+    console.log(sessionID); */
+
     if (!props.isRemovable) {
       if (sessionID !== null) {
         // eslint-disable-next-line no-unused-vars
@@ -38,6 +42,10 @@ const ProductCard = (props) => {
           withCredentials: true,
           url: `${url}/cart/product/${product.id}`
         });
+        console.log(res.data);
+        if(res.data === "done"){
+          props.setNumOfItems(props.numOfItems + 1);
+        } else alert("Item exists on your cart");
       }
       else {
         const prod = {
@@ -47,9 +55,13 @@ const ProductCard = (props) => {
           image: product.img,
           price: product.price
         }
-        localStorage.setItem(product.id, JSON.stringify(prod));
+
+        if(localStorage.getItem(product.id) === null){
+          localStorage.setItem(product.id, JSON.stringify(prod));
+          props.setNumOfItems(props.numOfItems + 1);
+          console.log(props.numOfItems);
+        } else alert("Item exists on your cart");
       }
-      props.setNumOfItems(props.numOfItems + 1);
     }
     else if (props.isRemovable) {
       if (sessionID !== null) {

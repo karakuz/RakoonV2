@@ -63,9 +63,7 @@ router.post("/payment/transfer", async (req, res) => {
 
   var price = products.reduce((a, v) => a = a + v.price, 0);
   const user = await User.findOne({ where: { user_id: sessionuser.user_id } });
-  console.log(price);
   let user_balance = await balanceOf(user.wallet_address);
-  console.log(user_balance);
   user_balance = user_balance / 1000000000000000000;
   if (user_balance < price) {
     res.send("InsufficientBalance");
@@ -80,7 +78,9 @@ router.post("/payment/transfer", async (req, res) => {
       const dd = (today.getDate() < 10) ? '0' + String(today.getDate()) : String(today.getDate());
       const date = `${String(today.getFullYear())}-${mm}-${dd}`;
 
-      await db.get(`INSERT INTO orders(date,address,customer_id,seller_id,item_id,status, quantity) VALUES('${date}', 'test address', ${user.user_id}, ${store.store_id}, ${product.item_id},'pending', 1)`);
+      await db.get(`
+        INSERT INTO orders(date,address,customer_id,seller_id,item_id,price, status, quantity) 
+        VALUES('${date}', 'test address', ${user.user_id}, ${store.store_id}, ${product.item_id}, ${product.price}, 'pending', 1)`);
       await transfer(price, user.wallet_address, user.wallet_private_key, store_owner.wallet_address)
         .then(() => {
             ;

@@ -21,36 +21,61 @@ function numeral(number) {
 
 const Cart = (props) => {
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([""]);
   const ref = useRef(true);
   var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
-  const getProducts = async () => {
-    const res = await Axios({
-      method: "POST",
-      data: {
-        sessionID: sessionID
-      },
-      withCredentials: true,
-      url: `${url}/cart/products`,
-    });
-    setProducts(res.data);
-    console.log(res.data);
-    ref.current = false;
+  var arr = [];
+
+  const getProducts = async (isLoggedIn) => {
+    console.log(isLoggedIn);
+    if(isLoggedIn){
+      const res = await Axios({
+        method: "POST",
+        data: {
+          sessionID: sessionID
+        },
+        withCredentials: true,
+        url: `${url}/cart/products`,
+      });
+      console.log(res.data);
+      setProducts(res.data);
+      ref.current = false;
+    } else {
+      let item_ids = [];
+      for(let item of arr)
+        item_ids.push(item.item_id);
+
+      const res = await Axios({
+        method: "POST",
+        data: {
+          item_ids: item_ids
+        },
+        withCredentials: true,
+        url: `${url}/cart/products2`,
+      });
+      console.log(res.data);
+      setProducts(res.data);
+    }
+    
   };
 
   useEffect(() => {
-    if (sessionID !== null) getProducts();
+    console.log(sessionID);
+    if (sessionID !== null) getProducts(true);
     else {
-      var arr = []
       Object.keys(localStorage).forEach(productID => {
         arr.push(JSON.parse(localStorage.getItem(productID)));
       });
-      setProducts(arr);
+
+      if(arr.length !== 0)
+        getProducts(false);
+      else
+        setProducts("none");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (products.length !== 0 && typeof products !== typeof '') {
+  if (products.length !== 0 && products[0] !== '' && products !== "none") {
     return (
       <div >
         <Link className='btn btn-light my-3' to='/'>
@@ -80,7 +105,7 @@ const Cart = (props) => {
                   <div>
                     <h6 class="my-0">Total:</h6>
                   </div>
-                  <span>${numeral(products.reduce((a, v) => a = a + v.price, 0))}</span>
+                  {/* <span>${numeral(products.reduce((a, v) => a = a + v.price, 0))}</span> */}
                 </li>
                 <div style={{ marginTop: '1rem' }}> <Button href="/checkout">Checkout</Button></div>
               </ul>
@@ -89,6 +114,7 @@ const Cart = (props) => {
               <div className='row' >
                 {
                   products.map((product) => {
+                    console.log(product);
                     return (
                       <Col sm={12} md={6} lg={5} xl={4}>
                         <ProductCard key={product.id} {...product} isRemovable={true} numOfItems={props.numOfItems} setNumOfItems={props.setNumOfItems} />
@@ -103,7 +129,7 @@ const Cart = (props) => {
       </div>
     )
   }
-  else if (products[0] === undefined) {
+  else if (products[0] === "") {
     return (
       <div className="container">
         <img src={Loading} alt='Loading...' />

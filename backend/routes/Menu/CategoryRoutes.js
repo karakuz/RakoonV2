@@ -5,6 +5,7 @@ const Product = require("../../models/item");
 
 // Get all category names from db
 router.get("/categories", async (req, res) => {
+    console.log("test");
     var categories = await Product.findAll({
         attributes: ["category"],
         group: "category"

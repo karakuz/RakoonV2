@@ -17,7 +17,6 @@ const Body = (props) => {
       url: `${url}/products`,
     });
     setProducts(res.data);
-    console.log(res.data);
   };
 
   useEffect(() => {
@@ -123,7 +122,7 @@ const Body = (props) => {
               return (
                 <Col sm={12} md={6} lg={4} xl={3} key={product.item_id}>
                   <ProductCard key={product.item_id} id={product.item_id} {...product}
-                    numOfItems={props.numOfItems} setNumOfItems={props.setNumOfItems} />
+                    numOfItems={props.numOfItems} setNumOfItems={props.setNumOfItems} isRemovable={false}/>
                 </Col>
               );
             })
