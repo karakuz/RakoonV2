@@ -26,7 +26,7 @@ self.addEventListener("fetch", (event) => {
             })
     )
 });
-
+/*
 self.addEventListener("push", e => {
     const data = e.data.json();
     self.registration.showNotification(data.title, {
@@ -34,7 +34,7 @@ self.addEventListener("push", e => {
         icon: " ./logo192.png"
     })
 })
-
+*/
 
 self.addEventListener("activate", (event) => {
     const cacheWhiteList = [];

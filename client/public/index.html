@@ -14,8 +14,20 @@
 
 <body>
   <div id="root"></div>
-  <script src ="sw.js"></script>
+  <!-- <script src="swfinder.js"></script> -->
 
+  </script>
+  <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+  <script>
+    window.OneSignal = window.OneSignal || [];
+    OneSignal.push(function () {
+      OneSignal.init({
+        appId: "d02c9816-ba91-486b-9409-e4c26855cc7e",
+        notifyButton: {
+          enable: true,
+        },
+      });
+    });
   </script>
 </body>
 
