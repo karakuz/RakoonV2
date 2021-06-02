@@ -3,7 +3,7 @@ import '../../pages/css/ordercard.css'
 const jwt = require("jsonwebtoken");
 
 
-const OrderCard = (props, u) => {
+const OrderCard = (props) => {
   const [status, setStatus] = React.useState(props.status);
   const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
   const user =  jwt.verify(sessionID, 'shhhhh');
@@ -19,11 +19,12 @@ const OrderCard = (props, u) => {
   const changeStatus = (e) => {
     e.target.parentElement.parentElement.parentElement.parentElement.parentElement.children[2].firstChild.removeAttribute("class");
     setStatus(e.target.value);
-    const itemName = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.firstChild.innerText.toLowerCase();
+    const itemName = e.target.parentElement.parentElement.parentElement.lastChild.childNodes[1].innerText.split("Product Name: ")[1].toLowerCase();
 
     const copyOrders = props.orders;
     for(let i=0; i<copyOrders.length; i++){
       const order = copyOrders[i];
+      
       if(order.item_name.toLowerCase() === itemName){
         copyOrders[i].status = e.target.value.toLowerCase();
         break

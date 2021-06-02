@@ -85,8 +85,8 @@ router.post("/profile/orders", async (req, res) => {
   const orders = await db.get(`
       SELECT orders.*,
         items.item_name,
-        items.image,
-          items.price FROM (SELECT * FROM orders) AS orders
+        items.image
+      FROM (SELECT * FROM orders) AS orders
       JOIN items ON items.item_id = orders.item_id
       WHERE customer_id = ${user_id}
       ORDER BY date DESC

@@ -228,8 +228,8 @@ router.post("/store/orders", async (req, res) => {
   const orders = await db.get(`
       SELECT  orders.*,
         items.item_name,
-        items.image,
-        items.price FROM orders
+        items.image 
+      FROM orders
       JOIN items
       ON items.item_id = orders.item_id
       WHERE seller_id=(
@@ -253,6 +253,8 @@ router.post("/store/orders", async (req, res) => {
 
 router.put("/store/updateorder", async (req, res) => {
   const orders = req.body.orders;
+  console.log("orders: ");
+  console.log(orders);
   for (let order of orders)
     await db.get(`UPDATE orders SET status='${order.status}' WHERE item_id=${order.item_id} AND order_id=${order.order_id}`);
   res.send("done");

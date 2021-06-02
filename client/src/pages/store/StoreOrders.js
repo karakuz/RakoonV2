@@ -38,7 +38,7 @@ const StoreOrders = () => {
           :
           (orders.length !== 0) ?
             Object.keys(orders).map((key) => {
-              return <Order orders={orders[key]} isStore={true} />
+              return <Order orders={orders[key]} setOrders={setOrders} isStore={true} />
             }) : "No Orders"
       }
     </div>

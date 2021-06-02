@@ -105,7 +105,7 @@ const Cart = (props) => {
                   <div>
                     <h6 class="my-0">Total:</h6>
                   </div>
-                  {/* <span>${numeral(products.reduce((a, v) => a = a + v.price, 0))}</span> */}
+                  <span>${numeral(products.reduce((a, v) => a = a + v.price, 0))}</span>
                 </li>
                 <div style={{ marginTop: '1rem' }}> <Button href="/checkout">Checkout</Button></div>
               </ul>
