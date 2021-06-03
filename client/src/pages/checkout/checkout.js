@@ -101,6 +101,7 @@ const Checkout = (props) => {
       url: `${url}/cart/products`,
     });
     setProducts(res.data);
+    console.log(res.data);
     ref.current = false;
   };
 
@@ -226,12 +227,6 @@ const Checkout = (props) => {
                 * must be filled out
               </Form.Text>
             </Form>
-
-            <hr class="mb-4"></hr>
-            <Form.Group controlId="formBasicCheckbox">
-              <Form.Check type="checkbox" label="Save this information for next time" />
-            </Form.Group>
-            <hr class="mb-4"></hr>
           </div>
         </Container>
       </div>
