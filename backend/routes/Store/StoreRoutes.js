@@ -25,7 +25,7 @@ const VerifyMail = function (user, token) {
     subject: 'Activation E-Mail',
     text: 'Hello,\n\n' +
       'To activate to your account please click the link below \n' +
-      'http://localhost:3000/activate/' + token
+      'https://rakoonecommerce.netlify.app/activate/' + token
   };
   smtpTransport.sendMail(mailOptions, function (err) {
     console.log('Success! e-mail has been sent');
