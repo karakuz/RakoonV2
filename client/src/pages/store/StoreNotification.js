@@ -25,10 +25,7 @@ const StoreNotification = () => {
             },
             withCredentials: true,
             url: `${url}/store/sendNotification`
-        })
-
-
-
+        });
         history.push('/store/notification');
         window.location.reload();
 

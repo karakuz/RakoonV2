@@ -7,7 +7,8 @@ const User = require("../../models/user");
 const webpush = require("web-push");
 const Notification = require("../../models/notification_name");
 const OneSignal = require('onesignal-node');
-
+const Store = require("../../models/store");
+const Items = require("../../models/item");
 
 
 const VerifyMail = function (user, token) {
@@ -498,6 +499,20 @@ router.post("/store/setNotification", async (req, res) => {
     }
   });
   res.send("");
+});
+
+router.post("/store/storenames", async (req, res) => {
+  const categoryName = req.body.category;
+  var stores = {};
+  if (categoryName === "all") {
+    stores = await db.get("select store_name from store where store_id in (SELECT store_id FROM rakoon.items group by store_id);");
+  }
+  else {
+    stores = await db.get(`select store_name from store where store_id in (SELECT store_id FROM rakoon.items where category = '${categoryName}' group by store_id)`);
+  }
+
+  res.send(stores)
+
 })
 
 module.exports = router;
