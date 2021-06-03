@@ -20,7 +20,7 @@ const VerifyMail = function (user, token) {
     }
   });
   var mailOptions = {
-    to: user.e_mail,
+    to: user.email,
     from: 'rakoonecommerceservices@gmail.com',
     subject: 'Activation E-Mail',
     text: 'Hello,\n\n' +
