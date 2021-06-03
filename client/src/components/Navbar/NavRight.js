@@ -68,7 +68,7 @@ const NavRight = () => {
   else {
     return (
       <Nav style={{ position: "relative" }}>
-        <span style={{ position: "relative", right: "-110px", top: "0.00001px", fontSize: "50%", width: "max-content"}}>{role + " " + user.name}</span>
+        <span style={{ position: "relative", right: "-110px", top: "0.00001px", fontSize: "50%", width: "max-content", height: "fit-content"}}>{role + " " + user.name}</span>
         <Nav.Link href="/profile">Profile</Nav.Link>
         <Nav.Link onClick={() => logout()}>Logout</Nav.Link>
       </Nav>
