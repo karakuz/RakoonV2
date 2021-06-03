@@ -35,17 +35,16 @@ const OrderCard = (props) => {
 
   return (
     <div className="ordercard" style={{position: "relative"}}>
-      {/* <p style={{position: "absolute", margin: "0", right: "15px", bottom: "15px", fontSize: "18px"}}>Order Date: {product.date.split('-')[2] + '/' + product.date.split('-')[1] + '/' + product.date.split('-')[0]}</p> */}
       <a href={"/product/" + product.id}>
         <img src={product.image} alt="product" style={{width: '200px'}}/>
       </a>
-      <div style={{width: "100%", overflow: "auto", position: "relative"}}>
+      <div>
         <div>
           <a href={"/product/"  + product.id}>
             <h5 style={{textAlign: "center"}}>Invoice</h5>
           </a>
         </div>
-        <div style={{width: "fit-content", float: "right", position:"relative"}} className="orderInfo">
+        <div style={{ width: "fit-content", position:"relative" }} className="orderInfo">
           <p>Name: {user.name}  {user.surname}</p>
           <p>Product Name: {product.name}</p>
           <p>Invoice Number: {product.id+"758375960"}</p>

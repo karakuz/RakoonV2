@@ -3,6 +3,7 @@ import Axios from "axios";
 import StoreNav from './StoreNav';
 import Order from '../user_page/Order';
 import Loading from '../cart/loading.gif';
+import '../css/storeOrder.css'
 const jwt = require("jsonwebtoken");
 
 const StoreOrders = () => {

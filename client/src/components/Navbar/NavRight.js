@@ -58,8 +58,8 @@ const NavRight = () => {
   else if (user != null && (user.role_id === 3 || user.role_id === 2)) {
     return (
       <Nav style={{ position: "relative", textAlign: "center" }}>
-        <span style={{ position: "absolute", right: "140px", top: "0.00001px", fontSize: "50%", width: "max-content", height: "fit-content"}}>{role}</span>
-        <Nav.Link href="/store" style={{ width: "max-content"}}>{storeName}</Nav.Link>
+        <span style={{ position: "absolute", right: "140px", top: "0.00001px", fontSize: "50%", width: "max-content", height: "fit-content"}} id="navRole">{role}</span>
+        <Nav.Link href="/store" style={{ width: "max-content"}} id="storeName">{storeName}</Nav.Link>
         <Nav.Link href="/profile">Profile</Nav.Link>
         <Nav.Link onClick={() => logout()}>Logout</Nav.Link>
       </Nav>

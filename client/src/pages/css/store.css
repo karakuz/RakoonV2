@@ -1,12 +1,3 @@
-#nav > span{
-  font-size: 1.2rem;
-  border-right: 1px solid black;
-  font-weight: bold;
-  color: rgba(0,0,0,.5);
-  margin-left: 1rem;
-  padding-right: 1rem;
-  cursor: pointer;
-}
 
 #add > div{
   display: flex;
@@ -39,3 +30,33 @@ th, td {
 tr > th{
   font-size: revert;
 }
+
+.storeInfoInnerDiv, .storeInfoTable{
+  width: 400px;
+}
+
+@media (max-width: 470px) {
+  .storeInfoTable{
+    width: 100%;
+    padding: 0 5px;
+  }
+  .storeInfoInnerDiv{
+    width: 100%
+  }
+}
+
+@media (max-width: 410px) {
+  .storeInfoTable > tr{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+  }
+  .storeInfoTable > tr > th,
+  .storeInfoTable > tr > td{
+    margin: 0 auto;
+  }
+  .storeInfoTable > tr > td{
+    border: none
+  }
+} 
+

@@ -18,6 +18,7 @@ const SearchBar = ({ history }) => {
           onChange={(e) => setKeyword(e.target.value)}
           placeholder='Search Products...'
           className='mr-sm-2 ml-sm-5 searchInput'
+          style={{width: "300px"}}
         ></Form.Control>
         <Button style={{ margin: '1rem' }} type='submit' varient='outline-success' className='p-2 searchButton'>Search</Button>
       </Form>

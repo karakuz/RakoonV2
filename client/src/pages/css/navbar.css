@@ -1,0 +1,9 @@
+@media (max-width: 992px) {
+  #cart, #storeName{
+    margin: 0 auto;
+  } 
+  #navRole{
+    display: none
+  } 
+}
+

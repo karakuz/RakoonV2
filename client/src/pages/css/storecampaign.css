@@ -1,0 +1,41 @@
+.storeCampaignDiv{
+  border-radius: 15px;
+  box-shadow: 0 0 15px grey;
+  width: 80%;
+  margin: 40px auto;
+  padding: 20px;
+}
+.campaignProductOuterDiv{
+  margin-top: 2rem
+}
+.campaignProductInnerDiv{
+  display: flex; 
+  flex-wrap: wrap;
+}
+.mapDiv{
+  margin: 1rem;
+  overflow: auto;
+  flex: 1 1 30.0%;
+  font-size: 16px;
+}
+.mapDiv > p {
+  margin-bottom: 0.5rem;
+}
+.mapDiv > a > img {
+  float: left;
+  margin-right: 1rem;
+  height: 130px;
+}
+
+@media only screen and (max-width: 650px) {
+  .campaignProductInnerDiv{
+    flex-direction: column;
+  }
+  .storeCampaignDiv{
+    width: 100vw;
+    box-shadow: none;
+  }
+  .mapDiv > a > img {
+    height: 150px;
+  }
+}

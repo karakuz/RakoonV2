@@ -1,0 +1,26 @@
+#nav{
+  display: flex;
+}
+
+#nav > span{
+  font-size: 1.2rem;
+  border-right: 1px solid black;
+  font-weight: bold;
+  color: rgba(0,0,0,.5);
+  margin-left: 1rem;
+  padding-right: 1rem;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 830px) {
+  #nav{
+    flex-direction: column;
+    border-bottom: 2px solid black;
+    margin-bottom: 0.5rem;
+  }
+  #nav > span{
+    width: max-content;
+    border: none;
+    margin: 0.3rem auto;
+  }
+}

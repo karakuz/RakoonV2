@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Axios from 'axios';
 import StoreNav from './StoreNav'
 import StoreCampaignProduct from './StoreCampaignProduct';
+import '../css/storecampaign.css'
 const jwt = require("jsonwebtoken");
 
 const StoreCampaings = () => {
@@ -179,7 +180,7 @@ const StoreCampaings = () => {
       <StoreNav user={user} />
 
       <h3 style={{ textAlign: "center", marginTop: "2rem" }}>Campaigns</h3>
-      <div style={{ borderRadius: '15px', boxShadow: '0 0 15px grey', width: "80%", margin: "40px auto", padding: "20px" }}>
+      <div className="storeCampaignDiv">
         {
           (campaigns.length === 0) ?
             <p style={{ textAlign: "center", fontSize: "1.3rem" }}>Store does not have any campaign</p>

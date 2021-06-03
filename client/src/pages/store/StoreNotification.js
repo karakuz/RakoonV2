@@ -41,11 +41,11 @@ const StoreNotification = () => {
             <StoreNav user={user} />
             <Card>
                 <Card.Body>
-                    <Form style={{ margin: "2rem auto" }}>
-                        <Form.Label>Enter your notification here</Form.Label>
+                    <Form style={{ margin: "0 auto", width: "300px", display: "block"}}>
+                        <Form.Label style={{ textAlign: "center"}}>Enter your notification here</Form.Label>
                         <Form.Control onChange={(e) => setMessage(e.target.value)}>
                         </Form.Control>
-                        <Button type="submit" onClick={(e) => setNotification(message, e)}>Submit</Button>
+                        <Button type="submit" onClick={(e) => setNotification(message, e)} style={{ margin: "0 auto", display: "block"}}>Submit</Button>
                     </Form>
                 </Card.Body>
             </Card>
