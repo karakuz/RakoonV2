@@ -40,7 +40,7 @@ router.post("/forgot", function (req, res, next) {
                 subject: "Rakoon E-Commerce Password change",
                 text: "You are receiving this e-mail because you have requested to reset your password " +
                     " Please click on the following link to change your password" + '\n\n' +
-                    "https://rakoonapp.herokuapp.com/reset/" + token
+                    "https://rakoonecommerce.netlify.app/reset/" + token
             };
 
             smtpTransport.sendMail(mailOptions, function (err) {
