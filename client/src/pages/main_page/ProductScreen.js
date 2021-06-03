@@ -29,6 +29,19 @@ const ProductScreen = (props) => {
     setProduct(res.data);
   };
 
+  const addToCart = async (e) => {
+    const res = await Axios({
+      method: "POST",
+      withCredentials: true,
+      data: {
+        sessionID: sessionID
+      },
+      url: `${url}/cart/product/${id}`
+    });
+    props.setNumOfItems(props.numOfItems + 1);
+    console.log(res);
+  }
+
   const getRecommendedProducts = async () => {
     const res = await Axios({
       method: "GET",
@@ -121,14 +134,13 @@ const ProductScreen = (props) => {
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
-                {<Button className='btn-block'
+                <Button className='btn-block'
                   type='button'
-                  disabled={product.countInStock == 0} >
-                  {/*
-                <span onClick={(e) => change(e)}>Add To Cart</span>
-              */}
-              Add To Cart
-              </Button>}
+                  disabled={product.countInStock == 0}
+                  onClick={(e) => addToCart(e)}>
+
+                  Add To Cart
+              </Button>
               </ListGroup.Item>
             </ListGroup>
           </Card>
