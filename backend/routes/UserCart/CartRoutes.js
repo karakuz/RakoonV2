@@ -8,18 +8,19 @@ const db = require('../../config/database.js');
 
 router.post("/cart/product/:id", async (req, res) => {
   const productID = req.params.id;
-  const user_id = (typeof req.body.user === typeof []) ? req.body.user.user_id : (jwt.verify(req.body.user, 'shhhhh')).user_id;
+  const user = await jwt.verify(req.body.sessionID, 'shhhhh');
+  const user_id = user.user_id;
   let isExists = false;
 
   const cart_items = await db.get(`SELECT item_id FROM users_cart WHERE user_id = ${user_id}`);
-  for(let row of cart_items){
-    if(row.item_id === parseInt(productID)){
+  for (let row of cart_items) {
+    if (row.item_id === parseInt(productID)) {
       isExists = true;
     }
   }
   console.log("cart_items:");
   console.log(cart_items);
-  if(!isExists){
+  if (!isExists) {
     await db.get(`INSERT INTO users_cart(item_id,user_id) VALUES(
       ( SELECT item_id FROM items WHERE item_id=${productID}),
       ( SELECT user_id FROM users WHERE user_id=${user_id})
@@ -28,7 +29,7 @@ router.post("/cart/product/:id", async (req, res) => {
   } else {
     res.send("exists");
   }
-  
+
   /* const CartProduct = await UserCart.create({
     item_id: productId,
     user_id: user_id
@@ -58,7 +59,7 @@ router.post("/cart/products2", async (req, res) => {
   const item_ids = req.body.item_ids;
   let products = [];
 
-  for(let item_id of item_ids){
+  for (let item_id of item_ids) {
     const product = await db.get(`
     SELECT 
     items.*,
@@ -77,8 +78,8 @@ router.post("/cart/products2", async (req, res) => {
   }
 
   let map = new Map();
-  for(let product of products){
-    map.set(product[0].item_id, {...product[0]});
+  for (let product of products) {
+    map.set(product[0].item_id, { ...product[0] });
   }
   const rated_products = await db.get(`
   SELECT item_id, store.store_name, item_name, price, image, AVG(rate) as rate FROM 
@@ -91,9 +92,9 @@ router.post("/cart/products2", async (req, res) => {
     JOIN store ON store.store_id = J.store_id WHERE is_verified = 1
   `);
 
-  for(let product of rated_products){
-    if(map.get(product.item_id) !== undefined)
-      map.set(product.item_id, {...product, old_price: map.get(product.item_id).old_price});
+  for (let product of rated_products) {
+    if (map.get(product.item_id) !== undefined)
+      map.set(product.item_id, { ...product, old_price: map.get(product.item_id).old_price });
   }
 
   res.send(Array.from(map.values()));
@@ -122,8 +123,8 @@ router.post("/cart/products", async (req, res) => {
   console.log(products);
 
   let map = new Map();
-  for(let product of products)
-    map.set(product.item_id, {...product});
+  for (let product of products)
+    map.set(product.item_id, { ...product });
 
   const rated_products = await db.get(`
   SELECT item_id, store.store_name, item_name, price, image, AVG(rate) as rate FROM 
@@ -135,11 +136,11 @@ router.post("/cart/products", async (req, res) => {
     ) AS J
     JOIN store ON store.store_id = J.store_id WHERE is_verified = 1
   `);
-  
-  for(let product of rated_products)
-    if(map.get(product.item_id) !== undefined)
-      map.set(product.item_id, {...product, old_price: map.get(product.item_id).old_price});
-  
+
+  for (let product of rated_products)
+    if (map.get(product.item_id) !== undefined)
+      map.set(product.item_id, { ...product, old_price: map.get(product.item_id).old_price });
+
   res.send(Array.from(map.values()));
 
 
@@ -165,12 +166,12 @@ router.post('/getCartItems', async (req, res) => {
 });
 
 const getProducts = async function (itemIDs) {
-    let products = [];
-    for (const itemID of itemIDs) {
-        const product = await Product.findAll({ where: { item_id: itemID.item_id } });
-        products.push(product[0]);
-    }
-    return products;
+  let products = [];
+  for (const itemID of itemIDs) {
+    const product = await Product.findAll({ where: { item_id: itemID.item_id } });
+    products.push(product[0]);
+  }
+  return products;
 }
 
 module.exports = router;
