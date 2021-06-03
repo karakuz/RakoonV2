@@ -14,9 +14,14 @@ const Activate = () => {
     e.preventDefault();
     // eslint-disable-next-line no-unused-vars
     const res = await Axios.post(url).catch(err => console.log(`Error in activate.js: ${err}`));
-    if (res.data === "NoUser")
-      alert("Invalid Token")
-    history.push("/login");
+    if (res.data === "NoUser") {
+      alert("Invalid Token");
+      history.push("/");
+    }
+    else {
+      history.push("/login");
+    }
+
   };
 
 
