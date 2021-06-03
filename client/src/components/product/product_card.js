@@ -98,10 +98,10 @@ const ProductCard = (props) => {
       <Card.Body>
         {
           (product.old_price !== null) ?
-            <Card.Text as='h5' style={{ textAlign: "center", textDecoration: "line-through" }}>${product.old_price}</Card.Text>
+            <Card.Text as='h5' style={{ textAlign: "center", textDecoration: "line-through" }}>RKN {product.old_price}</Card.Text>
           : null
         }
-        <Card.Text as='h5' style={{ textAlign: "center" }}>${product.price}</Card.Text>
+        <Card.Text as='h5' style={{ textAlign: "center" }}>RKN {product.price}</Card.Text>
         {
           (user === null || user.role_id === 1) ?
             <Button variant="success">

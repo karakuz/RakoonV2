@@ -101,7 +101,7 @@ const ProductScreen = (props) => {
         <Col md={3} >
           <ListGroup variant='flush' >
             <ListGroup.Item><h3>{product.item_name}</h3> </ListGroup.Item>
-            <ListGroup.Item>Price: ${product.price} </ListGroup.Item>
+            <ListGroup.Item>Price: RKN{product.price} </ListGroup.Item>
             <ListGroup.Item>Description: {product.description} </ListGroup.Item>
           </ListGroup>
         </Col>
@@ -111,7 +111,7 @@ const ProductScreen = (props) => {
               <ListGroup.Item>
                 <Row>
                   <Col>Price: </Col>
-                  <Col><srong> $ {product.price} </srong></Col>
+                  <Col><srong> RKN {product.price} </srong></Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
