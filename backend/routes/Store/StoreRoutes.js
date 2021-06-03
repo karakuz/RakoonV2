@@ -6,6 +6,10 @@ const nodemailer = require("nodemailer");
 const User = require("../../models/user");
 const webpush = require("web-push");
 const Notification = require("../../models/notification_name");
+const OneSignal = require('onesignal-node');
+
+
+
 const VerifyMail = function (user, token) {
   var smtpTransport = nodemailer.createTransport({
     service: 'Gmail',
@@ -162,12 +166,12 @@ router.post("/getComments/:id", async (req, res) => {
     GROUP BY customer_id
   `);
 
-  let orderIDs=[];
-  for(let obj of orderID)
-    if(!orderIDs.includes(obj.customer_id))
+  let orderIDs = [];
+  for (let obj of orderID)
+    if (!orderIDs.includes(obj.customer_id))
       orderIDs.push(obj.customer_id);
 
-  res.send({comments: comments, userIDs: orderIDs});
+  res.send({ comments: comments, userIDs: orderIDs });
 });
 
 router.post("/getStoreComments", async (req, res) => {
@@ -264,7 +268,7 @@ router.post("/getCampaigns", async (req, res) => {
   const user_id = req.body.user_id;
   const role_id = req.body.role_id;
 
-  
+
   const campaigns = (role_id === 3) ?
     //store owner
     await db.get(`
@@ -288,7 +292,7 @@ router.post("/getCampaigns", async (req, res) => {
         JOIN items ON items.item_id = campaigns.item_id
       JOIN users ON users.user_id = campaigns.user_id
     `);
-  if(campaigns.length !== 0){
+  if (campaigns.length !== 0) {
     let map = new Map();
     for (let item of campaigns) {
       if (map.get(item.campaign_id) === undefined) map.set(item.campaign_id, [item])
@@ -302,7 +306,7 @@ router.post("/getCampaigns", async (req, res) => {
   } else {
     res.send([]);
   }
-  
+
 
 });
 
@@ -310,7 +314,7 @@ function decimal(num) {
   const str = String(num);
   console.log("str: " + str);
 
-  if (str.includes('.')) 
+  if (str.includes('.'))
     return parseFloat(str.split('.')[0] + '.' + str.split('.')[1].substring(0, 2));
   return parseFloat(str);
 }
@@ -453,7 +457,7 @@ router.post("/store/removeCampaign", async (req, res) => {
   const campaign_id = req.body.campaign_id;
 
   const item_ids = await db.get(`SELECT item_id,old_price FROM campaign_items WHERE campaign_id=${campaign_id}`);
-  for(let item of item_ids){
+  for (let item of item_ids) {
     const item_id = item.item_id;
     const old_price = item.old_price;
 
@@ -471,16 +475,19 @@ router.post("/store/removeCampaign", async (req, res) => {
 });
 
 router.post("/store/sendNotification", async (req, res) => {
-  const publicvapidkey = "BDBeRvuYwbqaz2_m4-3Mai3FFyyCZwQ8u2X12AKPg_KBGzf6_Lh40g4r-0vGdYlI4qYozJJ10VcWJB8p4lel9Ro";
-  const privatevapidkey = "ISIut9dFbHDC7B6RiCU9NB5jujq_AuY6nkNTTixQgtQ";
-  webpush.setVapidDetails('mailto:rakoonecommerceservices@gmail.com', publicvapidkey, privatevapidkey);
-  const body = await Notification.findOne({ where: { idnotification_name: 1 } });
-  const subscribtion = req.body;
-  console.log(body.notification_body);
+  const message = req.body.message;
+  const client = new OneSignal.Client('d02c9816-ba91-486b-9409-e4c26855cc7e', 'YjkyY2Q0MDQtMjA2Yi00NGFmLWEyZDktNjNhZWEzOGRiZmE3');
+  const notification = {
+    contents: {
+      'en': message,
+    },
+    included_segments: ['Subscribed Users']
+  };
+  client.createNotification(notification).then(res => {
 
-  const payload = JSON.stringify({ title: "Rakoon E-Commerce", body: body.notification_body });
-
-  webpush.sendNotification(subscribtion, payload).catch((err) => console.log(err));
+  }).catch(e => {
+    console.log(e);
+  });
 });
 
 router.post("/store/setNotification", async (req, res) => {

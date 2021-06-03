@@ -13,48 +13,19 @@ const StoreNotification = () => {
     let history = useHistory();
     var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
 
-    var sendNotification = function (data) {
-        var headers = {
-            "Content-Type": "application/json; charset=utf-8",
-            "Authorization": "Basic Njc2NDY4MTMtOWVkZi00Mjg0LWE0YWUtZTI0ZDUyNDRiYjNk"
-        };
-
-        var options = {
-            host: "onesignal.com",
-            port: 443,
-            path: "/api/v1/notifications",
-            method: "POST",
-            headers: headers
-        };
-
-
-        var req = https.request(options, function (res) {
-            res.on('data', function (data) {
-                console.log("Response:");
-                console.log(JSON.parse(data));
-            });
-        });
-
-        req.on('error', function (e) {
-            console.log("ERROR:");
-            console.log(e);
-        });
-
-        req.write(JSON.stringify(data));
-        req.end();
-    };
-
-    var message2 = {
-        app_id: "d02c9816-ba91-486b-9409-e4c26855cc7e",
-        contents: { "en": message },
-        included_segments: ["Subscribed Users"]
-    };
 
 
 
-    const setNotification = async (messageeee, e) => {
+    const setNotification = async (message, e) => {
         e.preventDefault();
-        sendNotification(message2);
+        const res = await Axios({
+            method: "POST",
+            data: {
+                message: message,
+            },
+            withCredentials: true,
+            url: `${url}/store/sendNotification`
+        })
 
 
 
