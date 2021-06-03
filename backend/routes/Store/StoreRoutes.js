@@ -484,8 +484,8 @@ router.post("/store/sendNotification", async (req, res) => {
     },
     included_segments: ['Subscribed Users']
   };
-  client.createNotification(notification).then(res => {
-
+  client.createNotification(notification).then(response => {
+    res.send(response);
   }).catch(e => {
     console.log(e);
   });
