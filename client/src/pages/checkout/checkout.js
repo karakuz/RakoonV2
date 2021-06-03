@@ -161,7 +161,7 @@ const Checkout = (props) => {
                         <div>
                           <h6 class="my-0">{product.item_name}</h6>
                         </div>
-                        <span class="text-muted">${product.price}</span>
+                        <span class="text-muted">RKN{product.price}</span>
                       </li>
                     );
                   })
@@ -170,7 +170,7 @@ const Checkout = (props) => {
                   <div>
                     <h6 class="my-0">Total: </h6>
                   </div>
-                  <span>${products.reduce((a, v) => a = a + v.price, 0)}</span>
+                  <span>RKN {products.reduce((a, v) => a = a + v.price, 0)}</span>
                 </li>
                 <div style={{ marginTop: '1rem' }}>
                   <Button onClick={() => proceedPayment()} className="proceedButton">Complete Payment</Button>
