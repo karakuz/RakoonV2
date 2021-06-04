@@ -2,6 +2,7 @@ import React from 'react'
 import { Card, Form, Button } from 'react-bootstrap';
 import Axios from "axios";
 import ProfileNav from './ProfileNav';
+import '../css/profile.css';
 
 const Privacy = () => {
   const [registerOldPassword, setRegisterOldPassword] = React.useState("");
@@ -61,11 +62,11 @@ const Privacy = () => {
   }
 
   return (
-    <div style={{ margin: '2rem', justifyContent: 'center' }}>
+    <div className="privacyDiv">
       <ProfileNav />
       <Card>
-        <Card.Body>
-          <Form style={{ margin: "2rem auto" }} onSubmit={e => submit(e)}>
+        <Card.Body className="privacyCard">
+          <Form className="privacyForm" onSubmit={e => submit(e)}>
             <Form.Label>Two Factor Auth</Form.Label>
             <Form.Control as="select" defaultValue="Select" onChange={e => setTwofaenable(e.target.value)}>
               <option>Select</option>
@@ -73,14 +74,14 @@ const Privacy = () => {
               <option>Off</option>
             </Form.Control>
 
-            <Form.Group controlId="formBasicPassword">
+            <Form.Group controlId="formBasicPassword" className="passwordForm">
               <Form.Label>Old Password</Form.Label>
               <Form.Control type="password" onChange={e => setRegisterOldPassword(e.target.value)} />
               <Form.Label>New Password</Form.Label>
               <Form.Control type="password" onChange={e => setRegisterNewPassword(e.target.value)} />
             </Form.Group>
 
-            <Button variant="primary" type="submit" onClick={e => submit(e)}>
+            <Button variant="primary" type="submit" onClick={e => submit(e)} style={{margin: "0 auto", display: "block"}}>
               Update
             </Button>
           </Form>

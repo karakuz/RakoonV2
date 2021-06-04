@@ -1,0 +1,43 @@
+.privacyDiv,
+.privacyCard,
+.profileDiv,
+.walletDiv{
+  margin: 2rem;
+  justify-content: center
+}
+.privacyForm,
+.accountForm{
+  margin: 0 auto;
+  width: 350px;
+}
+.passwordForm{
+  display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (max-width: 830px) {
+  .profileEmail{
+    display: flex;
+    flex-direction: column;
+  }
+  .privacyDiv,
+  .profileDiv,
+  .walletDiv{
+    margin: 0;
+  }
+  .privacyCard{
+    padding: 1rem 0;
+  }
+  .privacyForm{
+    width: 80%;
+  }
+  .customerProfileNav{
+    display: flex;
+    flex-direction: column;
+  }
+  .customerProfileNav > span{
+    width: fit-content;
+    margin: 0 auto;
+    padding: 5px 0;
+  } 
+}

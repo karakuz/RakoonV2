@@ -47,18 +47,18 @@ const Store = () => {
   console.log(salesManagers); */
 
   return (
-    <div style={{ margin: "2em" }}>
+    <div>
       <StoreNav user={user} />
-      <div style={{ display: "flex", justifyContent: "center", marginTop: "2rem" }}>
+      <div className="storeInfoDiv" style={{ display: "flex", justifyContent: "center", marginTop: "3rem" }}>
         {
           (salesManagers[0] === "" || store === "") ?
             <div id="loading" style={{ display: "block" }}>
               <img src={Loading} alt='Loading...' style={{ display: 'block', margin: "0 auto" }} />
             </div>
             :
-            <div style={{ width: "400px" }}>
+            <div className="storeInfoInnerDiv">
               <h3 style={{ textAlign: "center" }}>Store Info</h3>
-              <table style={{ width: "400px", fontSize: "20px" }}>
+              <table style={{ fontSize: "20px" }} className="storeInfoTable">
                 <tr>
                   <th>Store Name:</th>
                   <td>{store.store_name}</td>

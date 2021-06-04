@@ -7,11 +7,11 @@ const jwt = require("jsonwebtoken");
 const NavRight = () => {
   const [storeName, setStoreName] = useState("STORE");
   let history = useHistory();
-  const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
+  const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID')
+
   const [role, setUserRole] = useState("ROLE");
   let user = null;
   if (sessionID != null) user = jwt.verify(sessionID, 'shhhhh');
-  //console.log(user);
   var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   const logout = () => {
     localStorage.removeItem('sessionID');
@@ -58,10 +58,10 @@ const NavRight = () => {
   else if (user != null && (user.role_id === 3 || user.role_id === 2)) {
     return (
       <Nav style={{ position: "relative", textAlign: "center" }}>
-        <span style={{ position: "absolute", right: "140px", top: "0.00001px", fontSize: "50%", width: "max-content", height: "fit-content"}}>{role}</span>
-        <Nav.Link href="/store" style={{ width: "max-content"}}>{storeName}</Nav.Link>
-        <Nav.Link href="/profile">Profile</Nav.Link>
-        <Nav.Link onClick={() => logout()}>Logout</Nav.Link>
+        <span style={{ position: "absolute", right: "140px", top: "0.00001px", fontSize: "50%", width: "max-content", height: "fit-content"}} id="navRole">{role}</span>
+        <Nav.Link href="/store" style={{ width: "max-content"}} id="storeName">{storeName}</Nav.Link>
+        <Nav.Link href="/profile" id="profile">Profile</Nav.Link>
+        <Nav.Link onClick={() => logout()} id="logout">Logout</Nav.Link>
       </Nav>
     )
   }

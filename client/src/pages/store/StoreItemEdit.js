@@ -23,6 +23,8 @@ const StoreItemEdit = () => {
   var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   const history = useHistory();
   const queries = ["#name", "#description", "#price", "#category", "#count", "#brand"]
+  const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
+  const user = jwt.verify(sessionID, 'shhhhh');
 
   useEffect(() => {
     (async () => {
@@ -109,8 +111,6 @@ const StoreItemEdit = () => {
       const imageResponse = JSON.parse(xhr.responseText);
       imgURL = imageResponse.url;
     }
-    const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
-    const user = await jwt.verify(sessionID, 'shhhhh');
 
     const item = {
       user_id: user.user_id,
@@ -141,7 +141,7 @@ const StoreItemEdit = () => {
 
   return (
     <div style={{ margin: "2em", display: "flex", flexDirection: "column" }}>
-      <StoreNav />
+      <StoreNav user={user}/>
       <h3 style={{ textAlign: "center" }}>Edit Product</h3>
       <div style={{ margin: "2em auto", display: "inline-flex", flexDirection: "column", fontSize: "1.3rem", width: "430px", position: "relative" }} id="add">
         <div style={{ display: "none", position: 'absolute', overflow: 'auto', width: '550px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px' }} id='emptyError'>

@@ -3,7 +3,7 @@ import Axios from 'axios'
 import ProductCard from '../../components/product/product_card';
 import '../css/bootstrap.min.css';
 import { Col, Row, Container, Form } from 'react-bootstrap';
-
+import '../css/body.css'
 
 const Body = (props) => {
   const [products, setProducts] = useState([]);
@@ -67,54 +67,63 @@ const Body = (props) => {
         Welcome to Rakoon E-Commerce!
       </h3>
       {/* <Filter products={products}/> */}
-   
-      <div class="row">
-        <div class="col">
-          <Form.Control as="select" defaultValue="Select">
-            <option>Price</option>
-            <option>0-$50</option>
-            <option>$50-$200</option>
-            <option>$200-$500</option>
-            <option>+$500</option>
-          </Form.Control>
+      <div className="filter">
+        <div class="row">
+          <div style={{marginBottom: "1rem"}}>
+            <Form.Control as="select" defaultValue="Select">
+              <option>Price</option>
+              <option>0-$50</option>
+              <option>$50-$200</option>
+              <option>$200-$500</option>
+              <option>+$500</option>
+            </Form.Control>
           </div>
-    
-          <div class="col">
-          <Form.Control as="select" defaultValue="Select">
-            <option>Store</option>
-            <option>A</option>
-            <option>B</option>
-          </Form.Control>
+      
+          <div style={{marginBottom: "1rem"}}>
+            <Form.Control as="select" defaultValue="Select">
+              <option>Store</option>
+              <option>A</option>
+              <option>B</option>
+            </Form.Control>
           </div>
+        </div>
+
+        <div style={{marginBottom: "1rem"}}>
+          <select
+            className="custom-select"
+            value={orderState}
+            onChange={(e) => {
+              const selectedOrder = e.target.value;
+              setOrderState(selectedOrder);
+              order();
+            }}
+          >
+            <option value="NameAsc">Order by Name Z-A</option>
+            <option value="NameDesc">Order by Name A-Z</option>
+            <option value="PriceAsc">Order by Price(Descending)</option>
+            <option value="PriceDesc">Order by Price(Ascending)</option>
+          </select>
+        </div>
+
+        <div className="container p-1">
+          <div className="form-group">
+            <label style={{display: "block", textAlign: "center"}}>Price</label>
+            <div className="bodyPriceFilter">
+              <input id="min" type="number" onChange={(e) => setMin(parseInt(e.target.value))} className="minPrice"/>
+              <input id="max" type="number" onChange={(e) => setMax(parseInt(e.target.value))} className="maxPrice"/>
+            </div>
+            <input type="button" onClick={() => find()} value="Filter" 
+              style={{
+                display: "block",
+                margin: "1rem auto 0",
+                padding: "7px",
+                fontSize: "18px",
+                color:"white",
+                backgroundColor: "black"}}/>
           </div>
-
-      <div className="container p-5">
-        <select
-          className="custom-select"
-          value={orderState}
-          onChange={(e) => {
-            const selectedOrder = e.target.value;
-            setOrderState(selectedOrder);
-            order();
-          }}
-        >
-          <option value="NameAsc">Order by Name Z-A</option>
-          <option value="NameDesc">Order by Name A-Z</option>
-          <option value="PriceAsc">Order by Price(Descending)</option>
-          <option value="PriceDesc">Order by Price(Ascending)</option>
-        </select>
-      </div>
-
-      <div className="container p-1">
-        <div className="form-group">
-          <label>Price</label>
-          <br></br>
-          <input id="min" type="number" onChange={(e) => setMin(parseInt(e.target.value))} />
-          <input id="max" type="number" onChange={(e) => setMax(parseInt(e.target.value))} />
-
-          <input type="button" onClick={() => find()} value="Filter" />
         </div>
       </div>
+      
       <Container>
         <Row>
           {

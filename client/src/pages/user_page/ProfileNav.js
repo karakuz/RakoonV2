@@ -11,7 +11,7 @@ const ProfileNav = () => {
   return (
     (user.role_id === 1) ?
     <>
-      <nav>
+      <nav className="customerProfileNav">
         <span onClick={() => history.push('/profile')}>Account</span>
         <span onClick={() => history.push('/profile/privacy')}>Privacy</span>
         <span onClick={() => history.push('/profile/orders')}>Orders</span>

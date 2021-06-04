@@ -21,20 +21,20 @@ const StoreCampaignProduct = (props) => {
   }
  
   return (
-    <div style={{marginTop: "2rem"}}>
+    <div className="campaignProductOuterDiv">
       <h4 style={{textAlign: "center", display: "block"}}>Campaign ID: {props.id}</h4>
-      <div style={{display: "flex", flexWrap: "wrap"}}>
+      <div className="campaignProductInnerDiv">
         {
           props.campaigns.map( product => {
             return( 
-              <div style={{margin: "1rem", overflow: "auto", flex: "1 1 30.0%", fontSize: "16px"}}>
-                <a href={`/product/${product.item_id}`} style={{float: "left", marginRight: "1rem"}}>
-                  <img src={product.image} alt={product.name} style={{height: "120px"}}/>
+              <div className="mapDiv">
+                <a href={`/product/${product.item_id}`}>
+                  <img src={product.image} alt={product.name}/>
                 </a>
-                <p style={{marginBottom: "0.5rem"}}><i>{product.item_name}</i></p>
-                <p style={{marginBottom: "0.5rem"}}>Old price: {product.old_price}</p>
-                <p style={{marginBottom: "0.5rem"}}>Discount: {'%' + String(product.discount * 100)}</p>
-                <p style={{marginBottom: "0.5rem"}}>New price: {product.new_price}</p>
+                <p><i>{product.item_name}</i></p>
+                <p>Old price: {product.old_price}</p>
+                <p>Discount: {'%' + String(product.discount * 100)}</p>
+                <p>New price: {product.new_price}</p>
               </div>
             )
           })

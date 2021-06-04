@@ -1,0 +1,12 @@
+@media (max-width: 992px) {
+  #cart, 
+  #storeName,
+  #profile,
+  #logout{
+    margin: 0 auto;
+  } 
+  #navRole{
+    display: none
+  } 
+}
+

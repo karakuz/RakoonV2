@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Axios from 'axios';
 import StoreNav from './StoreNav'
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid, ResponsiveContainer } from 'recharts';
+import '../css/storeSales.css'
 const jwt = require("jsonwebtoken");
 
 const StoreSales = () => {
@@ -34,31 +35,36 @@ const StoreSales = () => {
     <>
       <StoreNav user={user} />
       
-      <div style={{margin: "0 auto", width: "50%"}}>
+      <div className="outerDiv">
         <h3 style={{margin: "2rem 0", textAlign: "center"}}>Sales by number</h3>
-        <BarChart width={600} height={300} data={sales.sales} style={{display: "block", margin: "0 auto"}}>
-          <XAxis dataKey="name" stroke="#8884d8" />
-          <YAxis />
-          <Tooltip wrapperStyle={{ width: 100, backgroundColor: "#ccc"}}/>
-          <Legend 
-            width={100} 
-            wrapperStyle={{ top: 40, right: 20, backgroundColor: '#f5f5f5', border: '1px solid #d5d5d5', borderRadius: 3, lineHeight: '40px' }} />
-          <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-          <Bar dataKey="products" fill="#8884d8" barSize={30} />
-        </BarChart>
+        <ResponsiveContainer width="85%" height={300}>
+          <BarChart data={sales.sales} style={{display: "block", margin: "0 auto"}}>
+            <XAxis dataKey="name" stroke="#8884d8" />
+            <YAxis />
+            <Tooltip wrapperStyle={{ width: 100, backgroundColor: "#ccc"}}/>
+            <Legend 
+              width={100} 
+              wrapperStyle={{ top: 40, right: 20, backgroundColor: '#f5f5f5', border: '1px solid #d5d5d5', borderRadius: 3, lineHeight: '40px' }} />
+            <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+            <Bar dataKey="products" fill="#8884d8" barSize={30} />
+          </BarChart>
+        </ResponsiveContainer>
+        
       </div>
-      <div style={{margin: "0 auto", width: "50%"}}>
+      <div className="outerDiv">
         <h3 style={{margin: "2rem 0", textAlign: "center"}}>Sales by category</h3>
-        <BarChart width={600} height={300} data={sales.category} style={{display: "block", margin: "0 auto"}}>
-          <XAxis dataKey="name" stroke="#8884d8" />
-          <YAxis />
-          <Tooltip wrapperStyle={{ width: 100, backgroundColor: "#ccc"}}/>
-          <Legend 
-            width={100} 
-            wrapperStyle={{ top: 40, right: 20, backgroundColor: '#f5f5f5', border: '1px solid #d5d5d5', borderRadius: 3, lineHeight: '40px' }} />
-          <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-          <Bar dataKey="products" fill="#8884d8" barSize={30} />
-        </BarChart>
+        <ResponsiveContainer width="85%" height={300}>
+          <BarChart data={sales.category} style={{display: "block", margin: "0 auto"}}>
+            <XAxis dataKey="name" stroke="#8884d8" />
+            <YAxis />
+            <Tooltip wrapperStyle={{ width: 100, backgroundColor: "#ccc"}}/>
+            <Legend 
+              width={100} 
+              wrapperStyle={{ top: 40, right: 20, backgroundColor: '#f5f5f5', border: '1px solid #d5d5d5', borderRadius: 3, lineHeight: '40px' }} />
+            <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+            <Bar dataKey="products" fill="#8884d8" barSize={30} />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
     </>
   )

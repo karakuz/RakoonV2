@@ -1,7 +1,14 @@
+.searchInput{
+  margin-right: 0.8rem;
+}
+
 @media (max-width: 992px) {
   .searchForm{
     flex-direction: column;
     justify-content: center;
     margin: 0 auto
+  }
+  .searchInput{
+    width: initial;
   }
 }

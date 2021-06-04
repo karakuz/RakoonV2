@@ -4,6 +4,7 @@ import NavLeft from './NavLeft';
 import NavRight from './NavRight';
 import SearchBar from './SearchBar';
 import { Route } from 'react-router-dom';
+import '../../pages/css/navbar.css'
 
 const NavigationBar = (props) => {
     return (
@@ -16,7 +17,7 @@ const NavigationBar = (props) => {
                 <NavLeft numOfItems={props.numOfItems} setNumOfItems={props.setNumOfItems}/>
                 <Route render = {({history}) => <SearchBar history = {history} /> }  />
                 <NavRight/>
-            </Navbar.Collapse>   
+            </Navbar.Collapse>
         </Navbar>
     );
 

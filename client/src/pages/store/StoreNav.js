@@ -1,5 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom';
+import '../css/storeNav.css'
 
 const StoreNav = (props) => {
   const history = useHistory();

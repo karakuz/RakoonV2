@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Axios from 'axios';
 import StoreNav from './StoreNav'
 import StoreCampaignProduct from './StoreCampaignProduct';
+import '../css/storecampaign.css'
 const jwt = require("jsonwebtoken");
 
 const StoreCampaings = () => {
@@ -179,7 +180,7 @@ const StoreCampaings = () => {
       <StoreNav user={user} />
 
       <h3 style={{ textAlign: "center", marginTop: "2rem" }}>Campaigns</h3>
-      <div style={{ borderRadius: '15px', boxShadow: '0 0 15px grey', width: "80%", margin: "40px auto", padding: "20px" }}>
+      <div className="storeCampaignDiv">
         {
           (campaigns.length === 0) ?
             <p style={{ textAlign: "center", fontSize: "1.3rem" }}>Store does not have any campaign</p>
@@ -196,11 +197,11 @@ const StoreCampaings = () => {
       {(user.role_id === 2) ?
         <>
           <h3 style={{ textAlign: "center" }}>Deploy Campaign</h3>
-          <div style={{ borderRadius: '15px', boxShadow: '0 0 15px grey', width: "80%", margin: "40px auto", padding: "20px" }}>
+          <div className="deployCampaignOuterDiv">
 
             <h5>By Category</h5>
-            <div style={{ display: "flex", justifyContent: "space-between", margin: "1.5rem 0 0 1rem" }}>
-              <div style={{ width: "350px" }}>
+            <div className="byCategoryDiv">
+              <div className="category">
                 <label style={{ margin: "auto 0.8rem 0 0", fontSize: "16px", width: "75px" }}>Category</label>
                 <select style={{ width: "120px", padding: '7px' }} onChange={e => setCategory(e.target.value)}>
                   {<option value="" selected></option>}
@@ -211,12 +212,12 @@ const StoreCampaings = () => {
                   }
                 </select>
               </div>
-              <div style={{ position: "relative" }}>
+              <div className="discount">
                 <label style={{ margin: "auto 0.8rem 0 0", fontSize: "16px" }}>Discount</label>
-                <span style={{ position: "absolute", fontSize: "1rem", top: "8px", right: "52px" }}>%</span>
+                <span className="percent">%</span>
                 <input type="number" value={byCategoryDiscount} style={{ width: "70px", marginLeft: "0", padding: "7px 7px 7px 16px" }} onChange={e => setByCategoryDiscount(parseInt(e.target.value))} />
               </div>
-              <div>
+              <div className="dateby">
                 <label style={{ margin: "auto 0.8rem 0 0", fontSize: "16px" }}>Date By</label>
                 <input type="date" id="date" onChange={e => setByCategoryDateBy(e.target.value)} style={{padding: "7px"}}/>
               </div>
@@ -224,9 +225,9 @@ const StoreCampaings = () => {
               <input type="submit" value="Deploy" id="category" onClick={(e) => categorySubmit(e)} style={{padding: "7px", color: "white", backgroundColor: "blue", borderRadius: "5px"}}/>
             </div>
 
-            <h5 style={{ marginTop: "2rem" }}>By Product</h5>
-            <div style={{ display: "flex", justifyContent: "space-between", margin: "1.5rem 0 0 1rem" }}>
-              <div style={{ width: "350px" }}>
+            <h5>By Product</h5>
+            <div className="byProductDiv">
+              <div className="product">
                 <label style={{ margin: "auto 0.8rem 0 0", fontSize: "16px", width: "75px" }}>Product</label>
                 <select style={{ width: "200px", padding: "7px" }} onChange={e => setProduct(e.target.value)}>
                   {<option value="" selected></option>}
@@ -237,12 +238,12 @@ const StoreCampaings = () => {
                   }
                 </select>
               </div>
-              <div style={{ position: "relative" }}>
+              <div className="discount">
                 <label style={{ margin: "auto 0.8rem 0 0", fontSize: "16px" }}>Discount</label>
-                <span style={{ position: "absolute", fontSize: "1rem", top: "8px", right: "52px" }}>%</span>
+                <span className="percent">%</span>
                 <input type="number" value={byProductDiscount} style={{ width: "70px", marginLeft: "0", padding: "7px 7px 7px 16px" }} onChange={e => setByProductDiscount(parseInt(e.target.value))} />
               </div>
-              <div>
+              <div className="dateby">
                 <label style={{ margin: "auto 0.8rem 0 0", fontSize: "16px" }}>Date By</label>
                 <input type="date" id="date" onChange={e => setByProductDateBy(e.target.value)} style={{ padding: "7px" }}/>
               </div>
@@ -250,20 +251,20 @@ const StoreCampaings = () => {
               <input type="submit" value="Deploy" id="product" onClick={(e) => productSubmit(e)} style={{padding: "7px", color: "white", backgroundColor: "blue", borderRadius: "5px"}}/>
             </div>
 
-            <h5 style={{ marginTop: "2rem" }}>By Price</h5>
-            <div style={{ display: "flex", justifyContent: "space-between", margin: "1.5rem 0 0 1rem" }}>
+            <h5>By Price</h5>
+            <div className="byPriceDiv">
               <div style={{ width: "350px" }}>
                 <label style={{ margin: "auto 0.8rem 0 0", fontSize: "16px" }}>Price Between</label>
-                <input type="number" style={{ width: "80px", marginRight: "0.8rem", padding: "7px" }} onChange={e => setPriceBetween1(parseFloat(e.target.value))} />
-                <span style={{ margin: "auto 0.8rem 0 0", fontSize: "16px" }}>and</span>
-                <input type="number" style={{ width: "80px", padding: "7px" }} onChange={e => setPriceBetween2(parseFloat(e.target.value))} />
+                <input type="number" id="lower" onChange={e => setPriceBetween1(parseFloat(e.target.value))} />
+                <span style={{ margin: "auto 0.8rem 0 0", fontSize: "16px" }}>-</span>
+                <input type="number" id="higher" onChange={e => setPriceBetween2(parseFloat(e.target.value))} />
               </div>
-              <div style={{ position: "relative" }}>
+              <div className="discount">
                 <label style={{ margin: "auto 0.8rem 0 0", fontSize: "16px" }}>Discount</label>
-                <span style={{ position: "absolute", fontSize: "1rem", top: "8px", right: "52px" }}>%</span>
+                <span className="percent">%</span>
                 <input type="number" value={byPriceDiscount} style={{ width: "70px", marginLeft: "0", padding: "7px 7px 7px 16px" }} onChange={e => setByPriceDiscount(parseInt(e.target.value))} />
               </div>
-              <div>
+              <div className="dateby">
                 <label style={{ margin: "auto 0.8rem 0 0", fontSize: "16px", padding: "7px" }}>Date By</label>
                 <input type="date" id="date" onChange={e => setByPriceDateBy(e.target.value)} style={{ padding: "7px" }}/>
               </div>

@@ -55,7 +55,7 @@ const Wallet = () => {
   };
 
   return (
-    <div style={{ margin: '2rem', justifyContent: 'center' }}>
+    <div className="walletDiv">
       <ProfileNav />
       {
         (walletAddress === "") ?

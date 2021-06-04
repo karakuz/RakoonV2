@@ -1,0 +1,147 @@
+.storeCampaignDiv{
+  border-radius: 15px;
+  box-shadow: 0 0 15px grey;
+  width: 80%;
+  margin: 40px auto;
+  padding: 20px;
+}
+.campaignProductOuterDiv{
+  margin-top: 2rem
+}
+.campaignProductInnerDiv{
+  display: flex; 
+  flex-wrap: wrap;
+}
+.mapDiv{
+  margin: 1rem;
+  overflow: auto;
+  flex: 1 1 30.0%;
+  font-size: 16px;
+}
+.mapDiv > p {
+  margin-bottom: 0.5rem;
+}
+.mapDiv > a > img {
+  float: left;
+  margin-right: 1rem;
+  height: 130px;
+}
+
+.deployCampaignOuterDiv{
+  border-radius: 15px;
+  box-shadow: 0 0 15px grey;
+  width: 80%;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.byCategoryDiv{
+  display: flex;
+  justify-content: space-between;
+  margin: 1.5rem 0 0 1rem;
+}
+
+.byProductDiv{
+  display: flex;
+  justify-content: space-between;
+  margin: 1.5rem 0 0 1rem;
+}
+.byPriceDiv{
+  display: flex;
+  justify-content: space-between;
+  margin: 1.5rem 0 0 1rem;
+}
+
+.category,
+.product{
+  width: 350px
+}
+
+.discount{
+  position: relative
+}
+
+h5{
+  margin-bottom: 2rem;
+}
+
+.percent{
+  position: absolute;
+  font-size: 1rem;
+  top: 8px;
+  right: 52px;
+}
+
+#lower,
+#higher{
+  width: 80px;
+  padding: 7px;
+}
+
+#lower{
+  margin-right: 0.8rem
+}
+
+@media only screen and (max-width: 1200px) {
+  h5{
+    text-align: center;
+  }
+  .byCategoryDiv,
+  .byProductDiv,
+  .byPriceDiv{
+    width: fit-content;
+    margin: 0 auto 3rem;
+    flex-direction: column;
+  }
+  .byCategoryDiv > div,
+  .byProductDiv > div,
+  .byPriceDiv > div {
+    margin-bottom: 1rem;
+  }
+  .byCategoryDiv > input,
+  .byProductDiv > input,
+  .byPriceDiv > input {
+    width: fit-content
+  }
+  .percent{
+    top: 7px;
+    right: 0;
+    left: 87px;
+  }
+  #category,
+  #product,
+  #price{
+    margin: 0 auto
+  }
+
+  .deployCampaignOuterDiv{
+    width: 90%;
+    box-shadow: none;
+    padding: 0
+  }
+}
+
+
+@media only screen and (max-width: 650px) {
+  .campaignProductInnerDiv{
+    flex-direction: column;
+  }
+  .storeCampaignDiv{
+    width: 100vw;
+    box-shadow: none;
+  }
+  .mapDiv > a > img {
+    height: 150px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .mapDiv > a > img{
+    margin: 0 auto;
+    display: block;
+    float: none;
+  }
+  .mapDiv > p {
+    text-align: center;
+  }
+}

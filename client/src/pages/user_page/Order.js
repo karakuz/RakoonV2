@@ -36,7 +36,7 @@ const Order = (props) => {
 
   return (
     <div>
-      <div style={{ width: "60%", margin: "2rem auto", boxShadow: "0px 0px 25px -10px black", borderRadius: "35px", padding: "1rem 0 3rem", position: "relative" }}>
+      <div className="orderCard">
         <h3 style={{ textAlign: "center" }}>Date: {props.orders[0].date.split('-')[2] + '/' + props.orders[0].date.split('-')[1] + '/' + props.orders[0].date.split('-')[0]}</h3>
         {
           props.orders.map(product => {
@@ -49,7 +49,7 @@ const Order = (props) => {
           (props.isStore) ?
             <div style={{ display: "flex", justifyContent: "center" }}>
               <button onClick={(e) => update(e)}
-                style={{ padding: "8px 13px", fontSize: "18px", color: "white", background: "blue", borderRadius: "10px", marginTop: "-15px" }}
+                style={{ padding: "8px 13px", fontSize: "18px", color: "white", background: "blue", borderRadius: "10px"}}
               >
                 Update
               </button>

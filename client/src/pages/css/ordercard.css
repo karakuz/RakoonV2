@@ -3,6 +3,7 @@
   margin: 1rem auto;
   padding: 1rem;
   flex-direction: row;
+  justify-content: space-between;
 }
 
 .ordercard > div {
