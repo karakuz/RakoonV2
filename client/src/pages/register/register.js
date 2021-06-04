@@ -85,6 +85,7 @@ const Register = () => {
           }).then(res => console.log(res)).then(() => localStorage.clear());
         });
       }
+      localStorage.clear();
       document.querySelector('#success').style.display = 'flex';
       setTimeout(() => {
         document.querySelector('#success').style.display = 'none';
@@ -96,7 +97,7 @@ const Register = () => {
   return (
     <div style={{ marginTop: '2rem' }}>
       <div className="form_container" style={{ fontSize: '2em', position: 'relative' }}>
-        <div style={{ display: 'none', position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px' }} id='exists'>
+        <div style={{ display: 'none', position: 'absolute', overflow: 'auto', width: '350px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px' }} id='exists'>
           <img src={redX} alt="error" style={{ width: '70px', float: 'left' }} />
           <div style={{ flexGrow: '1', marginTop: '3px' }}>
             <span style={{ fontSize: '20px' }}>User already exists</span>
@@ -106,7 +107,7 @@ const Register = () => {
           </div>
         </div>
 
-        <div style={{ display: 'none', padding: '10px', position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px' }} id='success'>
+        <div style={{ display: 'none', padding: '10px', position: 'absolute', overflow: 'auto', width: '350px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px' }} id='success'>
           <img src={greenTick} alt="success" style={{ width: '70px', float: 'left' }} />
           <div style={{ flexGrow: '1', marginTop: '3px', marginLeft: '10px', lineHeight: '0.9' }}>
             <span style={{ fontSize: '20px' }}>An email has been sent to {registerUsername} for activation</span>
@@ -116,7 +117,7 @@ const Register = () => {
           </div>
         </div>
 
-        <div style={{ display: 'none', position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px' }} id='doesNotMatch'>
+        <div style={{ display: 'none', position: 'absolute', overflow: 'auto', width: '350px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px' }} id='doesNotMatch'>
           <img src={redX} alt="error" style={{ width: '70px', float: 'left' }} />
           <div style={{ flexGrow: '1', marginTop: '3px' }}>
             <span style={{ fontSize: '20px' }}>Passwords does not match</span>
@@ -126,20 +127,20 @@ const Register = () => {
           </div>
         </div>
 
-        <div style={{ display: 'none', position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px' }} id='min6Char'>
+        <div style={{ display: 'none', position: 'absolute', overflow: 'auto', width: '350px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px' }} id='min6Char'>
           <img src={redX} alt="error" style={{ width: '70px', float: 'left' }} />
           <div style={{ flexGrow: '1', marginTop: '3px' }}>
-            <span style={{ fontSize: '17px' }}>Password should be minimum 6 characters</span>
+            <span style={{ fontSize: '12px' }}>Password should be minimum 6 characters</span>
             <div className="progress-bar-error">
               <span className="progress-bar-inner"></span>
             </div>
           </div>
         </div>
 
-        <div style={{ display: 'none', position: 'absolute', overflow: 'auto', width: '450px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px' }} id='nameError'>
+        <div style={{ display: 'none', position: 'absolute', overflow: 'auto', width: '350px', boxShadow: '0 0 15px grey', background: 'white', top: '-90px', borderRadius: '10px' }} id='nameError'>
           <img src={redX} alt="error" style={{ width: '70px', float: 'left' }} />
           <div style={{ flexGrow: '1', marginTop: '3px' }}>
-            <span style={{ fontSize: '17px' }}>Your name or surname can not be empty</span>
+            <span style={{ fontSize: '13px' }}>Your name or surname can not be empty</span>
             <div className="progress-bar-error">
               <span className="progress-bar-inner"></span>
             </div>

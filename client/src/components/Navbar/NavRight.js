@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const NavRight = () => {
   const [storeName, setStoreName] = useState("STORE");
   let history = useHistory();
-  const [sessionID, setSessionID] = useState(null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID'));
+  const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID')
 
   const [role, setUserRole] = useState("ROLE");
   let user = null;
