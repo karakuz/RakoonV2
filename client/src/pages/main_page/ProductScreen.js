@@ -29,6 +29,19 @@ const ProductScreen = (props) => {
     setProduct(res.data);
   };
 
+  const addToCart = async (e) => {
+    const res = await Axios({
+      method: "POST",
+      withCredentials: true,
+      data: {
+        sessionID: sessionID
+      },
+      url: `${url}/cart/product/${id}`
+    });
+    props.setNumOfItems(props.numOfItems + 1);
+    console.log(res);
+  }
+
   const getRecommendedProducts = async () => {
     const res = await Axios({
       method: "GET",
@@ -101,7 +114,7 @@ const ProductScreen = (props) => {
         <Col md={3} >
           <ListGroup variant='flush' >
             <ListGroup.Item><h3>{product.item_name}</h3> </ListGroup.Item>
-            <ListGroup.Item>Price: ${product.price} </ListGroup.Item>
+            <ListGroup.Item>Price: RKN{product.price} </ListGroup.Item>
             <ListGroup.Item>Description: {product.description} </ListGroup.Item>
           </ListGroup>
         </Col>
@@ -111,7 +124,7 @@ const ProductScreen = (props) => {
               <ListGroup.Item>
                 <Row>
                   <Col>Price: </Col>
-                  <Col><srong> $ {product.price} </srong></Col>
+                  <Col><srong> RKN {product.price} </srong></Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
@@ -121,14 +134,13 @@ const ProductScreen = (props) => {
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
-                {<Button className='btn-block'
+                <Button className='btn-block'
                   type='button'
-                  disabled={product.countInStock == 0} >
-                  {/*
-                <span onClick={(e) => change(e)}>Add To Cart</span>
-              */}
-              Add To Cart
-              </Button>}
+                  disabled={product.countInStock == 0}
+                  onClick={(e) => addToCart(e)}>
+
+                  Add To Cart
+              </Button>
               </ListGroup.Item>
             </ListGroup>
           </Card>

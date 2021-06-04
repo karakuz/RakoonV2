@@ -23,7 +23,7 @@ const Privacy = () => {
         twofaenable: twofaenable == "Off" ? 0 : 1,
         sessionID: sessionID
       }).catch(err => console.log(`Error 2fa.js: ${err}`));
-      alert("2FA is enabled")
+      alert("2FA settings has been updated.")
       window.location.reload();
 
 
