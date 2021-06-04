@@ -155,24 +155,28 @@ const Body = (props) => {
               <input id="min" type="number" onChange={(e) => setMin(parseInt(e.target.value))} className="minPrice" />
               <input id="max" type="number" onChange={(e) => setMax(parseInt(e.target.value))} className="maxPrice" />
             </div>
+            <div>
             <input type="button" onClick={() => find()} value="Filter"
               style={{
-                display: "block",
+                display: "inline-block",
                 margin: "1rem auto 0",
-                padding: "7px",
+                padding: "11px",
                 fontSize: "18px",
                 color: "white",
                 backgroundColor: "black"
               }} />
               <input type="button" onClick={() => getProducts()} value="Reset"
               style={{
-                display: "flex",
+                display: "inline-block",
                 margin: "1rem auto 0",
-                padding: "7px",
+                padding: "11px",
                 fontSize: "18px",
                 color: "white",
                 backgroundColor: "black"
               }} />
+
+            </div>
+            
           </div>
         </div>
       </div>
