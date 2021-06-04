@@ -14,11 +14,6 @@ router.get("/categories", async (req, res) => {
 });
 
 router.get("/category/:name", async (req, res) => {
-  /* let products = await Product.findAll({ where: { category: req.params.name } });
-  if (products.length === 0) res.send("none");
-  else {
-      res.send(products);
-  } */
 
   let all_category_products = await db.get(`
   SELECT 
@@ -54,6 +49,8 @@ router.get("/category/:name", async (req, res) => {
   
   for(let product of rated_products)
     map.set(product.item_id, {...product, old_price: map.get(product.item_id).old_price});
+  
+
   
   res.send(Array.from(map.values()));
   

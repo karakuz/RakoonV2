@@ -7,11 +7,11 @@ const jwt = require("jsonwebtoken");
 const NavRight = () => {
   const [storeName, setStoreName] = useState("STORE");
   let history = useHistory();
-  const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
+  const [sessionID, setSessionID] = useState(null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID'));
+
   const [role, setUserRole] = useState("ROLE");
   let user = null;
   if (sessionID != null) user = jwt.verify(sessionID, 'shhhhh');
-  //console.log(user);
   var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   const logout = () => {
     localStorage.removeItem('sessionID');

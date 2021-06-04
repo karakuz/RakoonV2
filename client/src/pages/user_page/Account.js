@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Card, Form, Button } from 'react-bootstrap';
 import Axios from "axios";
 import '../css/profile.css';
+const jwt = require("jsonwebtoken");
 
 const Account = (props) => {
   const [registerName, setRegisterName] = React.useState("");
@@ -51,6 +52,12 @@ const Account = (props) => {
       user: userInfo,
       sessionID: props.sessionID
     }).catch(err => console.log(`Error in update.js: ${err}`));
+    const sessionID = null || localStorage.getItem('sessionID') || sessionStorage.getItem('sessionID');
+    const old_user = jwt.verify(sessionID, 'shhhhh');
+    old_user.name = registerName;
+    const token = jwt.sign(old_user, 'shhhhh');
+    localStorage.setItem('sessionID',token);
+    
     alert("Your information has been updated.")
     window.location.reload();
   }

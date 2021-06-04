@@ -69,7 +69,7 @@ const Body = (props) => {
       {/* <Filter products={products}/> */}
       <div className="filter">
         <div class="row">
-          <div>
+          <div style={{marginBottom: "1rem"}}>
             <Form.Control as="select" defaultValue="Select">
               <option>Price</option>
               <option>0-$50</option>
@@ -79,7 +79,7 @@ const Body = (props) => {
             </Form.Control>
           </div>
       
-          <div>
+          <div style={{marginBottom: "1rem"}}>
             <Form.Control as="select" defaultValue="Select">
               <option>Store</option>
               <option>A</option>
@@ -88,7 +88,7 @@ const Body = (props) => {
           </div>
         </div>
 
-        <div>
+        <div style={{marginBottom: "1rem"}}>
           <select
             className="custom-select"
             value={orderState}
