@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Card, Form, Button } from 'react-bootstrap';
 import Axios from "axios";
+import '../css/profile.css';
 
 const Account = (props) => {
   const [registerName, setRegisterName] = React.useState("");
@@ -57,9 +58,9 @@ const Account = (props) => {
   return (
     <div>
       <Card>
-        <Card.Body>
-          <Form style={{ margin: "2rem auto" }}>
-            <Form.Row>
+        <Card.Body className="privacyCard">
+          <Form className="accountForm">
+            <Form.Row style={{ flexDirection: "column"}}>
               <Form.Group controlId="formName">
                 <Form.Label>First Name</Form.Label>
                 <Form.Control id="name" type="name" onChange={e => setRegisterName(e.target.value)} />
@@ -70,11 +71,11 @@ const Account = (props) => {
               </Form.Group>
             </Form.Row>
 
-            <Form.Group controlId="formEmail">
+            <Form.Group controlId="formEmail" className="profileEmail">
               <Form.Label> E-Mail Address: </Form.Label>
               <Form.Control id="email" type="email" onChange={e => setRegisterEmail(e.target.value)} />
             </Form.Group>
-            <Button variant="primary" type="submit" onClick={(e) => submit(e)} >
+            <Button variant="primary" type="submit" onClick={(e) => submit(e)} style={{margin: "0 auto", display: "block"}}>
               Update
             </Button>
           </Form>

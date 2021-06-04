@@ -1,5 +1,29 @@
 .container{
   display: flex;
   justify-content: center;
-  
+}
+
+.filter{
+  max-width: 670px;
+  margin: 2rem auto;
+}
+
+.bodyPriceFilter{
+  display: flex;
+  width: 160px;
+  justify-content: space-between;
+}
+
+.bodyPriceFilter > input{
+  width: 70px;
+  padding: 5px 10px
+}
+
+@media only screen and (max-width: 750px) {
+  .filter > div > div{
+    flex-direction: column;
+  }
+  .bodyPriceFilter{
+    margin: 0 auto;
+  }
 }

@@ -35,12 +35,6 @@ const NavLeft = (props) => {
   }, []);
 
   useEffect(() => {
-    /* console.log("in useEffect");
-    console.log(user);
-    console.log(ref.current);
-    console.log(user); */
-
-    //(user != null && ref.current && user.role_id !== 3)
     if (user=== null || (ref.current && user.role_id !== 3)) {
       let text = document.getElementById('cart').innerHTML;
       if (props.numOfItems === 0) text = `Cart`;

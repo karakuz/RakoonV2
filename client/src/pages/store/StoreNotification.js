@@ -13,9 +13,6 @@ const StoreNotification = () => {
     let history = useHistory();
     var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
 
-
-
-
     const setNotification = async (message, e) => {
         e.preventDefault();
         const res = await Axios({
@@ -45,7 +42,7 @@ const StoreNotification = () => {
                         <Form.Label style={{ textAlign: "center"}}>Enter your notification here</Form.Label>
                         <Form.Control onChange={(e) => setMessage(e.target.value)}>
                         </Form.Control>
-                        <Button type="submit" onClick={(e) => setNotification(message, e)} style={{ margin: "0 auto", display: "block"}}>Submit</Button>
+                        <Button type="submit" onClick={(e) => setNotification(message, e)} style={{ margin: "0 auto", display: "block", marginTop: "1rem"}}>Submit</Button>
                     </Form>
                 </Card.Body>
             </Card>

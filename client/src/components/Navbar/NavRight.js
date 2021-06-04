@@ -60,17 +60,17 @@ const NavRight = () => {
       <Nav style={{ position: "relative", textAlign: "center" }}>
         <span style={{ position: "absolute", right: "140px", top: "0.00001px", fontSize: "50%", width: "max-content", height: "fit-content"}} id="navRole">{role}</span>
         <Nav.Link href="/store" style={{ width: "max-content"}} id="storeName">{storeName}</Nav.Link>
-        <Nav.Link href="/profile">Profile</Nav.Link>
-        <Nav.Link onClick={() => logout()}>Logout</Nav.Link>
+        <Nav.Link href="/profile" id="profile">Profile</Nav.Link>
+        <Nav.Link onClick={() => logout()} id="logout">Logout</Nav.Link>
       </Nav>
     )
   }
   else {
     return (
       <Nav style={{ position: "relative" }}>
-        <span style={{ position: "relative", right: "-110px", top: "0.00001px", fontSize: "50%", width: "max-content"}}>{role + " " + user.name}</span>
-        <Nav.Link href="/profile">Profile</Nav.Link>
-        <Nav.Link onClick={() => logout()}>Logout</Nav.Link>
+        <span style={{ position: "relative", right: "-110px", top: "0.00001px", fontSize: "50%", width: "max-content"}} id="navRole">{role + " " + user.name}</span>
+        <Nav.Link href="/profile" id="profile">Profile</Nav.Link>
+        <Nav.Link onClick={() => logout()} id="logout">Logout</Nav.Link>
       </Nav>
     )
   }

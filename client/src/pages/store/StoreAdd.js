@@ -161,7 +161,7 @@ const StoreAdd = () => {
         </div>
         <div>
           <label>Price:</label>
-          <input type="text" onChange={(e) => setPrice(e.target.value)} id="price" />
+          <input type="text" onChange={(e) => setPrice(e.target.value)} />
         </div>
         <div style={{ position: "relative" }}>
           <label>Image:</label>
@@ -170,7 +170,7 @@ const StoreAdd = () => {
         </div>
         <div>
           <label>Category</label>
-          <select name="categories" id="category" onChange={(e) => setCategory(e.target.value)}>
+          <select name="categories" onChange={(e) => setCategory(e.target.value)}>
             {<option value="" selected></option>}
             {
               categories.map(category => {
