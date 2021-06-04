@@ -37,12 +37,18 @@ const Body = (props) => {
     getStoreNames();
   }, []);
 
+  const [color, setColor] = React.useState();
+  const filterColor = () => {
+    setProducts(products.filter(product => product.color == "Black"))
+  }
+  
   const find = () => {
     if (max !== null && min != null)
       setProducts(products.filter(product => product.price < max && product.price > min))
   }
 
   const [orderState, setOrderState] = useState("NameAsc");
+  const [colorState, setColorState] = useState("White");
 
   const sortAsc = sortBy => (a, b) => {
     if (a[sortBy] > b[sortBy]) {
@@ -105,6 +111,25 @@ const Body = (props) => {
             </Form.Control>
           </div>
         </div>
+
+        <div style={{ marginBottom: "1rem" }}>
+          <select
+            className="custom-select"
+            value={color}
+            onChange={(e) => {
+              const selectedColor = e.target.value;
+              setColorState(selectedColor);
+              filterColor();
+            }}
+          >
+            <option value="Red">Red</option>
+            <option value="White">White</option>
+            <option value="Black">Black</option>
+            <option value="Mixed">Blue</option>
+            <option value="Mixed">Mixed</option>
+          </select>
+        </div>
+
 
         <div style={{ marginBottom: "1rem" }}>
           <select
