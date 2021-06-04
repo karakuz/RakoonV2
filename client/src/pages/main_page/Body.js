@@ -164,6 +164,15 @@ const Body = (props) => {
                 color: "white",
                 backgroundColor: "black"
               }} />
+              <input type="button" onClick={() => getProducts()} value="Reset"
+              style={{
+                display: "flex",
+                margin: "1rem auto 0",
+                padding: "7px",
+                fontSize: "18px",
+                color: "white",
+                backgroundColor: "black"
+              }} />
           </div>
         </div>
       </div>
