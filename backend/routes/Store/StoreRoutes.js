@@ -19,6 +19,7 @@ const VerifyMail = function (user, token) {
       pass: "rakoon123"
     }
   });
+  console.log(user.email);
   var mailOptions = {
     to: user.email,
     from: 'rakoonecommerceservices@gmail.com',
@@ -127,7 +128,7 @@ router.post("/addSalesManager", async (req, res) => {
       (SELECT store_id FROM rakoon.store WHERE owner_id=${user.owner_id})
     )`);
 
-    VerifyMail(user.email, activate);
+    VerifyMail(user, activate);
 
     res.send(true);
   } else {
