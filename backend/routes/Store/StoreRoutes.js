@@ -507,6 +507,7 @@ router.post("/store/storenames", async (req, res) => {
   var stores = {};
   if (categoryName === "all") {
     stores = await db.get("select store_name from store where store_id in (SELECT store_id FROM rakoon.items group by store_id);");
+
   }
   else {
     stores = await db.get(`select store_name from store where store_id in (SELECT store_id FROM rakoon.items where category = '${categoryName}' group by store_id)`);

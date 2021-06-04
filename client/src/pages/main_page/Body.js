@@ -9,6 +9,7 @@ const Body = (props) => {
   const [products, setProducts] = useState([]);
   const [min, setMin] = React.useState();
   const [max, setMax] = React.useState();
+  const [storeNames, setStoreNames] = useState([]);
   var url = process.env.NODE_ENV === "production" ? "https://rakoon-v-2-kbmgw.ondigitalocean.app" : "http://localhost:4000";
   const getProducts = async () => {
     const res = await Axios({
@@ -18,9 +19,22 @@ const Body = (props) => {
     });
     setProducts(res.data);
   };
+  const getStoreNames = async () => {
+    const res = await Axios({
+      method: "POST",
+      withCredentials: true,
+      data: {
+        category: "all"
+      },
+      url: `${url}/store/storenames`
+    });
+    console.log(res.data);
+    setStoreNames(res.data);
+  }
 
   useEffect(() => {
     getProducts();
+    getStoreNames();
   }, []);
 
   const find = () => {
@@ -69,7 +83,7 @@ const Body = (props) => {
       {/* <Filter products={products}/> */}
       <div className="filter">
         <div class="row">
-          <div style={{marginBottom: "1rem"}}>
+          <div style={{ marginBottom: "1rem" }}>
             <Form.Control as="select" defaultValue="Select">
               <option>Price</option>
               <option>0-$50</option>
@@ -78,17 +92,21 @@ const Body = (props) => {
               <option>+$500</option>
             </Form.Control>
           </div>
-      
-          <div style={{marginBottom: "1rem"}}>
+
+          <div style={{ marginBottom: "1rem" }}>
             <Form.Control as="select" defaultValue="Select">
               <option>Store</option>
-              <option>A</option>
-              <option>B</option>
+              {
+                storeNames.map((store) => {
+                  console.log(store);
+                  return <option>{store.store_name}</option>
+                })
+              }
             </Form.Control>
           </div>
         </div>
 
-        <div style={{marginBottom: "1rem"}}>
+        <div style={{ marginBottom: "1rem" }}>
           <select
             className="custom-select"
             value={orderState}
@@ -107,23 +125,24 @@ const Body = (props) => {
 
         <div className="container p-1">
           <div className="form-group">
-            <label style={{display: "block", textAlign: "center"}}>Price</label>
+            <label style={{ display: "block", textAlign: "center" }}>Price</label>
             <div className="bodyPriceFilter">
-              <input id="min" type="number" onChange={(e) => setMin(parseInt(e.target.value))} className="minPrice"/>
-              <input id="max" type="number" onChange={(e) => setMax(parseInt(e.target.value))} className="maxPrice"/>
+              <input id="min" type="number" onChange={(e) => setMin(parseInt(e.target.value))} className="minPrice" />
+              <input id="max" type="number" onChange={(e) => setMax(parseInt(e.target.value))} className="maxPrice" />
             </div>
-            <input type="button" onClick={() => find()} value="Filter" 
+            <input type="button" onClick={() => find()} value="Filter"
               style={{
                 display: "block",
                 margin: "1rem auto 0",
                 padding: "7px",
                 fontSize: "18px",
-                color:"white",
-                backgroundColor: "black"}}/>
+                color: "white",
+                backgroundColor: "black"
+              }} />
           </div>
         </div>
       </div>
-      
+
       <Container>
         <Row>
           {
@@ -131,7 +150,7 @@ const Body = (props) => {
               return (
                 <Col sm={12} md={6} lg={4} xl={3} key={product.item_id}>
                   <ProductCard key={product.item_id} id={product.item_id} {...product}
-                    numOfItems={props.numOfItems} setNumOfItems={props.setNumOfItems} isRemovable={false}/>
+                    numOfItems={props.numOfItems} setNumOfItems={props.setNumOfItems} isRemovable={false} />
                 </Col>
               );
             })
