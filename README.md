@@ -1,5 +1,8 @@
 CS 476/576 Project: E-commerce System
 
+Binance Smart Chain: https://testnet.bscscan.com/token/0x4114fc29c232a9e18a81af22423f3340d79cabb0
+https://rakoonecommerce.netlify.app/ (not working now due to the expired DO )
+
 The goal of this project is to design & implement an e-commerce website. Students are expected to fulfil
 the following requirements of the customer:
   ● Adding an item to the shopping cart should be available without account creation.
